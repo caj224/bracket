@@ -1210,7 +1210,7 @@ def render_dashboard(payloads: List[dict]) -> str:
       <h3 class="section-title">How Similar the Horizon Brackets Are</h3>
       <p class="chart-note">
         Each percentage compares two horizons across all rounds they both specify.
-        Darker cells mean the optimizer is making almost the same choices in both views.
+        Lighter cells mean the optimizer is making almost the same choices in both views.
       </p>
       {build_similarity_heatmap(payloads)}
     </section>

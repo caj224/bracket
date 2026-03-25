@@ -1,18 +1,16 @@
 {
-  "timestamp": "2026-03-24T22:52:02.760812",
-  "best_ev": 87.32039714609223,
+  "timestamp": "2026-03-25T07:38:56.181208",
+  "best_ev": 87.56064475927022,
   "extra": {
-    "starts_completed": 123,
+    "starts_completed": 400,
     "start_mode": "elite:random",
-    "start_ev": 72.50107601306213,
+    "start_ev": 83.31611357790155,
     "history": [
-      72.50107601306213,
-      77.82686601378877,
-      81.6957882770725,
-      84.4079704452604,
-      86.3756236212508,
-      86.97612618818076,
-      87.32039714609223
+      83.31611357790155,
+      85.28376675389194,
+      86.6158712344288,
+      87.21637380135874,
+      87.56064475927022
     ]
   },
   "best_bracket": {
@@ -345,18 +343,18 @@
             "bpi_source": "espn"
           },
           {
-            "id": "231",
-            "name": "Furman",
-            "seed": 15,
+            "id": "41",
+            "name": "UConn",
+            "seed": 2,
             "region": "East",
-            "bpi": -0.1,
-            "prob_r64": null,
-            "prob_r32": null,
-            "prob_r16": null,
-            "prob_r8": null,
-            "prob_r4": null,
-            "prob_final": null,
-            "bpi_source": "manual"
+            "bpi": 19.4389,
+            "prob_r64": 100.0,
+            "prob_r32": 100.0,
+            "prob_r16": 53.37,
+            "prob_r8": 18.16,
+            "prob_r4": 7.85,
+            "prob_final": 3.01,
+            "bpi_source": "espn"
           }
         ],
         "round_32_winners": [

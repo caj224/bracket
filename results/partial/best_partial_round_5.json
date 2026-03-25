@@ -1,16 +1,17 @@
 {
-  "timestamp": "2026-03-24T23:24:50.453982",
-  "best_ev": 107.66865445109022,
+  "timestamp": "2026-03-25T07:31:39.610257",
+  "best_ev": 107.68108499593818,
   "extra": {
     "starts_completed": 6,
     "start_mode": "elite:greedy_init",
-    "start_ev": 99.64551104571727,
+    "start_ev": 93.73374234633,
     "history": [
-      99.64551104571727,
-      104.06785834230158,
-      104.40114028892017,
-      104.45542636711615,
-      107.66865445109022
+      93.73374234633,
+      99.65794159056523,
+      104.08028888714954,
+      104.41357083376813,
+      104.4678569119641,
+      107.68108499593818
     ]
   },
   "best_bracket": {
@@ -831,17 +832,17 @@
             "bpi_source": "espn"
           },
           {
-            "id": "251",
-            "name": "Texas",
-            "seed": 11,
+            "id": "2250",
+            "name": "Gonzaga",
+            "seed": 3,
             "region": "West",
-            "bpi": 14.2203,
+            "bpi": 20.0374,
             "prob_r64": 100.0,
-            "prob_r32": 100.0,
-            "prob_r16": 24.45,
-            "prob_r8": 5.36,
-            "prob_r4": 1.15,
-            "prob_final": 0.24,
+            "prob_r32": 0.0,
+            "prob_r16": 0.0,
+            "prob_r8": 0.0,
+            "prob_r4": 0.0,
+            "prob_final": 0.0,
             "bpi_source": "espn"
           },
           {
@@ -875,17 +876,17 @@
             "bpi_source": "espn"
           },
           {
-            "id": "251",
-            "name": "Texas",
-            "seed": 11,
+            "id": "2250",
+            "name": "Gonzaga",
+            "seed": 3,
             "region": "West",
-            "bpi": 14.2203,
+            "bpi": 20.0374,
             "prob_r64": 100.0,
-            "prob_r32": 100.0,
-            "prob_r16": 24.45,
-            "prob_r8": 5.36,
-            "prob_r4": 1.15,
-            "prob_final": 0.24,
+            "prob_r32": 0.0,
+            "prob_r16": 0.0,
+            "prob_r8": 0.0,
+            "prob_r4": 0.0,
+            "prob_final": 0.0,
             "bpi_source": "espn"
           }
         ],
