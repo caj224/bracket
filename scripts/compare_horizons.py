@@ -58,9 +58,9 @@ PARTIAL_TOP_K_PATH_TEMPLATE = str(PARTIAL_RESULTS_DIR / "top_partial_round_{cuto
 PARTIAL_SEARCH_RUN_WEIGHTS = {
     1: 1,
     2: 1,
-    3: 2,
-    4: 4,
-    5: 4,
+    3: 1,
+    4: 20,
+    5: 1,
 }
 
 # For Elite 8 / Final Four, some "random" restarts begin near the saved
