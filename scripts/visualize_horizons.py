@@ -659,6 +659,52 @@ def build_round_chips(picks: List[str], seed_lookup: Dict[str, int]) -> str:
     return "".join(chips)
 
 
+def build_calculator_bootstrap(bracket: dict) -> str:
+    teams_by_region = {
+        region: [
+            {
+                "name": team["name"],
+                "seed": team["seed"],
+                "bpi": team["bpi"],
+            }
+            for team in bracket["regions"][region]["teams"]
+        ]
+        for region in REGION_ORDER
+    }
+
+    optimized_picks = {
+        "regions": {},
+        "final_four_winners": pick_names(bracket.get("final_four_winners", [])),
+        "champion": pick_names(bracket.get("champion")),
+    }
+
+    for region in REGION_ORDER:
+        region_data = bracket["regions"][region]
+        optimized_picks["regions"][region] = {
+            "round_64_winners": pick_names(region_data.get("round_64_winners", [])),
+            "round_32_winners": pick_names(region_data.get("round_32_winners", [])),
+            "round_16_winners": pick_names(region_data.get("round_16_winners", [])),
+            "region_champion": pick_names(region_data.get("region_champion")),
+        }
+
+    bootstrap = {
+        "regions": REGION_ORDER,
+        "roundLabels": ROUND_LABELS,
+        "teamsByRegion": teams_by_region,
+        "optimized": optimized_picks,
+        "scalingFactor": SCALING_FACTOR,
+        "roundParams": {
+            "1": [1, 1],
+            "2": [2, 2],
+            "3": [4, 3],
+            "4": [8, 4],
+            "5": [16, 5],
+            "6": [32, 6],
+        },
+    }
+    return json.dumps(bootstrap).replace("</", "<\\/")
+
+
 def render_dashboard(payloads: List[dict]) -> str:
     seed_lookup = team_seed_lookup(payloads)
 
@@ -779,6 +825,7 @@ def render_dashboard(payloads: List[dict]) -> str:
         )
 
     best_gain = max(ev_values) - min(ev_values)
+    calculator_bootstrap = build_calculator_bootstrap(final_bracket)
 
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -814,6 +861,36 @@ def render_dashboard(payloads: List[dict]) -> str:
       max-width: 1240px;
       margin: 0 auto;
       padding: 40px 20px 72px;
+    }}
+    .tabs {{
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }}
+    .tab-button {{
+      appearance: none;
+      border: 1px solid rgba(148, 163, 184, 0.14);
+      border-radius: 999px;
+      padding: 12px 18px;
+      font: inherit;
+      font-weight: 700;
+      color: #c9d8ed;
+      background: rgba(15, 23, 42, 0.68);
+      cursor: pointer;
+      transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+    }}
+    .tab-button:hover {{
+      transform: translateY(-1px);
+      border-color: rgba(56, 189, 248, 0.34);
+    }}
+    .tab-button.active {{
+      color: #f8fbff;
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.24), rgba(249, 115, 22, 0.2));
+      border-color: rgba(56, 189, 248, 0.42);
+    }}
+    .tab-panel[hidden] {{
+      display: none;
     }}
     .hero {{
       display: grid;
@@ -1104,6 +1181,177 @@ def render_dashboard(payloads: List[dict]) -> str:
       color: var(--accent);
       font-weight: 600;
     }}
+    .calculator-shell {{
+      display: grid;
+      gap: 20px;
+    }}
+    .calculator-card {{
+      padding: 24px;
+    }}
+    .calculator-actions {{
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }}
+    .action-button {{
+      appearance: none;
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      border-radius: 14px;
+      padding: 11px 14px;
+      font: inherit;
+      font-weight: 700;
+      color: #e7f1fd;
+      background: rgba(15, 23, 42, 0.7);
+      cursor: pointer;
+    }}
+    .action-button.primary {{
+      background: rgba(56, 189, 248, 0.18);
+      border-color: rgba(56, 189, 248, 0.28);
+      color: #d7f2ff;
+    }}
+    .calculator-summary {{
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 22px;
+    }}
+    .summary-stat {{
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: rgba(15, 23, 42, 0.58);
+      border: 1px solid rgba(148, 163, 184, 0.1);
+    }}
+    .summary-stat .label {{
+      color: var(--muted);
+      font-size: 0.78rem;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }}
+    .summary-stat .value {{
+      font-size: 1.35rem;
+      font-weight: 700;
+    }}
+    .calculator-grid {{
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }}
+    .region-card {{
+      padding: 20px;
+    }}
+    .bracket-region {{
+      overflow: hidden;
+    }}
+    .region-header {{
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 16px;
+    }}
+    .bracket-board {{
+      display: grid;
+      grid-template-columns: repeat(4, minmax(180px, 1fr));
+      gap: 14px;
+      align-items: start;
+      overflow-x: auto;
+      padding-bottom: 6px;
+    }}
+    .bracket-column {{
+      min-width: 180px;
+    }}
+    .bracket-column.round-64 .matchup-stack {{
+      padding-top: 0;
+    }}
+    .bracket-column.round-32 .matchup-stack {{
+      padding-top: 28px;
+    }}
+    .bracket-column.round-16 .matchup-stack {{
+      padding-top: 82px;
+    }}
+    .bracket-column.round-elite-8 .matchup-stack {{
+      padding-top: 192px;
+    }}
+    .matchup-stack {{
+      display: grid;
+      gap: 12px;
+    }}
+    .bracket-column.round-32 .matchup-stack,
+    .bracket-column.round-16 .matchup-stack,
+    .bracket-column.round-elite-8 .matchup-stack {{
+      gap: 30px;
+    }}
+    .bracket-column.round-16 .matchup-stack {{
+      gap: 84px;
+    }}
+    .bracket-column.round-elite-8 .matchup-stack {{
+      gap: 196px;
+    }}
+    .matchup-row {{
+      padding: 12px;
+      border-radius: 16px;
+      background: rgba(15, 23, 42, 0.52);
+      border: 1px solid rgba(148, 163, 184, 0.1);
+      position: relative;
+    }}
+    .matchup-row label {{
+      display: block;
+      font-size: 0.86rem;
+      color: #c8d8eb;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }}
+    .matchup-row select {{
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      background: rgba(8, 17, 31, 0.9);
+      color: #e5eefc;
+      font: inherit;
+    }}
+    .matchup-row.connector:after {{
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: -14px;
+      width: 14px;
+      height: 1px;
+      background: rgba(148, 163, 184, 0.22);
+    }}
+    .finals-grid {{
+      display: grid;
+      grid-template-columns: 1fr minmax(220px, 280px) 1fr;
+      gap: 18px;
+      align-items: center;
+    }}
+    .finals-column {{
+      display: grid;
+      gap: 18px;
+    }}
+    .final-card {{
+      padding: 20px;
+    }}
+    .title-card {{
+      padding: 24px;
+      text-align: center;
+      background:
+        radial-gradient(circle at top, rgba(56, 189, 248, 0.12), transparent 58%),
+        rgba(12, 23, 42, 0.84);
+    }}
+    .helper-text {{
+      color: var(--muted);
+      margin-top: 10px;
+    }}
+    .status-ok {{
+      color: #bbf7d0;
+    }}
+    .status-warn {{
+      color: #fde68a;
+    }}
     ul {{
       margin: 0;
       padding-left: 18px;
@@ -1127,95 +1375,558 @@ def render_dashboard(payloads: List[dict]) -> str:
       .stats {{
         grid-template-columns: 1fr;
       }}
+      .calculator-summary,
+      .calculator-grid,
+      .finals-grid {{
+        grid-template-columns: 1fr;
+      }}
+      .bracket-board {{
+        grid-template-columns: repeat(4, minmax(160px, 1fr));
+      }}
+      .bracket-column.round-32 .matchup-stack,
+      .bracket-column.round-16 .matchup-stack,
+      .bracket-column.round-elite-8 .matchup-stack {{
+        padding-top: 0;
+        gap: 12px;
+      }}
+      .matchup-row.connector:after {{
+        display: none;
+      }}
     }}
   </style>
 </head>
 <body>
   <main class="shell">
-    <section class="hero">
-      <div class="card hero-copy">
-        <div class="eyebrow">Bracket Horizon Dashboard</div>
-        <h1>How the optimized bracket evolves as the horizon gets deeper.</h1>
-        <p>
-          This report compares the best saved bracket for each cutoff round and highlights
-          how expected value rises, which teams survive deeper into the tree, and where
-          the optimizer changes its mind as it starts caring about later rounds.
-        </p>
-        <div class="stats">
-          <div class="stat">
-            <div class="label">Horizons Loaded</div>
-            <div class="value">{len(payloads)}</div>
-          </div>
-          <div class="stat">
-            <div class="label">EV Range</div>
-            <div class="value">{best_gain:.2f}</div>
-          </div>
-          <div class="stat">
-            <div class="label">Best Horizon</div>
-            <div class="value">{escape(ROUND_LABELS[payloads[-1]["best_bracket"]["cutoff_round"]])}</div>
+    <div class="tabs" role="tablist" aria-label="Dashboard tabs">
+      <button class="tab-button active" type="button" data-tab-target="dashboard-tab" aria-selected="true">Dashboard</button>
+      <button class="tab-button" type="button" data-tab-target="calculator-tab" aria-selected="false">Custom EV</button>
+    </div>
+
+    <section id="dashboard-tab" class="tab-panel">
+      <section class="hero">
+        <div class="card hero-copy">
+          <div class="eyebrow">Bracket Horizon Dashboard</div>
+          <h1>How the optimized bracket evolves as the horizon gets deeper.</h1>
+          <p>
+            This report compares the best saved bracket for each cutoff round and highlights
+            how expected value rises, which teams survive deeper into the tree, and where
+            the optimizer changes its mind as it starts caring about later rounds.
+          </p>
+          <div class="stats">
+            <div class="stat">
+              <div class="label">Horizons Loaded</div>
+              <div class="value">{len(payloads)}</div>
+            </div>
+            <div class="stat">
+              <div class="label">EV Range</div>
+              <div class="value">{best_gain:.2f}</div>
+            </div>
+            <div class="stat">
+              <div class="label">Best Horizon</div>
+              <div class="value">{escape(ROUND_LABELS[payloads[-1]["best_bracket"]["cutoff_round"]])}</div>
+            </div>
           </div>
         </div>
+        <aside class="card spotlight">
+          <div class="eyebrow">Deepest Horizon Snapshot</div>
+          <h3 class="section-title">Round 6 bracket spine</h3>
+          {''.join(spotlight_items)}
+        </aside>
+      </section>
+
+      <section class="card chart-card">
+        <div class="eyebrow">Trend</div>
+        <h3 class="section-title">Expected Value by Horizon</h3>
+        {build_ev_svg(ev_values, ev_labels)}
+      </section>
+
+      <section class="card chart-card">
+        <div class="eyebrow">Comparison</div>
+        <h3 class="section-title">Each Optimized Bracket Against the Others</h3>
+        <p class="chart-note">
+          Each line shows the cumulative expected value of one horizon-optimized bracket.
+          Lines stop at their own cutoff, so the R64 bracket ends after Round 1, the R32 bracket ends after Round 2, and so on.
+        </p>
+        {build_bracket_curve_svg(curve_rows)}
+        {build_curve_table(curve_rows)}
+      </section>
+
+      <section>
+        <div class="eyebrow">Profiles</div>
+        <h3 class="section-title">Best Bracket at Each Cutoff</h3>
+        <div class="grid">
+          {''.join(horizon_rows)}
+        </div>
+      </section>
+
+      <section>
+        <div class="eyebrow">Transitions</div>
+        <h3 class="section-title">What Changed from One Horizon to the Next</h3>
+        <div class="grid">
+          {''.join(transition_rows)}
+        </div>
+      </section>
+
+      <section class="card chart-card">
+        <div class="eyebrow">Teams</div>
+        <h3 class="section-title">Team Survival Matrix Across Horizons</h3>
+        <p class="chart-note">
+          Each cell shows the deepest round that team reaches in that horizon's optimized bracket.
+          Teams are sorted by how deep they ever go across the six horizons.
+        </p>
+        {build_survival_matrix(payloads, seed_lookup)}
+      </section>
+
+      <section class="card chart-card">
+        <div class="eyebrow">Similarity</div>
+        <h3 class="section-title">How Similar the Horizon Brackets Are</h3>
+        <p class="chart-note">
+          Each percentage compares two horizons across all rounds they both specify.
+          Lighter cells mean the optimizer is making almost the same choices in both views.
+        </p>
+        {build_similarity_heatmap(payloads)}
+      </section>
+    </section>
+
+    <section id="calculator-tab" class="tab-panel" hidden>
+      <div class="calculator-shell">
+        <section class="card calculator-card">
+          <div class="eyebrow">Interactive</div>
+          <h2 class="section-title">Build Your Own Bracket and Score Its EV</h2>
+          <p>
+            Enter winners round by round. The calculator uses the same BPI-derived matchup model
+            as the dashboard and computes the full expected value for your custom bracket.
+          </p>
+          <div class="calculator-actions">
+            <button id="load-optimized" class="action-button primary" type="button">Load best Title bracket</button>
+            <button id="reset-calculator" class="action-button" type="button">Clear picks</button>
+          </div>
+          <div class="calculator-summary">
+            <div class="summary-stat">
+              <div class="label">Custom EV</div>
+              <div class="value" id="custom-ev">-</div>
+            </div>
+            <div class="summary-stat">
+              <div class="label">Completed Picks</div>
+              <div class="value" id="custom-complete">0 / 63</div>
+            </div>
+            <div class="summary-stat">
+              <div class="label">Champion</div>
+              <div class="value" id="custom-champion">-</div>
+            </div>
+            <div class="summary-stat">
+              <div class="label">Status</div>
+              <div class="value status-warn" id="custom-status">Waiting for picks</div>
+            </div>
+          </div>
+          <p class="helper-text">Round choices unlock as upstream winners are selected. EV updates automatically once the bracket is complete.</p>
+        </section>
+
+        <div id="calculator-root"></div>
       </div>
-      <aside class="card spotlight">
-        <div class="eyebrow">Deepest Horizon Snapshot</div>
-        <h3 class="section-title">Round 6 bracket spine</h3>
-        {''.join(spotlight_items)}
-      </aside>
-    </section>
-
-    <section class="card chart-card">
-      <div class="eyebrow">Trend</div>
-      <h3 class="section-title">Expected Value by Horizon</h3>
-      {build_ev_svg(ev_values, ev_labels)}
-    </section>
-
-    <section class="card chart-card">
-      <div class="eyebrow">Comparison</div>
-      <h3 class="section-title">Each Optimized Bracket Against the Others</h3>
-      <p class="chart-note">
-        Each line shows the cumulative expected value of one horizon-optimized bracket.
-        Lines stop at their own cutoff, so the R64 bracket ends after Round 1, the R32 bracket ends after Round 2, and so on.
-      </p>
-      {build_bracket_curve_svg(curve_rows)}
-      {build_curve_table(curve_rows)}
-    </section>
-
-    <section>
-      <div class="eyebrow">Profiles</div>
-      <h3 class="section-title">Best Bracket at Each Cutoff</h3>
-      <div class="grid">
-        {''.join(horizon_rows)}
-      </div>
-    </section>
-
-    <section>
-      <div class="eyebrow">Transitions</div>
-      <h3 class="section-title">What Changed from One Horizon to the Next</h3>
-      <div class="grid">
-        {''.join(transition_rows)}
-      </div>
-    </section>
-
-    <section class="card chart-card">
-      <div class="eyebrow">Teams</div>
-      <h3 class="section-title">Team Survival Matrix Across Horizons</h3>
-      <p class="chart-note">
-        Each cell shows the deepest round that team reaches in that horizon's optimized bracket.
-        Teams are sorted by how deep they ever go across the six horizons.
-      </p>
-      {build_survival_matrix(payloads, seed_lookup)}
-    </section>
-
-    <section class="card chart-card">
-      <div class="eyebrow">Similarity</div>
-      <h3 class="section-title">How Similar the Horizon Brackets Are</h3>
-      <p class="chart-note">
-        Each percentage compares two horizons across all rounds they both specify.
-        Lighter cells mean the optimizer is making almost the same choices in both views.
-      </p>
-      {build_similarity_heatmap(payloads)}
     </section>
   </main>
+  <script id="calculator-data" type="application/json">{calculator_bootstrap}</script>
+  <script>
+    const tabButtons = document.querySelectorAll(".tab-button");
+    const tabPanels = document.querySelectorAll(".tab-panel");
+    tabButtons.forEach((button) => {{
+      button.addEventListener("click", () => {{
+        const target = button.dataset.tabTarget;
+        tabButtons.forEach((candidate) => {{
+          const active = candidate === button;
+          candidate.classList.toggle("active", active);
+          candidate.setAttribute("aria-selected", active ? "true" : "false");
+        }});
+        tabPanels.forEach((panel) => {{
+          panel.hidden = panel.id !== target;
+        }});
+      }});
+    }});
+
+    const calculatorData = JSON.parse(document.getElementById("calculator-data").textContent);
+    const regionOrder = calculatorData.regions;
+    const teamsByRegion = calculatorData.teamsByRegion;
+    const optimized = calculatorData.optimized;
+    const scalingFactor = calculatorData.scalingFactor;
+    const roundParams = calculatorData.roundParams;
+    const roundKeyOrder = ["round_64_winners", "round_32_winners", "round_16_winners", "region_champion"];
+    const roundTitleMap = {{
+      round_64_winners: "R64",
+      round_32_winners: "R32",
+      round_16_winners: "Sweet 16",
+      region_champion: "Elite 8",
+    }};
+    const state = {{
+      regions: {{}},
+      final_four_winners: ["", ""],
+      champion: "",
+    }};
+    const teamLookup = {{}};
+
+    regionOrder.forEach((region) => {{
+      state.regions[region] = {{
+        round_64_winners: Array(8).fill(""),
+        round_32_winners: Array(4).fill(""),
+        round_16_winners: Array(2).fill(""),
+        region_champion: [""],
+      }};
+      teamsByRegion[region].forEach((team) => {{
+        teamLookup[team.name] = team;
+      }});
+    }});
+
+    const root = document.getElementById("calculator-root");
+    const customEv = document.getElementById("custom-ev");
+    const customComplete = document.getElementById("custom-complete");
+    const customChampion = document.getElementById("custom-champion");
+    const customStatus = document.getElementById("custom-status");
+
+    function prob(teamAName, teamBName) {{
+      if (teamAName === teamBName) {{
+        return 0.5;
+      }}
+      const teamA = teamLookup[teamAName];
+      const teamB = teamLookup[teamBName];
+      return 1 / (1 + Math.exp(-(teamA.bpi - teamB.bpi) * scalingFactor));
+    }}
+
+    function createOptionMarkup(options, selectedValue) {{
+      const placeholder = '<option value="">Choose winner</option>';
+      const choices = options.map((name) => {{
+        const selected = name === selectedValue ? " selected" : "";
+        const team = teamLookup[name];
+        return `<option value="${{name}}"${{selected}}>(${{team.seed}}) ${{name}}</option>`;
+      }});
+      return placeholder + choices.join("");
+    }}
+
+    function getRegionRoundSources(region, roundKey) {{
+      if (roundKey === "round_64_winners") {{
+        const teams = teamsByRegion[region].map((team) => team.name);
+        const pairs = [];
+        for (let i = 0; i < teams.length; i += 2) {{
+          pairs.push([teams[i], teams[i + 1]]);
+        }}
+        return pairs;
+      }}
+      if (roundKey === "round_32_winners") {{
+        const picks = state.regions[region].round_64_winners;
+        return [[picks[0], picks[1]], [picks[2], picks[3]], [picks[4], picks[5]], [picks[6], picks[7]]];
+      }}
+      if (roundKey === "round_16_winners") {{
+        const picks = state.regions[region].round_32_winners;
+        return [[picks[0], picks[1]], [picks[2], picks[3]]];
+      }}
+      const picks = state.regions[region].round_16_winners;
+      return [[picks[0], picks[1]]];
+    }}
+
+    function syncInvalidPick(region, roundKey, slot, validOptions) {{
+      if (!validOptions.includes(state.regions[region][roundKey][slot])) {{
+        state.regions[region][roundKey][slot] = "";
+      }}
+    }}
+
+    function syncRegionDependencies(region) {{
+      roundKeyOrder.forEach((roundKey) => {{
+        const sources = getRegionRoundSources(region, roundKey);
+        sources.forEach((options, slot) => {{
+          syncInvalidPick(region, roundKey, slot, options.filter(Boolean));
+        }});
+      }});
+    }}
+
+    function syncFinalDependencies() {{
+      const eastSouth = [state.regions.East.region_champion[0], state.regions.South.region_champion[0]].filter(Boolean);
+      const westMidwest = [state.regions.West.region_champion[0], state.regions.Midwest.region_champion[0]].filter(Boolean);
+      if (!eastSouth.includes(state.final_four_winners[0])) {{
+        state.final_four_winners[0] = "";
+      }}
+      if (!westMidwest.includes(state.final_four_winners[1])) {{
+        state.final_four_winners[1] = "";
+      }}
+      const finalOptions = state.final_four_winners.filter(Boolean);
+      if (!finalOptions.includes(state.champion)) {{
+        state.champion = "";
+      }}
+    }}
+
+    function regionCardMarkup(region) {{
+      const roundClasses = {{
+        round_64_winners: "round-64",
+        round_32_winners: "round-32",
+        round_16_winners: "round-16",
+        region_champion: "round-elite-8",
+      }};
+      const columns = roundKeyOrder.map((roundKey, roundIndex) => {{
+        const sources = getRegionRoundSources(region, roundKey);
+        const rows = sources.map((options, slot) => {{
+          const validOptions = options.filter(Boolean);
+          const selectedValue = state.regions[region][roundKey][slot];
+          const disabled = validOptions.length < 2 ? " disabled" : "";
+          const subtitle = validOptions.length
+            ? validOptions.map((name) => `(${{teamLookup[name].seed}}) ${{name}}`).join(" vs ")
+            : "Waiting for prior round";
+          const connectorClass = roundIndex < roundKeyOrder.length - 1 ? " connector" : "";
+          return `
+            <div class="matchup-row${{connectorClass}}">
+              <label>${{roundTitleMap[roundKey]}} matchup ${{slot + 1}}</label>
+              <div class="helper-text">${{subtitle}}</div>
+              <select data-region="${{region}}" data-round-key="${{roundKey}}" data-slot="${{slot}}"${{disabled}}>
+                ${{createOptionMarkup(validOptions, selectedValue)}}
+              </select>
+            </div>
+          `;
+        }}).join("");
+        return `
+          <div class="bracket-column ${{roundClasses[roundKey]}}">
+            <div class="pick-label">${{roundTitleMap[roundKey]}}</div>
+            <div class="matchup-stack">${{rows}}</div>
+          </div>
+        `;
+      }}).join("");
+      return `
+        <section class="card region-card bracket-region">
+          <div class="region-header">
+            <h3>${{region}}</h3>
+            <div class="ev-pill">${{teamsByRegion[region].length}} teams</div>
+          </div>
+          <div class="bracket-board">${{columns}}</div>
+        </section>
+      `;
+    }}
+
+    function finalsMarkup() {{
+      const semi1Options = [state.regions.East.region_champion[0], state.regions.South.region_champion[0]].filter(Boolean);
+      const semi2Options = [state.regions.West.region_champion[0], state.regions.Midwest.region_champion[0]].filter(Boolean);
+      const finalOptions = state.final_four_winners.filter(Boolean);
+      const semis = [
+        {{ label: "East vs South", options: semi1Options, slot: 0 }},
+        {{ label: "West vs Midwest", options: semi2Options, slot: 1 }},
+      ].map((item) => {{
+        const disabled = item.options.length < 2 ? " disabled" : "";
+        return `
+          <section class="card final-card">
+            <div class="pick-label">${{item.label}}</div>
+            <div class="matchup-row">
+              <div class="helper-text">${{item.options.length ? item.options.map((name) => `(${{teamLookup[name].seed}}) ${{name}}`).join(" vs ") : "Waiting for region champions"}}</div>
+              <select data-final-slot="${{item.slot}}"${{disabled}}>
+                ${{createOptionMarkup(item.options, state.final_four_winners[item.slot])}}
+              </select>
+            </div>
+          </section>
+        `;
+      }});
+      const titleDisabled = finalOptions.length < 2 ? " disabled" : "";
+      const titleSubtitle = finalOptions.length
+        ? finalOptions.map((name) => `(${{teamLookup[name].seed}}) ${{name}}`).join(" vs ")
+        : "Waiting for finalists";
+      return `
+        <section class="finals-grid">
+          <div class="finals-column">${{semis[0]}}</div>
+          <section class="card title-card">
+            <div class="pick-label">National Champion</div>
+            <div class="matchup-row">
+              <div class="helper-text">${{titleSubtitle}}</div>
+              <select id="champion-select"${{titleDisabled}}>
+                ${{createOptionMarkup(finalOptions, state.champion)}}
+              </select>
+            </div>
+            <div class="helper-text">Final Four winners feed the title game automatically.</div>
+          </section>
+          <div class="finals-column">${{semis[1]}}</div>
+        </section>
+      `;
+    }}
+
+    function renderCalculator() {{
+      regionOrder.forEach((region) => syncRegionDependencies(region));
+      syncFinalDependencies();
+      root.innerHTML = `
+        <div class="calculator-grid">
+          ${{regionOrder.map((region) => regionCardMarkup(region)).join("")}}
+        </div>
+        ${{finalsMarkup()}}
+      `;
+      root.querySelectorAll("select[data-region]").forEach((select) => {{
+        select.addEventListener("change", (event) => {{
+          const el = event.currentTarget;
+          state.regions[el.dataset.region][el.dataset.roundKey][Number(el.dataset.slot)] = el.value;
+          renderCalculator();
+          updateSummary();
+        }});
+      }});
+      root.querySelectorAll("select[data-final-slot]").forEach((select) => {{
+        select.addEventListener("change", (event) => {{
+          state.final_four_winners[Number(event.currentTarget.dataset.finalSlot)] = event.currentTarget.value;
+          renderCalculator();
+          updateSummary();
+        }});
+      }});
+      const championSelect = document.getElementById("champion-select");
+      if (championSelect) {{
+        championSelect.addEventListener("change", (event) => {{
+          state.champion = event.currentTarget.value;
+          updateSummary();
+        }});
+      }}
+    }}
+
+    function buildCustomBracket() {{
+      const bracket = {{ cutoff_round: 6, regions: {{}}, final_four_winners: [] }};
+      for (const region of regionOrder) {{
+        const picks = state.regions[region];
+        if (picks.round_64_winners.some((v) => !v) || picks.round_32_winners.some((v) => !v) || picks.round_16_winners.some((v) => !v) || !picks.region_champion[0]) {{
+          return null;
+        }}
+        bracket.regions[region] = {{
+          teams: teamsByRegion[region],
+          round_64_winners: picks.round_64_winners.map((name) => teamLookup[name]),
+          round_32_winners: picks.round_32_winners.map((name) => teamLookup[name]),
+          round_16_winners: picks.round_16_winners.map((name) => teamLookup[name]),
+          region_champion: teamLookup[picks.region_champion[0]],
+        }};
+      }}
+      if (state.final_four_winners.some((v) => !v) || !state.champion) {{
+        return null;
+      }}
+      bracket.final_four_winners = state.final_four_winners.map((name) => teamLookup[name]);
+      bracket.champion = teamLookup[state.champion];
+      return bracket;
+    }}
+
+    function matchupEv(leftDist, rightDist, pickedName, roundNum) {{
+      const [base, bonus] = roundParams[String(roundNum)];
+      let ev = 0;
+      for (const [leftName, leftProb] of Object.entries(leftDist)) {{
+        const leftTeam = teamLookup[leftName];
+        for (const [rightName, rightProb] of Object.entries(rightDist)) {{
+          const rightTeam = teamLookup[rightName];
+          const pMatch = leftProb * rightProb;
+          if (pickedName === leftName) {{
+            ev += pMatch * prob(leftName, rightName) * (base + bonus * Math.max(0, leftTeam.seed - rightTeam.seed));
+          }} else if (pickedName === rightName) {{
+            ev += pMatch * prob(rightName, leftName) * (base + bonus * Math.max(0, rightTeam.seed - leftTeam.seed));
+          }}
+        }}
+      }}
+      return ev;
+    }}
+
+    function advanceDistribution(leftDist, rightDist) {{
+      const out = {{}};
+      for (const [leftName, leftProb] of Object.entries(leftDist)) {{
+        for (const [rightName, rightProb] of Object.entries(rightDist)) {{
+          const pMatch = leftProb * rightProb;
+          out[leftName] = (out[leftName] || 0) + pMatch * prob(leftName, rightName);
+          out[rightName] = (out[rightName] || 0) + pMatch * prob(rightName, leftName);
+        }}
+      }}
+      return out;
+    }}
+
+    function scoreBracketEv(bracket) {{
+      let totalEv = 0;
+      const regionChampDists = {{}};
+      for (const region of regionOrder) {{
+        const regionData = bracket.regions[region];
+        const regionTeams = regionData.teams;
+        const r64Inputs = [];
+        for (let i = 0; i < regionTeams.length; i += 2) {{
+          r64Inputs.push([regionTeams[i], regionTeams[i + 1]]);
+        }}
+        const r64WinnerDists = [];
+        regionData.round_64_winners.forEach((picked, slot) => {{
+          const [teamA, teamB] = r64Inputs[slot];
+          totalEv += matchupEv({{ [teamA.name]: 1 }}, {{ [teamB.name]: 1 }}, picked.name, 1);
+          r64WinnerDists.push({{ [teamA.name]: prob(teamA.name, teamB.name), [teamB.name]: prob(teamB.name, teamA.name) }});
+        }});
+        const r32WinnerDists = [];
+        regionData.round_32_winners.forEach((picked, slot) => {{
+          const leftDist = r64WinnerDists[2 * slot];
+          const rightDist = r64WinnerDists[2 * slot + 1];
+          totalEv += matchupEv(leftDist, rightDist, picked.name, 2);
+          r32WinnerDists.push(advanceDistribution(leftDist, rightDist));
+        }});
+        const r16WinnerDists = [];
+        regionData.round_16_winners.forEach((picked, slot) => {{
+          const leftDist = r32WinnerDists[2 * slot];
+          const rightDist = r32WinnerDists[2 * slot + 1];
+          totalEv += matchupEv(leftDist, rightDist, picked.name, 3);
+          r16WinnerDists.push(advanceDistribution(leftDist, rightDist));
+        }});
+        totalEv += matchupEv(r16WinnerDists[0], r16WinnerDists[1], regionData.region_champion.name, 4);
+        regionChampDists[region] = advanceDistribution(r16WinnerDists[0], r16WinnerDists[1]);
+      }}
+      totalEv += matchupEv(regionChampDists.East, regionChampDists.South, bracket.final_four_winners[0].name, 5);
+      const semi1 = advanceDistribution(regionChampDists.East, regionChampDists.South);
+      totalEv += matchupEv(regionChampDists.West, regionChampDists.Midwest, bracket.final_four_winners[1].name, 5);
+      const semi2 = advanceDistribution(regionChampDists.West, regionChampDists.Midwest);
+      totalEv += matchupEv(semi1, semi2, bracket.champion.name, 6);
+      return totalEv;
+    }}
+
+    function countCompletedPicks() {{
+      let complete = 0;
+      for (const region of regionOrder) {{
+        for (const roundKey of roundKeyOrder) {{
+          complete += state.regions[region][roundKey].filter(Boolean).length;
+        }}
+      }}
+      complete += state.final_four_winners.filter(Boolean).length;
+      if (state.champion) {{
+        complete += 1;
+      }}
+      return complete;
+    }}
+
+    function updateSummary() {{
+      const completed = countCompletedPicks();
+      customComplete.textContent = `${{completed}} / 63`;
+      customChampion.textContent = state.champion ? `(${{teamLookup[state.champion].seed}}) ${{state.champion}}` : "-";
+      const bracket = buildCustomBracket();
+      if (!bracket) {{
+        customEv.textContent = "-";
+        customStatus.textContent = completed === 0 ? "Waiting for picks" : "Incomplete bracket";
+        customStatus.className = "value status-warn";
+        return;
+      }}
+      customEv.textContent = scoreBracketEv(bracket).toFixed(2);
+      customStatus.textContent = "Full bracket scored";
+      customStatus.className = "value status-ok";
+    }}
+
+    function loadOptimizedBracket() {{
+      regionOrder.forEach((region) => {{
+        const saved = optimized.regions[region];
+        roundKeyOrder.forEach((roundKey) => {{
+          state.regions[region][roundKey] = [...saved[roundKey]];
+        }});
+      }});
+      state.final_four_winners = [...optimized.final_four_winners];
+      state.champion = optimized.champion[0] || "";
+      renderCalculator();
+      updateSummary();
+    }}
+
+    function resetCalculator() {{
+      regionOrder.forEach((region) => {{
+        roundKeyOrder.forEach((roundKey) => {{
+          state.regions[region][roundKey] = state.regions[region][roundKey].map(() => "");
+        }});
+      }});
+      state.final_four_winners = ["", ""];
+      state.champion = "";
+      renderCalculator();
+      updateSummary();
+    }}
+
+    document.getElementById("load-optimized").addEventListener("click", loadOptimizedBracket);
+    document.getElementById("reset-calculator").addEventListener("click", resetCalculator);
+    renderCalculator();
+    updateSummary();
+  </script>
 </body>
 </html>
 """
