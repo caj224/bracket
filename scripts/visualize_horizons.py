@@ -1233,6 +1233,30 @@ def render_dashboard(payloads: List[dict]) -> str:
       font-size: 1.35rem;
       font-weight: 700;
     }}
+    .round-summary {{
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }}
+    .round-stat {{
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: rgba(15, 23, 42, 0.42);
+      border: 1px solid rgba(148, 163, 184, 0.08);
+    }}
+    .round-stat .label {{
+      color: var(--muted);
+      font-size: 0.74rem;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }}
+    .round-stat .value {{
+      font-size: 1rem;
+      font-weight: 700;
+      color: #dce9f7;
+    }}
     .calculator-grid {{
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1377,7 +1401,8 @@ def render_dashboard(payloads: List[dict]) -> str:
       }}
       .calculator-summary,
       .calculator-grid,
-      .finals-grid {{
+      .finals-grid,
+      .round-summary {{
         grid-template-columns: 1fr;
       }}
       .bracket-board {{
@@ -1519,6 +1544,32 @@ def render_dashboard(payloads: List[dict]) -> str:
               <div class="value status-warn" id="custom-status">Waiting for picks</div>
             </div>
           </div>
+          <div class="round-summary">
+            <div class="round-stat">
+              <div class="label">R64 EV</div>
+              <div class="value" id="round-ev-1">-</div>
+            </div>
+            <div class="round-stat">
+              <div class="label">R32 EV</div>
+              <div class="value" id="round-ev-2">-</div>
+            </div>
+            <div class="round-stat">
+              <div class="label">Sweet 16 EV</div>
+              <div class="value" id="round-ev-3">-</div>
+            </div>
+            <div class="round-stat">
+              <div class="label">Elite 8 EV</div>
+              <div class="value" id="round-ev-4">-</div>
+            </div>
+            <div class="round-stat">
+              <div class="label">Final Four EV</div>
+              <div class="value" id="round-ev-5">-</div>
+            </div>
+            <div class="round-stat">
+              <div class="label">Title EV</div>
+              <div class="value" id="round-ev-6">-</div>
+            </div>
+          </div>
           <p class="helper-text">Round choices unlock as upstream winners are selected. EV updates automatically once the bracket is complete.</p>
         </section>
 
@@ -1581,6 +1632,14 @@ def render_dashboard(payloads: List[dict]) -> str:
     const customComplete = document.getElementById("custom-complete");
     const customChampion = document.getElementById("custom-champion");
     const customStatus = document.getElementById("custom-status");
+    const roundEvNodes = [
+      document.getElementById("round-ev-1"),
+      document.getElementById("round-ev-2"),
+      document.getElementById("round-ev-3"),
+      document.getElementById("round-ev-4"),
+      document.getElementById("round-ev-5"),
+      document.getElementById("round-ev-6"),
+    ];
 
     function prob(teamAName, teamBName) {{
       if (teamAName === teamBName) {{
@@ -1828,6 +1887,7 @@ def render_dashboard(payloads: List[dict]) -> str:
 
     function scoreBracketEv(bracket) {{
       let totalEv = 0;
+      const roundTotals = [0, 0, 0, 0, 0, 0];
       const regionChampDists = {{}};
       for (const region of regionOrder) {{
         const regionData = bracket.regions[region];
@@ -1839,32 +1899,46 @@ def render_dashboard(payloads: List[dict]) -> str:
         const r64WinnerDists = [];
         regionData.round_64_winners.forEach((picked, slot) => {{
           const [teamA, teamB] = r64Inputs[slot];
-          totalEv += matchupEv({{ [teamA.name]: 1 }}, {{ [teamB.name]: 1 }}, picked.name, 1);
+          const ev = matchupEv({{ [teamA.name]: 1 }}, {{ [teamB.name]: 1 }}, picked.name, 1);
+          totalEv += ev;
+          roundTotals[0] += ev;
           r64WinnerDists.push({{ [teamA.name]: prob(teamA.name, teamB.name), [teamB.name]: prob(teamB.name, teamA.name) }});
         }});
         const r32WinnerDists = [];
         regionData.round_32_winners.forEach((picked, slot) => {{
           const leftDist = r64WinnerDists[2 * slot];
           const rightDist = r64WinnerDists[2 * slot + 1];
-          totalEv += matchupEv(leftDist, rightDist, picked.name, 2);
+          const ev = matchupEv(leftDist, rightDist, picked.name, 2);
+          totalEv += ev;
+          roundTotals[1] += ev;
           r32WinnerDists.push(advanceDistribution(leftDist, rightDist));
         }});
         const r16WinnerDists = [];
         regionData.round_16_winners.forEach((picked, slot) => {{
           const leftDist = r32WinnerDists[2 * slot];
           const rightDist = r32WinnerDists[2 * slot + 1];
-          totalEv += matchupEv(leftDist, rightDist, picked.name, 3);
+          const ev = matchupEv(leftDist, rightDist, picked.name, 3);
+          totalEv += ev;
+          roundTotals[2] += ev;
           r16WinnerDists.push(advanceDistribution(leftDist, rightDist));
         }});
-        totalEv += matchupEv(r16WinnerDists[0], r16WinnerDists[1], regionData.region_champion.name, 4);
+        const eliteEv = matchupEv(r16WinnerDists[0], r16WinnerDists[1], regionData.region_champion.name, 4);
+        totalEv += eliteEv;
+        roundTotals[3] += eliteEv;
         regionChampDists[region] = advanceDistribution(r16WinnerDists[0], r16WinnerDists[1]);
       }}
-      totalEv += matchupEv(regionChampDists.East, regionChampDists.South, bracket.final_four_winners[0].name, 5);
+      const ffEv1 = matchupEv(regionChampDists.East, regionChampDists.South, bracket.final_four_winners[0].name, 5);
+      totalEv += ffEv1;
+      roundTotals[4] += ffEv1;
       const semi1 = advanceDistribution(regionChampDists.East, regionChampDists.South);
-      totalEv += matchupEv(regionChampDists.West, regionChampDists.Midwest, bracket.final_four_winners[1].name, 5);
+      const ffEv2 = matchupEv(regionChampDists.West, regionChampDists.Midwest, bracket.final_four_winners[1].name, 5);
+      totalEv += ffEv2;
+      roundTotals[4] += ffEv2;
       const semi2 = advanceDistribution(regionChampDists.West, regionChampDists.Midwest);
-      totalEv += matchupEv(semi1, semi2, bracket.champion.name, 6);
-      return totalEv;
+      const titleEv = matchupEv(semi1, semi2, bracket.champion.name, 6);
+      totalEv += titleEv;
+      roundTotals[5] += titleEv;
+      return {{ total: totalEv, rounds: roundTotals }};
     }}
 
     function countCompletedPicks() {{
@@ -1890,9 +1964,16 @@ def render_dashboard(payloads: List[dict]) -> str:
         customEv.textContent = "-";
         customStatus.textContent = completed === 0 ? "Waiting for picks" : "Incomplete bracket";
         customStatus.className = "value status-warn";
+        roundEvNodes.forEach((node) => {{
+          node.textContent = "-";
+        }});
         return;
       }}
-      customEv.textContent = scoreBracketEv(bracket).toFixed(2);
+      const scored = scoreBracketEv(bracket);
+      customEv.textContent = scored.total.toFixed(2);
+      scored.rounds.forEach((value, idx) => {{
+        roundEvNodes[idx].textContent = value.toFixed(2);
+      }});
       customStatus.textContent = "Full bracket scored";
       customStatus.className = "value status-ok";
     }}
