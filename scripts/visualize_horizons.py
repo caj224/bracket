@@ -1477,14 +1477,6 @@ def render_dashboard(payloads: List[dict]) -> str:
       </section>
 
       <section>
-        <div class="eyebrow">Profiles</div>
-        <h3 class="section-title">Best Bracket at Each Cutoff</h3>
-        <div class="grid">
-          {''.join(horizon_rows)}
-        </div>
-      </section>
-
-      <section>
         <div class="eyebrow">Transitions</div>
         <h3 class="section-title">What Changed from One Horizon to the Next</h3>
         <div class="grid">
@@ -1510,6 +1502,14 @@ def render_dashboard(payloads: List[dict]) -> str:
           Lighter cells mean the optimizer is making almost the same choices in both views.
         </p>
         {build_similarity_heatmap(payloads)}
+      </section>
+
+      <section>
+        <div class="eyebrow">Profiles</div>
+        <h3 class="section-title">Best Bracket at Each Cutoff</h3>
+        <div class="grid">
+          {''.join(horizon_rows)}
+        </div>
       </section>
     </section>
 
