@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Horizon Bracket Dashboard</title>
+  <style>
+    :root {
+      --bg: #08111f;
+      --bg2: #0f1d33;
+      --panel: rgba(12, 23, 42, 0.84);
+      --panel-border: rgba(148, 163, 184, 0.14);
+      --text: #e5eefc;
+      --muted: #93a4bf;
+      --accent: #38bdf8;
+      --accent2: #f97316;
+      --success: #22c55e;
+      --shadow: 0 28px 60px rgba(0, 0, 0, 0.32);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Avenir Next", "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(56, 189, 248, 0.16), transparent 30%),
+        radial-gradient(circle at top right, rgba(249, 115, 22, 0.12), transparent 24%),
+        linear-gradient(160deg, var(--bg) 0%, var(--bg2) 100%);
+      min-height: 100vh;
+    }
+    .shell {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 40px 20px 72px;
+    }
+    .hero {
+      display: grid;
+      grid-template-columns: 1.5fr 0.9fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+    }
+    .hero-copy {
+      padding: 28px;
+    }
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--accent);
+      font-size: 0.75rem;
+      margin-bottom: 10px;
+    }
+    h1 {
+      margin: 0 0 12px;
+      font-size: clamp(2.1rem, 5vw, 4rem);
+      line-height: 0.95;
+    }
+    p {
+      color: var(--muted);
+      line-height: 1.55;
+      margin: 0;
+    }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 22px;
+    }
+    .stat {
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: rgba(15, 23, 42, 0.58);
+      border: 1px solid rgba(148, 163, 184, 0.1);
+    }
+    .stat .label {
+      color: var(--muted);
+      font-size: 0.78rem;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .stat .value {
+      font-size: 1.55rem;
+      font-weight: 700;
+    }
+    .spotlight {
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    .spotlight:before {
+      content: "";
+      position: absolute;
+      inset: auto -40px -40px auto;
+      width: 160px;
+      height: 160px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(249, 115, 22, 0.24), transparent 68%);
+    }
+    .spotlight-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+      position: relative;
+      z-index: 1;
+    }
+    .spotlight-row span {
+      color: var(--muted);
+    }
+    .section-title {
+      margin: 0 0 12px;
+      font-size: 1.2rem;
+    }
+    .chart-card {
+      padding: 20px 20px 8px;
+      margin-bottom: 24px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+    .horizon-card, .change-card {
+      padding: 20px;
+    }
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: start;
+      margin-bottom: 14px;
+    }
+    h3 {
+      margin: 0;
+      font-size: 1.25rem;
+    }
+    .ev-pill, .gain-pill {
+      white-space: nowrap;
+      font-weight: 700;
+      padding: 10px 12px;
+      border-radius: 999px;
+      background: rgba(56, 189, 248, 0.14);
+      color: #bfe8ff;
+      border: 1px solid rgba(56, 189, 248, 0.2);
+    }
+    .gain-pill {
+      background: rgba(34, 197, 94, 0.14);
+      color: #c6f6d5;
+      border-color: rgba(34, 197, 94, 0.2);
+    }
+    .meta-row {
+      color: var(--muted);
+      font-size: 0.92rem;
+      margin-bottom: 16px;
+    }
+    .chart-note {
+      margin: 0 0 14px;
+      color: var(--muted);
+      max-width: 760px;
+    }
+    .legend-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 16px;
+      margin: 2px 0 12px;
+    }
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #c8d7eb;
+      font-size: 0.92rem;
+    }
+    .legend-swatch {
+      width: 14px;
+      height: 14px;
+      border-radius: 999px;
+      box-shadow: 0 0 0 3px rgba(255,255,255,0.05);
+    }
+    .table-wrap {
+      overflow-x: auto;
+      margin-top: 12px;
+      border-radius: 18px;
+      border: 1px solid rgba(148, 163, 184, 0.12);
+      background: rgba(15, 23, 42, 0.42);
+    }
+    .curve-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 720px;
+    }
+    .curve-table th,
+    .curve-table td {
+      padding: 12px 14px;
+      text-align: left;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+      font-size: 0.94rem;
+    }
+    .curve-table thead th {
+      color: #d9e7f7;
+      background: rgba(255, 255, 255, 0.03);
+      font-weight: 700;
+    }
+    .curve-table tbody th {
+      color: #d9e7f7;
+      font-weight: 600;
+    }
+    .curve-table td {
+      color: var(--muted);
+    }
+    .curve-table td.empty {
+      color: rgba(148, 163, 184, 0.55);
+    }
+    .table-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .matrix-table,
+    .heatmap-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 720px;
+    }
+    .matrix-table th,
+    .matrix-table td,
+    .heatmap-table th,
+    .heatmap-table td {
+      padding: 10px 12px;
+      text-align: left;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+      font-size: 0.92rem;
+    }
+    .matrix-table thead th,
+    .heatmap-table thead th {
+      color: #d9e7f7;
+      background: rgba(255, 255, 255, 0.03);
+      font-weight: 700;
+      position: sticky;
+      top: 0;
+    }
+    .matrix-table tbody th,
+    .heatmap-table tbody th {
+      color: #d9e7f7;
+      font-weight: 600;
+      background: rgba(10, 18, 34, 0.82);
+      position: sticky;
+      left: 0;
+    }
+    .matrix-table td,
+    .heatmap-table td {
+      color: #d6e4f5;
+      text-align: center;
+    }
+    .team-label {
+      white-space: nowrap;
+    }
+    .depth-0 { color: rgba(148, 163, 184, 0.62); }
+    .depth-1 { background: rgba(148, 163, 184, 0.08); }
+    .depth-2 { background: rgba(56, 189, 248, 0.12); }
+    .depth-3 { background: rgba(34, 197, 94, 0.12); }
+    .depth-4 { background: rgba(250, 204, 21, 0.12); }
+    .depth-5 { background: rgba(249, 115, 22, 0.14); }
+    .depth-6 { background: rgba(167, 139, 250, 0.18); font-weight: 700; }
+    .pick-block + .pick-block {
+      margin-top: 16px;
+    }
+    .pick-label {
+      color: #c5d5ea;
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      padding: 8px 12px;
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid rgba(148, 163, 184, 0.12);
+      font-size: 0.92rem;
+    }
+    .seed {
+      display: inline-flex;
+      width: 22px;
+      height: 22px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      background: rgba(249, 115, 22, 0.18);
+      color: #fed7aa;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+    .change-group + .change-group {
+      margin-top: 16px;
+    }
+    .change-title {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .change-title span {
+      color: var(--accent);
+      font-weight: 600;
+    }
+    ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .muted {
+      color: var(--muted);
+    }
+    code {
+      font-family: "SFMono-Regular", Consolas, monospace;
+      color: #cde7ff;
+    }
+    @media (max-width: 980px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+      .grid {
+        grid-template-columns: 1fr;
+      }
+      .stats {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="hero">
+      <div class="card hero-copy">
+        <div class="eyebrow">Bracket Horizon Dashboard</div>
+        <h1>How the optimized bracket evolves as the horizon gets deeper.</h1>
+        <p>
+          This report compares the best saved bracket for each cutoff round and highlights
+          how expected value rises, which teams survive deeper into the tree, and where
+          the optimizer changes its mind as it starts caring about later rounds.
+        </p>
+        <div class="stats">
+          <div class="stat">
+            <div class="label">Horizons Loaded</div>
+            <div class="value">6</div>
+          </div>
+          <div class="stat">
+            <div class="label">EV Range</div>
+            <div class="value">74.39</div>
+          </div>
+          <div class="stat">
+            <div class="label">Best Horizon</div>
+            <div class="value">Title</div>
+          </div>
+        </div>
+      </div>
+      <aside class="card spotlight">
+        <div class="eyebrow">Deepest Horizon Snapshot</div>
+        <h3 class="section-title">Round 6 bracket spine</h3>
+        <div class="spotlight-row"><span>East</span><strong>(1) Duke</strong></div><div class="spotlight-row"><span>West</span><strong>(1) Arizona</strong></div><div class="spotlight-row"><span>South</span><strong>(3) Illinois</strong></div><div class="spotlight-row"><span>Midwest</span><strong>(1) Michigan</strong></div><div class="spotlight-row"><span>Finalists</span><strong>(1) Duke, (1) Michigan</strong></div><div class="spotlight-row"><span>Champion</span><strong>(1) Duke</strong></div>
+      </aside>
+    </section>
+
+    <section class="card chart-card">
+      <div class="eyebrow">Trend</div>
+      <h3 class="section-title">Expected Value by Horizon</h3>
+      
+    <svg viewBox="0 0 920 260" role="img" aria-label="Expected value by horizon">
+      <defs>
+        <linearGradient id="evArea" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0%" stop-color="rgba(14,165,233,0.45)"></stop>
+          <stop offset="100%" stop-color="rgba(14,165,233,0.02)"></stop>
+        </linearGradient>
+      </defs>
+      <line x1="56" y1="20.0" x2="896" y2="20.0" stroke="rgba(148,163,184,0.22)" stroke-width="1" /><text x="46" y="24.0" text-anchor="end" fill="#94a3b8" font-size="12">114.7</text><line x1="56" y1="70.0" x2="896" y2="70.0" stroke="rgba(148,163,184,0.22)" stroke-width="1" /><text x="46" y="74.0" text-anchor="end" fill="#94a3b8" font-size="12">96.1</text><line x1="56" y1="120.0" x2="896" y2="120.0" stroke="rgba(148,163,184,0.22)" stroke-width="1" /><text x="46" y="124.0" text-anchor="end" fill="#94a3b8" font-size="12">77.5</text><line x1="56" y1="170.0" x2="896" y2="170.0" stroke="rgba(148,163,184,0.22)" stroke-width="1" /><text x="46" y="174.0" text-anchor="end" fill="#94a3b8" font-size="12">58.9</text><line x1="56" y1="220.0" x2="896" y2="220.0" stroke="rgba(148,163,184,0.22)" stroke-width="1" /><text x="46" y="224.0" text-anchor="end" fill="#94a3b8" font-size="12">40.3</text>
+      <polygon points="56,220 56.0,220.0 224.0,141.3 392.0,93.6 560.0,66.1 728.0,39.5 896.0,20.0 896,220" fill="url(#evArea)"></polygon>
+      <polyline points="56.0,220.0 224.0,141.3 392.0,93.6 560.0,66.1 728.0,39.5 896.0,20.0" fill="none" stroke="#38bdf8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></polyline>
+      <circle cx="56.0" cy="220.0" r="5.5" fill="#f97316" /><circle cx="56.0" cy="220.0" r="11" fill="rgba(249,115,22,0.18)" /><text x="56.0" y="206.0" text-anchor="middle" fill="#e2e8f0" font-size="12">40.30</text><circle cx="224.0" cy="141.3" r="5.5" fill="#f97316" /><circle cx="224.0" cy="141.3" r="11" fill="rgba(249,115,22,0.18)" /><text x="224.0" y="127.3" text-anchor="middle" fill="#e2e8f0" font-size="12">69.57</text><circle cx="392.0" cy="93.6" r="5.5" fill="#f97316" /><circle cx="392.0" cy="93.6" r="11" fill="rgba(249,115,22,0.18)" /><text x="392.0" y="79.6" text-anchor="middle" fill="#e2e8f0" font-size="12">87.32</text><circle cx="560.0" cy="66.1" r="5.5" fill="#f97316" /><circle cx="560.0" cy="66.1" r="11" fill="rgba(249,115,22,0.18)" /><text x="560.0" y="52.1" text-anchor="middle" fill="#e2e8f0" font-size="12">97.54</text><circle cx="728.0" cy="39.5" r="5.5" fill="#f97316" /><circle cx="728.0" cy="39.5" r="11" fill="rgba(249,115,22,0.18)" /><text x="728.0" y="25.5" text-anchor="middle" fill="#e2e8f0" font-size="12">107.44</text><circle cx="896.0" cy="20.0" r="5.5" fill="#f97316" /><circle cx="896.0" cy="20.0" r="11" fill="rgba(249,115,22,0.18)" /><text x="896.0" y="6.0" text-anchor="middle" fill="#e2e8f0" font-size="12">114.69</text>
+      <text x="56.0" y="248" text-anchor="middle" fill="#94a3b8" font-size="12">R64</text><text x="224.0" y="248" text-anchor="middle" fill="#94a3b8" font-size="12">R32</text><text x="392.0" y="248" text-anchor="middle" fill="#94a3b8" font-size="12">Sweet 16</text><text x="560.0" y="248" text-anchor="middle" fill="#94a3b8" font-size="12">Elite 8</text><text x="728.0" y="248" text-anchor="middle" fill="#94a3b8" font-size="12">Final Four</text><text x="896.0" y="248" text-anchor="middle" fill="#94a3b8" font-size="12">Title</text>
+    </svg>
+    
+    </section>
+
+    <section class="card chart-card">
+      <div class="eyebrow">Comparison</div>
+      <h3 class="section-title">Each Optimized Bracket Against the Others</h3>
+      <p class="chart-note">
+        Each line shows the cumulative expected value of one horizon-optimized bracket.
+        Lines stop at their own cutoff, so the R64 bracket ends after Round 1, the R32 bracket ends after Round 2, and so on.
+      </p>
+      
+    <div class="legend-row"><div class="legend-item"><span class="legend-swatch" style="background:#38bdf8"></span>R64 bracket</div><div class="legend-item"><span class="legend-swatch" style="background:#f97316"></span>R32 bracket</div><div class="legend-item"><span class="legend-swatch" style="background:#22c55e"></span>Sweet 16 bracket</div><div class="legend-item"><span class="legend-swatch" style="background:#facc15"></span>Elite 8 bracket</div><div class="legend-item"><span class="legend-swatch" style="background:#fb7185"></span>Final Four bracket</div><div class="legend-item"><span class="legend-swatch" style="background:#a78bfa"></span>Title bracket</div></div>
+    <svg viewBox="0 0 920 320" role="img" aria-label="Cumulative expected value by round for each optimized bracket">
+      <line x1="64" y1="28.0" x2="888" y2="28.0" stroke="rgba(148,163,184,0.22)" stroke-width="1" /><text x="54" y="32.0" text-anchor="end" fill="#94a3b8" font-size="12">114.7</text><line x1="64" y1="89.0" x2="888" y2="89.0" stroke="rgba(148,163,184,0.22)" stroke-width="1" /><text x="54" y="93.0" text-anchor="end" fill="#94a3b8" font-size="12">95.0</text><line x1="64" y1="150.0" x2="888" y2="150.0" stroke="rgba(148,163,184,0.22)" stroke-width="1" /><text x="54" y="154.0" text-anchor="end" fill="#94a3b8" font-size="12">75.2</text><line x1="64" y1="211.0" x2="888" y2="211.0" stroke="rgba(148,163,184,0.22)" stroke-width="1" /><text x="54" y="215.0" text-anchor="end" fill="#94a3b8" font-size="12">55.5</text><line x1="64" y1="272.0" x2="888" y2="272.0" stroke="rgba(148,163,184,0.22)" stroke-width="1" /><text x="54" y="276.0" text-anchor="end" fill="#94a3b8" font-size="12">35.8</text>
+      <line x1="64.0" y1="272" x2="64.0" y2="278" stroke="rgba(148,163,184,0.34)" stroke-width="1" /><text x="64.0" y="306" text-anchor="middle" fill="#94a3b8" font-size="12">R64</text><line x1="228.8" y1="272" x2="228.8" y2="278" stroke="rgba(148,163,184,0.34)" stroke-width="1" /><text x="228.8" y="306" text-anchor="middle" fill="#94a3b8" font-size="12">R32</text><line x1="393.6" y1="272" x2="393.6" y2="278" stroke="rgba(148,163,184,0.34)" stroke-width="1" /><text x="393.6" y="306" text-anchor="middle" fill="#94a3b8" font-size="12">Sweet 16</text><line x1="558.4" y1="272" x2="558.4" y2="278" stroke="rgba(148,163,184,0.34)" stroke-width="1" /><text x="558.4" y="306" text-anchor="middle" fill="#94a3b8" font-size="12">Elite 8</text><line x1="723.2" y1="272" x2="723.2" y2="278" stroke="rgba(148,163,184,0.34)" stroke-width="1" /><text x="723.2" y="306" text-anchor="middle" fill="#94a3b8" font-size="12">Final Four</text><line x1="888.0" y1="272" x2="888.0" y2="278" stroke="rgba(148,163,184,0.34)" stroke-width="1" /><text x="888.0" y="306" text-anchor="middle" fill="#94a3b8" font-size="12">Title</text>
+      <polyline points="64.0,258.1" fill="none" stroke="#38bdf8" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" /><circle cx="64.0" cy="258.1" r="4.5" fill="#38bdf8" /><polyline points="64.0,265.7 228.8,167.5" fill="none" stroke="#f97316" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" /><circle cx="64.0" cy="265.7" r="4.5" fill="#f97316" /><circle cx="228.8" cy="167.5" r="4.5" fill="#f97316" /><polyline points="64.0,266.9 228.8,170.4 393.6,112.6" fill="none" stroke="#22c55e" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" /><circle cx="64.0" cy="266.9" r="4.5" fill="#22c55e" /><circle cx="228.8" cy="170.4" r="4.5" fill="#22c55e" /><circle cx="393.6" cy="112.6" r="4.5" fill="#22c55e" /><polyline points="64.0,271.9 228.8,178.3 393.6,119.8 558.4,81.1" fill="none" stroke="#facc15" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" /><circle cx="64.0" cy="271.9" r="4.5" fill="#facc15" /><circle cx="228.8" cy="178.3" r="4.5" fill="#facc15" /><circle cx="393.6" cy="119.8" r="4.5" fill="#facc15" /><circle cx="558.4" cy="81.1" r="4.5" fill="#facc15" /><polyline points="64.0,264.0 228.8,171.9 393.6,116.2 558.4,77.4 723.2,50.4" fill="none" stroke="#fb7185" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" /><circle cx="64.0" cy="264.0" r="4.5" fill="#fb7185" /><circle cx="228.8" cy="171.9" r="4.5" fill="#fb7185" /><circle cx="393.6" cy="116.2" r="4.5" fill="#fb7185" /><circle cx="558.4" cy="77.4" r="4.5" fill="#fb7185" /><circle cx="723.2" cy="50.4" r="4.5" fill="#fb7185" /><polyline points="64.0,272.0 228.8,176.7 393.6,116.4 558.4,77.3 723.2,48.8 888.0,28.0" fill="none" stroke="#a78bfa" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" /><circle cx="64.0" cy="272.0" r="4.5" fill="#a78bfa" /><circle cx="228.8" cy="176.7" r="4.5" fill="#a78bfa" /><circle cx="393.6" cy="116.4" r="4.5" fill="#a78bfa" /><circle cx="558.4" cy="77.3" r="4.5" fill="#a78bfa" /><circle cx="723.2" cy="48.8" r="4.5" fill="#a78bfa" /><circle cx="888.0" cy="28.0" r="4.5" fill="#a78bfa" />
+    </svg>
+    
+      
+    <div class="table-wrap">
+      <table class="curve-table">
+        <thead>
+          <tr>
+            <th>Bracket</th>
+            <th>R64</th><th>R32</th><th>Sweet 16</th><th>Elite 8</th><th>Final Four</th><th>Title</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <th scope="row">
+                <span class="table-label">
+                  <span class="legend-swatch" style="background:#38bdf8"></span>
+                  R64 bracket
+                </span>
+              </th>
+              <td>40.30</td><td class="empty">-</td><td class="empty">-</td><td class="empty">-</td><td class="empty">-</td><td class="empty">-</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="table-label">
+                  <span class="legend-swatch" style="background:#f97316"></span>
+                  R32 bracket
+                </span>
+              </th>
+              <td>37.82</td><td>69.57</td><td class="empty">-</td><td class="empty">-</td><td class="empty">-</td><td class="empty">-</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="table-label">
+                  <span class="legend-swatch" style="background:#22c55e"></span>
+                  Sweet 16 bracket
+                </span>
+              </th>
+              <td>37.43</td><td>68.65</td><td>87.32</td><td class="empty">-</td><td class="empty">-</td><td class="empty">-</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="table-label">
+                  <span class="legend-swatch" style="background:#facc15"></span>
+                  Elite 8 bracket
+                </span>
+              </th>
+              <td>35.81</td><td>66.10</td><td>85.00</td><td>97.54</td><td class="empty">-</td><td class="empty">-</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="table-label">
+                  <span class="legend-swatch" style="background:#fb7185"></span>
+                  Final Four bracket
+                </span>
+              </th>
+              <td>38.38</td><td>68.17</td><td>86.18</td><td>98.72</td><td>107.44</td><td class="empty">-</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="table-label">
+                  <span class="legend-swatch" style="background:#a78bfa"></span>
+                  Title bracket
+                </span>
+              </th>
+              <td>35.78</td><td>66.59</td><td>86.11</td><td>98.76</td><td>107.96</td><td>114.69</td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </div>
+    
+    </section>
+
+    <section>
+      <div class="eyebrow">Profiles</div>
+      <h3 class="section-title">Best Bracket at Each Cutoff</h3>
+      <div class="grid">
+        
+            <section class="card horizon-card">
+              <div class="card-top">
+                <div>
+                  <div class="eyebrow">Cutoff Round 1</div>
+                  <h3>R64</h3>
+                </div>
+                <div class="ev-pill">EV 40.30</div>
+              </div>
+              <div class="meta-row">
+                <span>Saved from <code>best_partial_round_1.json</code></span>
+              </div>
+              <div class="pick-block">
+                <div class="pick-label">R64 outlook</div>
+                <div class="chip-row"><span class="chip"><span class="seed">1</span>Duke</span><span class="chip"><span class="seed">9</span>TCU</span><span class="chip"><span class="seed">12</span>Northern Iowa</span><span class="chip"><span class="seed">13</span>CA Baptist</span><span class="chip"><span class="seed">11</span>South Florida</span><span class="chip"><span class="seed">3</span>Michigan St</span><span class="chip"><span class="seed">10</span>UCF</span><span class="chip"><span class="seed">2</span>UConn</span><span class="chip"><span class="seed">1</span>Arizona</span><span class="chip"><span class="seed">9</span>Utah State</span><span class="chip"><span class="seed">12</span>High Point</span><span class="chip"><span class="seed">13</span>Hawai&#x27;i</span><span class="chip"><span class="seed">11</span>Texas</span><span class="chip"><span class="seed">3</span>Gonzaga</span><span class="chip"><span class="seed">10</span>Missouri</span><span class="chip"><span class="seed">2</span>Purdue</span><span class="chip"><span class="seed">1</span>Florida</span><span class="chip"><span class="seed">9</span>Iowa</span><span class="chip"><span class="seed">12</span>McNeese</span><span class="chip"><span class="seed">4</span>Nebraska</span><span class="chip"><span class="seed">11</span>VCU</span><span class="chip"><span class="seed">3</span>Illinois</span><span class="chip"><span class="seed">10</span>Texas A&amp;M</span><span class="chip"><span class="seed">2</span>Houston</span><span class="chip"><span class="seed">1</span>Michigan</span><span class="chip"><span class="seed">9</span>Saint Louis</span><span class="chip"><span class="seed">12</span>Akron</span><span class="chip"><span class="seed">13</span>Hofstra</span><span class="chip"><span class="seed">6</span>Tennessee</span><span class="chip"><span class="seed">14</span>Wright St</span><span class="chip"><span class="seed">10</span>Santa Clara</span><span class="chip"><span class="seed">2</span>Iowa State</span></div>
+              </div>
+              <div class="pick-block">
+                <div class="pick-label">Earlier picks </div>
+                <div class="chip-row"><span class="muted">Early-round view only</span></div>
+              </div>
+            </section>
+            
+            <section class="card horizon-card">
+              <div class="card-top">
+                <div>
+                  <div class="eyebrow">Cutoff Round 2</div>
+                  <h3>R32</h3>
+                </div>
+                <div class="ev-pill">EV 69.57</div>
+              </div>
+              <div class="meta-row">
+                <span>Saved from <code>best_partial_round_2.json</code></span>
+              </div>
+              <div class="pick-block">
+                <div class="pick-label">R32 outlook</div>
+                <div class="chip-row"><span class="chip"><span class="seed">1</span>Duke</span><span class="chip"><span class="seed">5</span>St John&#x27;s</span><span class="chip"><span class="seed">6</span>Louisville</span><span class="chip"><span class="seed">7</span>UCLA</span><span class="chip"><span class="seed">9</span>Utah State</span><span class="chip"><span class="seed">12</span>High Point</span><span class="chip"><span class="seed">11</span>Texas</span><span class="chip"><span class="seed">10</span>Missouri</span><span class="chip"><span class="seed">9</span>Iowa</span><span class="chip"><span class="seed">4</span>Nebraska</span><span class="chip"><span class="seed">3</span>Illinois</span><span class="chip"><span class="seed">10</span>Texas A&amp;M</span><span class="chip"><span class="seed">9</span>Saint Louis</span><span class="chip"><span class="seed">4</span>Alabama</span><span class="chip"><span class="seed">6</span>Tennessee</span><span class="chip"><span class="seed">7</span>Kentucky</span></div>
+              </div>
+              <div class="pick-block">
+                <div class="pick-label">R64 </div>
+                <div class="chip-row"><span class="chip"><span class="seed">1</span>Duke</span><span class="chip"><span class="seed">9</span>TCU</span><span class="chip"><span class="seed">5</span>St John&#x27;s</span><span class="chip"><span class="seed">13</span>CA Baptist</span><span class="chip"><span class="seed">6</span>Louisville</span><span class="chip"><span class="seed">3</span>Michigan St</span><span class="chip"><span class="seed">7</span>UCLA</span><span class="chip"><span class="seed">2</span>UConn</span><span class="chip"><span class="seed">1</span>Arizona</span><span class="chip"><span class="seed">9</span>Utah State</span><span class="chip"><span class="seed">12</span>High Point</span><span class="chip"><span class="seed">13</span>Hawai&#x27;i</span><span class="chip"><span class="seed">11</span>Texas</span><span class="chip"><span class="seed">3</span>Gonzaga</span><span class="chip"><span class="seed">10</span>Missouri</span><span class="chip"><span class="seed">2</span>Purdue</span><span class="chip"><span class="seed">1</span>Florida</span><span class="chip"><span class="seed">9</span>Iowa</span><span class="chip"><span class="seed">12</span>McNeese</span><span class="chip"><span class="seed">4</span>Nebraska</span><span class="chip"><span class="seed">11</span>VCU</span><span class="chip"><span class="seed">3</span>Illinois</span><span class="chip"><span class="seed">10</span>Texas A&amp;M</span><span class="chip"><span class="seed">2</span>Houston</span><span class="chip"><span class="seed">1</span>Michigan</span><span class="chip"><span class="seed">9</span>Saint Louis</span><span class="chip"><span class="seed">12</span>Akron</span><span class="chip"><span class="seed">4</span>Alabama</span><span class="chip"><span class="seed">6</span>Tennessee</span><span class="chip"><span class="seed">14</span>Wright St</span><span class="chip"><span class="seed">7</span>Kentucky</span><span class="chip"><span class="seed">2</span>Iowa State</span></div>
+              </div>
+            </section>
+            
+            <section class="card horizon-card">
+              <div class="card-top">
+                <div>
+                  <div class="eyebrow">Cutoff Round 3</div>
+                  <h3>Sweet 16</h3>
+                </div>
+                <div class="ev-pill">EV 87.32</div>
+              </div>
+              <div class="meta-row">
+                <span>Saved from <code>best_partial_round_3.json</code></span>
+              </div>
+              <div class="pick-block">
+                <div class="pick-label">Sweet 16 outlook</div>
+                <div class="chip-row"><span class="chip"><span class="seed">1</span>Duke</span><span class="chip"><span class="seed">6</span>Louisville</span><span class="chip"><span class="seed">1</span>Arizona</span><span class="chip"><span class="seed">2</span>Purdue</span><span class="chip"><span class="seed">4</span>Nebraska</span><span class="chip"><span class="seed">3</span>Illinois</span><span class="chip"><span class="seed">1</span>Michigan</span><span class="chip"><span class="seed">6</span>Tennessee</span></div>
+              </div>
+              <div class="pick-block">
+                <div class="pick-label">R32 </div>
+                <div class="chip-row"><span class="chip"><span class="seed">1</span>Duke</span><span class="chip"><span class="seed">5</span>St John&#x27;s</span><span class="chip"><span class="seed">6</span>Louisville</span><span class="chip"><span class="seed">7</span>UCLA</span><span class="chip"><span class="seed">1</span>Arizona</span><span class="chip"><span class="seed">12</span>High Point</span><span class="chip"><span class="seed">11</span>Texas</span><span class="chip"><span class="seed">2</span>Purdue</span><span class="chip"><span class="seed">9</span>Iowa</span><span class="chip"><span class="seed">4</span>Nebraska</span><span class="chip"><span class="seed">3</span>Illinois</span><span class="chip"><span class="seed">10</span>Texas A&amp;M</span><span class="chip"><span class="seed">1</span>Michigan</span><span class="chip"><span class="seed">4</span>Alabama</span><span class="chip"><span class="seed">6</span>Tennessee</span><span class="chip"><span class="seed">7</span>Kentucky</span></div>
+              </div>
+            </section>
+            
+            <section class="card horizon-card">
+              <div class="card-top">
+                <div>
+                  <div class="eyebrow">Cutoff Round 4</div>
+                  <h3>Elite 8</h3>
+                </div>
+                <div class="ev-pill">EV 97.54</div>
+              </div>
+              <div class="meta-row">
+                <span>Saved from <code>best_partial_round_4.json</code></span>
+              </div>
+              <div class="pick-block">
+                <div class="pick-label">Elite 8 outlook</div>
+                <div class="chip-row"><span class="chip"><span class="seed">1</span>Duke</span><span class="chip"><span class="seed">1</span>Arizona</span><span class="chip"><span class="seed">3</span>Illinois</span><span class="chip"><span class="seed">1</span>Michigan</span></div>
+              </div>
+              <div class="pick-block">
+                <div class="pick-label">Sweet 16 </div>
+                <div class="chip-row"><span class="chip"><span class="seed">1</span>Duke</span><span class="chip"><span class="seed">6</span>Louisville</span><span class="chip"><span class="seed">1</span>Arizona</span><span class="chip"><span class="seed">3</span>Gonzaga</span><span class="chip"><span class="seed">4</span>Nebraska</span><span class="chip"><span class="seed">3</span>Illinois</span><span class="chip"><span class="seed">1</span>Michigan</span><span class="chip"><span class="seed">6</span>Tennessee</span></div>
+              </div>
+            </section>
+            
+            <section class="card horizon-card">
+              <div class="card-top">
+                <div>
+                  <div class="eyebrow">Cutoff Round 5</div>
+                  <h3>Final Four</h3>
+                </div>
+                <div class="ev-pill">EV 107.44</div>
+              </div>
+              <div class="meta-row">
+                <span>Saved from <code>best_partial_round_5.json</code></span>
+              </div>
+              <div class="pick-block">
+                <div class="pick-label">Final Four outlook</div>
+                <div class="chip-row"><span class="chip"><span class="seed">1</span>Duke</span><span class="chip"><span class="seed">1</span>Michigan</span></div>
+              </div>
+              <div class="pick-block">
+                <div class="pick-label">Elite 8 </div>
+                <div class="chip-row"><span class="chip"><span class="seed">1</span>Duke</span><span class="chip"><span class="seed">1</span>Arizona</span><span class="chip"><span class="seed">3</span>Illinois</span><span class="chip"><span class="seed">1</span>Michigan</span></div>
+              </div>
+            </section>
+            
+            <section class="card horizon-card">
+              <div class="card-top">
+                <div>
+                  <div class="eyebrow">Cutoff Round 6</div>
+                  <h3>Title</h3>
+                </div>
+                <div class="ev-pill">EV 114.69</div>
+              </div>
+              <div class="meta-row">
+                <span>Saved from <code>best_bracket.json</code></span>
+              </div>
+              <div class="pick-block">
+                <div class="pick-label">Title outlook</div>
+                <div class="chip-row"><span class="chip"><span class="seed">1</span>Duke</span></div>
+              </div>
+              <div class="pick-block">
+                <div class="pick-label">Final Four </div>
+                <div class="chip-row"><span class="chip"><span class="seed">1</span>Duke</span><span class="chip"><span class="seed">1</span>Michigan</span></div>
+              </div>
+            </section>
+            
+      </div>
+    </section>
+
+    <section>
+      <div class="eyebrow">Transitions</div>
+      <h3 class="section-title">What Changed from One Horizon to the Next</h3>
+      <div class="grid">
+        
+            <section class="card change-card">
+              <div class="card-top">
+                <h3>R64 -> R32</h3>
+                <div class="gain-pill">+29.27 EV</div>
+              </div>
+              
+                    <div class="change-group">
+                      <div class="change-title">R64 <span>5 changes</span></div>
+                      <ul><li>Northern Iowa -&gt; St John&#x27;s</li><li>South Florida -&gt; Louisville</li><li>UCF -&gt; UCLA</li><li>Hofstra -&gt; Alabama</li><li>Santa Clara -&gt; Kentucky</li></ul>
+                    </div>
+                    
+            </section>
+            
+            <section class="card change-card">
+              <div class="card-top">
+                <h3>R32 -> Sweet 16</h3>
+                <div class="gain-pill">+17.75 EV</div>
+              </div>
+              
+                    <div class="change-group">
+                      <div class="change-title">R64 <span>3 changes</span></div>
+                      <ul><li>Michigan St -&gt; N Dakota St</li><li>UConn -&gt; Furman</li><li>Gonzaga -&gt; Kennesaw St</li></ul>
+                    </div>
+                    
+                    <div class="change-group">
+                      <div class="change-title">R32 <span>3 changes</span></div>
+                      <ul><li>Utah State -&gt; Arizona</li><li>Missouri -&gt; Purdue</li><li>Saint Louis -&gt; Michigan</li></ul>
+                    </div>
+                    
+            </section>
+            
+            <section class="card change-card">
+              <div class="card-top">
+                <h3>Sweet 16 -> Elite 8</h3>
+                <div class="gain-pill">+10.21 EV</div>
+              </div>
+              
+                    <div class="change-group">
+                      <div class="change-title">R64 <span>7 changes</span></div>
+                      <ul><li>N Dakota St -&gt; Michigan St</li><li>Furman -&gt; UConn</li><li>Hawai&#x27;i -&gt; Arkansas</li><li>Kennesaw St -&gt; Gonzaga</li><li>Houston -&gt; Idaho</li><li>Akron -&gt; Texas Tech</li></ul>
+                    </div>
+                    
+                    <div class="change-group">
+                      <div class="change-title">R32 <span>2 changes</span></div>
+                      <ul><li>High Point -&gt; Arkansas</li><li>Texas -&gt; Gonzaga</li></ul>
+                    </div>
+                    
+                    <div class="change-group">
+                      <div class="change-title">Sweet 16 <span>1 changes</span></div>
+                      <ul><li>Purdue -&gt; Gonzaga</li></ul>
+                    </div>
+                    
+            </section>
+            
+            <section class="card change-card">
+              <div class="card-top">
+                <h3>Elite 8 -> Final Four</h3>
+                <div class="gain-pill">+9.91 EV</div>
+              </div>
+              
+                    <div class="change-group">
+                      <div class="change-title">R64 <span>5 changes</span></div>
+                      <ul><li>Arkansas -&gt; Hawai&#x27;i</li><li>Idaho -&gt; Houston</li><li>Texas Tech -&gt; Akron</li><li>Virginia -&gt; Wright St</li><li>Kentucky -&gt; Santa Clara</li></ul>
+                    </div>
+                    
+                    <div class="change-group">
+                      <div class="change-title">R32 <span>5 changes</span></div>
+                      <ul><li>Arkansas -&gt; High Point</li><li>Gonzaga -&gt; Texas</li><li>Purdue -&gt; Missouri</li><li>Alabama -&gt; Akron</li><li>Kentucky -&gt; Iowa State</li></ul>
+                    </div>
+                    
+                    <div class="change-group">
+                      <div class="change-title">Sweet 16 <span>1 changes</span></div>
+                      <ul><li>Gonzaga -&gt; Texas</li></ul>
+                    </div>
+                    
+            </section>
+            
+            <section class="card change-card">
+              <div class="card-top">
+                <h3>Final Four -> Title</h3>
+                <div class="gain-pill">+7.25 EV</div>
+              </div>
+              
+                    <div class="change-group">
+                      <div class="change-title">R64 <span>6 changes</span></div>
+                      <ul><li>Michigan St -&gt; N Dakota St</li><li>Hawai&#x27;i -&gt; Arkansas</li><li>McNeese -&gt; Vanderbilt</li><li>Nebraska -&gt; Troy</li><li>Wright St -&gt; Virginia</li><li>Santa Clara -&gt; Kentucky</li></ul>
+                    </div>
+                    
+                    <div class="change-group">
+                      <div class="change-title">R32 <span>4 changes</span></div>
+                      <ul><li>High Point -&gt; Arkansas</li><li>Texas -&gt; Gonzaga</li><li>Nebraska -&gt; Vanderbilt</li><li>Iowa State -&gt; Kentucky</li></ul>
+                    </div>
+                    
+                    <div class="change-group">
+                      <div class="change-title">Sweet 16 <span>2 changes</span></div>
+                      <ul><li>Texas -&gt; Gonzaga</li><li>Nebraska -&gt; Vanderbilt</li></ul>
+                    </div>
+                    
+            </section>
+            
+      </div>
+    </section>
+
+    <section class="card chart-card">
+      <div class="eyebrow">Teams</div>
+      <h3 class="section-title">Team Survival Matrix Across Horizons</h3>
+      <p class="chart-note">
+        Each cell shows the deepest round that team reaches in that horizon's optimized bracket.
+        Teams are sorted by how deep they ever go across the six horizons.
+      </p>
+      
+    <div class="table-wrap">
+      <table class="matrix-table">
+        <thead>
+          <tr>
+            <th>Team</th>
+            <th>R64</th><th>R32</th><th>Sweet 16</th><th>Elite 8</th><th>Final Four</th><th>Title</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <th scope="row">
+                <span class="team-label">(1) Duke</span>
+              </th>
+              <td class="depth-1">R64</td><td class="depth-2">R32</td><td class="depth-3">Sweet 16</td><td class="depth-4">Elite 8</td><td class="depth-5">Final Four</td><td class="depth-6">Title</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(1) Michigan</span>
+              </th>
+              <td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-3">Sweet 16</td><td class="depth-4">Elite 8</td><td class="depth-5">Final Four</td><td class="depth-5">Final Four</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(3) Illinois</span>
+              </th>
+              <td class="depth-1">R64</td><td class="depth-2">R32</td><td class="depth-3">Sweet 16</td><td class="depth-4">Elite 8</td><td class="depth-4">Elite 8</td><td class="depth-4">Elite 8</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(1) Arizona</span>
+              </th>
+              <td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-3">Sweet 16</td><td class="depth-4">Elite 8</td><td class="depth-4">Elite 8</td><td class="depth-4">Elite 8</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(6) Tennessee</span>
+              </th>
+              <td class="depth-1">R64</td><td class="depth-2">R32</td><td class="depth-3">Sweet 16</td><td class="depth-3">Sweet 16</td><td class="depth-3">Sweet 16</td><td class="depth-3">Sweet 16</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(6) Louisville</span>
+              </th>
+              <td class="depth-0">Out</td><td class="depth-2">R32</td><td class="depth-3">Sweet 16</td><td class="depth-3">Sweet 16</td><td class="depth-3">Sweet 16</td><td class="depth-3">Sweet 16</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(4) Nebraska</span>
+              </th>
+              <td class="depth-1">R64</td><td class="depth-2">R32</td><td class="depth-3">Sweet 16</td><td class="depth-3">Sweet 16</td><td class="depth-3">Sweet 16</td><td class="depth-0">Out</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(11) Texas</span>
+              </th>
+              <td class="depth-1">R64</td><td class="depth-2">R32</td><td class="depth-2">R32</td><td class="depth-1">R64</td><td class="depth-3">Sweet 16</td><td class="depth-1">R64</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(2) Purdue</span>
+              </th>
+              <td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-3">Sweet 16</td><td class="depth-2">R32</td><td class="depth-1">R64</td><td class="depth-1">R64</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(3) Gonzaga</span>
+              </th>
+              <td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-0">Out</td><td class="depth-3">Sweet 16</td><td class="depth-1">R64</td><td class="depth-3">Sweet 16</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(5) Vanderbilt</span>
+              </th>
+              <td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-3">Sweet 16</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(9) Iowa</span>
+              </th>
+              <td class="depth-1">R64</td><td class="depth-2">R32</td><td class="depth-2">R32</td><td class="depth-2">R32</td><td class="depth-2">R32</td><td class="depth-2">R32</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(10) Texas A&amp;M</span>
+              </th>
+              <td class="depth-1">R64</td><td class="depth-2">R32</td><td class="depth-2">R32</td><td class="depth-2">R32</td><td class="depth-2">R32</td><td class="depth-2">R32</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(5) St John&#x27;s</span>
+              </th>
+              <td class="depth-0">Out</td><td class="depth-2">R32</td><td class="depth-2">R32</td><td class="depth-2">R32</td><td class="depth-2">R32</td><td class="depth-2">R32</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(7) UCLA</span>
+              </th>
+              <td class="depth-0">Out</td><td class="depth-2">R32</td><td class="depth-2">R32</td><td class="depth-2">R32</td><td class="depth-2">R32</td><td class="depth-2">R32</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(10) Missouri</span>
+              </th>
+              <td class="depth-1">R64</td><td class="depth-2">R32</td><td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-2">R32</td><td class="depth-2">R32</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(12) High Point</span>
+              </th>
+              <td class="depth-1">R64</td><td class="depth-2">R32</td><td class="depth-2">R32</td><td class="depth-1">R64</td><td class="depth-2">R32</td><td class="depth-1">R64</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(4) Alabama</span>
+              </th>
+              <td class="depth-0">Out</td><td class="depth-2">R32</td><td class="depth-2">R32</td><td class="depth-2">R32</td><td class="depth-1">R64</td><td class="depth-1">R64</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(7) Kentucky</span>
+              </th>
+              <td class="depth-0">Out</td><td class="depth-2">R32</td><td class="depth-2">R32</td><td class="depth-2">R32</td><td class="depth-0">Out</td><td class="depth-2">R32</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(2) Iowa State</span>
+              </th>
+              <td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-2">R32</td><td class="depth-1">R64</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(9) Saint Louis</span>
+              </th>
+              <td class="depth-1">R64</td><td class="depth-2">R32</td><td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-1">R64</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(9) Utah State</span>
+              </th>
+              <td class="depth-1">R64</td><td class="depth-2">R32</td><td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-1">R64</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(12) Akron</span>
+              </th>
+              <td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-0">Out</td><td class="depth-2">R32</td><td class="depth-2">R32</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(4) Arkansas</span>
+              </th>
+              <td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-2">R32</td><td class="depth-0">Out</td><td class="depth-2">R32</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(1) Florida</span>
+              </th>
+              <td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-1">R64</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(9) TCU</span>
+              </th>
+              <td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-1">R64</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(11) VCU</span>
+              </th>
+              <td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-1">R64</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(13) CA Baptist</span>
+              </th>
+              <td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-1">R64</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(2) Houston</span>
+              </th>
+              <td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-0">Out</td><td class="depth-1">R64</td><td class="depth-1">R64</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(2) UConn</span>
+              </th>
+              <td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-0">Out</td><td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-1">R64</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(12) McNeese</span>
+              </th>
+              <td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-0">Out</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(3) Michigan St</span>
+              </th>
+              <td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-0">Out</td><td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-0">Out</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(13) Hawai&#x27;i</span>
+              </th>
+              <td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-0">Out</td><td class="depth-1">R64</td><td class="depth-0">Out</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(14) Wright St</span>
+              </th>
+              <td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-0">Out</td><td class="depth-1">R64</td><td class="depth-0">Out</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(3) Virginia</span>
+              </th>
+              <td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-1">R64</td><td class="depth-0">Out</td><td class="depth-1">R64</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(10) Santa Clara</span>
+              </th>
+              <td class="depth-1">R64</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-1">R64</td><td class="depth-0">Out</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(14) N Dakota St</span>
+              </th>
+              <td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-1">R64</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-1">R64</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(5) Texas Tech</span>
+              </th>
+              <td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-1">R64</td><td class="depth-0">Out</td><td class="depth-0">Out</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(10) UCF</span>
+              </th>
+              <td class="depth-1">R64</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(11) South Florida</span>
+              </th>
+              <td class="depth-1">R64</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(12) Northern Iowa</span>
+              </th>
+              <td class="depth-1">R64</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(13) Hofstra</span>
+              </th>
+              <td class="depth-1">R64</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(13) Troy</span>
+              </th>
+              <td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-1">R64</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(14) Kennesaw St</span>
+              </th>
+              <td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-1">R64</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(15) Furman</span>
+              </th>
+              <td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-1">R64</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(15) Idaho</span>
+              </th>
+              <td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-1">R64</td><td class="depth-0">Out</td><td class="depth-0">Out</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(4) Kansas</span>
+              </th>
+              <td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(5) Wisconsin</span>
+              </th>
+              <td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(6) BYU</span>
+              </th>
+              <td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(6) North Carolina</span>
+              </th>
+              <td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(7) Miami</span>
+              </th>
+              <td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(7) Saint Mary&#x27;s</span>
+              </th>
+              <td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(8) Clemson</span>
+              </th>
+              <td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(8) Georgia</span>
+              </th>
+              <td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(8) Ohio State</span>
+              </th>
+              <td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(8) Villanova</span>
+              </th>
+              <td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(11) Miami OH</span>
+              </th>
+              <td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(14) Penn</span>
+              </th>
+              <td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(15) Queens</span>
+              </th>
+              <td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(15) Tennessee St</span>
+              </th>
+              <td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(16) Howard</span>
+              </th>
+              <td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(16) Long Island</span>
+              </th>
+              <td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(16) Prairie View</span>
+              </th>
+              <td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(16) Siena</span>
+              </th>
+              <td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td>
+            </tr>
+            
+        </tbody>
+      </table>
+    </div>
+    
+    </section>
+
+    <section class="card chart-card">
+      <div class="eyebrow">Similarity</div>
+      <h3 class="section-title">How Similar the Horizon Brackets Are</h3>
+      <p class="chart-note">
+        Each percentage compares two horizons across all rounds they both specify.
+        Darker cells mean the optimizer is making almost the same choices in both views.
+      </p>
+      
+    <div class="table-wrap">
+      <table class="heatmap-table">
+        <thead>
+          <tr>
+            <th>Horizon</th>
+            <th>R64</th><th>R32</th><th>Sweet 16</th><th>Elite 8</th><th>Final Four</th><th>Title</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><th>R64</th><td style="background:rgba(56, 189, 248, 0.700)">100%</td><td style="background:rgba(56, 189, 248, 0.613)">84%</td><td style="background:rgba(56, 189, 248, 0.560)">75%</td><td style="background:rgba(56, 189, 248, 0.542)">72%</td><td style="background:rgba(56, 189, 248, 0.630)">88%</td><td style="background:rgba(56, 189, 248, 0.525)">69%</td></tr><tr><th>R32</th><td style="background:rgba(56, 189, 248, 0.613)">84%</td><td style="background:rgba(56, 189, 248, 0.700)">100%</td><td style="background:rgba(56, 189, 248, 0.630)">88%</td><td style="background:rgba(56, 189, 248, 0.595)">81%</td><td style="background:rgba(56, 189, 248, 0.642)">90%</td><td style="background:rgba(56, 189, 248, 0.572)">77%</td></tr><tr><th>Sweet 16</th><td style="background:rgba(56, 189, 248, 0.560)">75%</td><td style="background:rgba(56, 189, 248, 0.630)">88%</td><td style="background:rgba(56, 189, 248, 0.700)">100%</td><td style="background:rgba(56, 189, 248, 0.600)">82%</td><td style="background:rgba(56, 189, 248, 0.620)">86%</td><td style="background:rgba(56, 189, 248, 0.570)">77%</td></tr><tr><th>Elite 8</th><td style="background:rgba(56, 189, 248, 0.542)">72%</td><td style="background:rgba(56, 189, 248, 0.595)">81%</td><td style="background:rgba(56, 189, 248, 0.600)">82%</td><td style="background:rgba(56, 189, 248, 0.700)">100%</td><td style="background:rgba(56, 189, 248, 0.597)">82%</td><td style="background:rgba(56, 189, 248, 0.616)">85%</td></tr><tr><th>Final Four</th><td style="background:rgba(56, 189, 248, 0.630)">88%</td><td style="background:rgba(56, 189, 248, 0.642)">90%</td><td style="background:rgba(56, 189, 248, 0.620)">86%</td><td style="background:rgba(56, 189, 248, 0.597)">82%</td><td style="background:rgba(56, 189, 248, 0.700)">100%</td><td style="background:rgba(56, 189, 248, 0.592)">81%</td></tr><tr><th>Title</th><td style="background:rgba(56, 189, 248, 0.525)">69%</td><td style="background:rgba(56, 189, 248, 0.572)">77%</td><td style="background:rgba(56, 189, 248, 0.570)">77%</td><td style="background:rgba(56, 189, 248, 0.616)">85%</td><td style="background:rgba(56, 189, 248, 0.592)">81%</td><td style="background:rgba(56, 189, 248, 0.700)">100%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    
+    </section>
+  </main>
+</body>
+</html>

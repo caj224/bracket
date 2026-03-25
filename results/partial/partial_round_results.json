@@ -1,0 +1,555 @@
+[
+  {
+    "cutoff_round": 1,
+    "round_name": "R64",
+    "ev": 40.29537182343627,
+    "summary": {
+      "cutoff_round": 1,
+      "regions": {
+        "East": {
+          "round_64_winners": [
+            "Duke",
+            "TCU",
+            "Northern Iowa",
+            "CA Baptist",
+            "South Florida",
+            "Michigan St",
+            "UCF",
+            "UConn"
+          ]
+        },
+        "West": {
+          "round_64_winners": [
+            "Arizona",
+            "Utah State",
+            "High Point",
+            "Hawai'i",
+            "Texas",
+            "Gonzaga",
+            "Missouri",
+            "Purdue"
+          ]
+        },
+        "South": {
+          "round_64_winners": [
+            "Florida",
+            "Iowa",
+            "McNeese",
+            "Nebraska",
+            "VCU",
+            "Illinois",
+            "Texas A&M",
+            "Houston"
+          ]
+        },
+        "Midwest": {
+          "round_64_winners": [
+            "Michigan",
+            "Saint Louis",
+            "Akron",
+            "Hofstra",
+            "Tennessee",
+            "Wright St",
+            "Santa Clara",
+            "Iowa State"
+          ]
+        }
+      }
+    }
+  },
+  {
+    "cutoff_round": 2,
+    "round_name": "R32",
+    "ev": 68.45262573077254,
+    "summary": {
+      "cutoff_round": 2,
+      "regions": {
+        "East": {
+          "round_64_winners": [
+            "Duke",
+            "TCU",
+            "Northern Iowa",
+            "CA Baptist",
+            "Louisville",
+            "Michigan St",
+            "UCLA",
+            "UConn"
+          ],
+          "round_32_winners": [
+            "Duke",
+            "Northern Iowa",
+            "Louisville",
+            "UCLA"
+          ]
+        },
+        "West": {
+          "round_64_winners": [
+            "Arizona",
+            "Utah State",
+            "High Point",
+            "Hawai'i",
+            "Texas",
+            "Gonzaga",
+            "Missouri",
+            "Purdue"
+          ],
+          "round_32_winners": [
+            "Utah State",
+            "High Point",
+            "Texas",
+            "Missouri"
+          ]
+        },
+        "South": {
+          "round_64_winners": [
+            "Florida",
+            "Iowa",
+            "McNeese",
+            "Nebraska",
+            "VCU",
+            "Illinois",
+            "Texas A&M",
+            "Houston"
+          ],
+          "round_32_winners": [
+            "Iowa",
+            "Nebraska",
+            "Illinois",
+            "Texas A&M"
+          ]
+        },
+        "Midwest": {
+          "round_64_winners": [
+            "Michigan",
+            "Saint Louis",
+            "Akron",
+            "Hofstra",
+            "Tennessee",
+            "Wright St",
+            "Kentucky",
+            "Iowa State"
+          ],
+          "round_32_winners": [
+            "Saint Louis",
+            "Akron",
+            "Tennessee",
+            "Kentucky"
+          ]
+        }
+      }
+    }
+  },
+  {
+    "cutoff_round": 3,
+    "round_name": "Sweet16",
+    "ev": 79.76436799393325,
+    "summary": {
+      "cutoff_round": 3,
+      "regions": {
+        "East": {
+          "round_64_winners": [
+            "Duke",
+            "TCU",
+            "Northern Iowa",
+            "CA Baptist",
+            "South Florida",
+            "Michigan St",
+            "UCF",
+            "UConn"
+          ],
+          "round_32_winners": [
+            "Duke",
+            "Northern Iowa",
+            "Michigan St",
+            "UConn"
+          ],
+          "round_16_winners": [
+            "Duke",
+            "Michigan St"
+          ]
+        },
+        "West": {
+          "round_64_winners": [
+            "Arizona",
+            "Utah State",
+            "High Point",
+            "Hawai'i",
+            "Texas",
+            "Gonzaga",
+            "Missouri",
+            "Purdue"
+          ],
+          "round_32_winners": [
+            "Utah State",
+            "High Point",
+            "Texas",
+            "Missouri"
+          ],
+          "round_16_winners": [
+            "Utah State",
+            "Texas"
+          ]
+        },
+        "South": {
+          "round_64_winners": [
+            "Florida",
+            "Iowa",
+            "McNeese",
+            "Nebraska",
+            "VCU",
+            "Illinois",
+            "Texas A&M",
+            "Houston"
+          ],
+          "round_32_winners": [
+            "Iowa",
+            "Nebraska",
+            "VCU",
+            "Texas A&M"
+          ],
+          "round_16_winners": [
+            "Nebraska",
+            "Texas A&M"
+          ]
+        },
+        "Midwest": {
+          "round_64_winners": [
+            "Michigan",
+            "Saint Louis",
+            "Akron",
+            "Hofstra",
+            "Tennessee",
+            "Wright St",
+            "Santa Clara",
+            "Iowa State"
+          ],
+          "round_32_winners": [
+            "Michigan",
+            "Akron",
+            "Tennessee",
+            "Iowa State"
+          ],
+          "round_16_winners": [
+            "Michigan",
+            "Tennessee"
+          ]
+        }
+      }
+    }
+  },
+  {
+    "cutoff_round": 4,
+    "round_name": "Elite8",
+    "ev": 87.52645998364416,
+    "summary": {
+      "cutoff_round": 4,
+      "regions": {
+        "East": {
+          "round_64_winners": [
+            "Duke",
+            "TCU",
+            "Northern Iowa",
+            "CA Baptist",
+            "South Florida",
+            "Michigan St",
+            "UCF",
+            "UConn"
+          ],
+          "round_32_winners": [
+            "Duke",
+            "Northern Iowa",
+            "Michigan St",
+            "UConn"
+          ],
+          "round_16_winners": [
+            "Duke",
+            "Michigan St"
+          ],
+          "region_champion": "Duke"
+        },
+        "West": {
+          "round_64_winners": [
+            "Arizona",
+            "Utah State",
+            "High Point",
+            "Hawai'i",
+            "Texas",
+            "Gonzaga",
+            "Missouri",
+            "Purdue"
+          ],
+          "round_32_winners": [
+            "Utah State",
+            "High Point",
+            "Texas",
+            "Missouri"
+          ],
+          "round_16_winners": [
+            "Utah State",
+            "Texas"
+          ],
+          "region_champion": "Texas"
+        },
+        "South": {
+          "round_64_winners": [
+            "Florida",
+            "Iowa",
+            "McNeese",
+            "Nebraska",
+            "VCU",
+            "Illinois",
+            "Texas A&M",
+            "Houston"
+          ],
+          "round_32_winners": [
+            "Iowa",
+            "Nebraska",
+            "VCU",
+            "Texas A&M"
+          ],
+          "round_16_winners": [
+            "Nebraska",
+            "VCU"
+          ],
+          "region_champion": "Nebraska"
+        },
+        "Midwest": {
+          "round_64_winners": [
+            "Michigan",
+            "Saint Louis",
+            "Akron",
+            "Hofstra",
+            "Tennessee",
+            "Wright St",
+            "Santa Clara",
+            "Iowa State"
+          ],
+          "round_32_winners": [
+            "Michigan",
+            "Hofstra",
+            "Tennessee",
+            "Iowa State"
+          ],
+          "round_16_winners": [
+            "Michigan",
+            "Tennessee"
+          ],
+          "region_champion": "Michigan"
+        }
+      }
+    }
+  },
+  {
+    "cutoff_round": 5,
+    "round_name": "FinalFour",
+    "ev": 93.315362839082,
+    "summary": {
+      "cutoff_round": 5,
+      "regions": {
+        "East": {
+          "round_64_winners": [
+            "Duke",
+            "TCU",
+            "Northern Iowa",
+            "CA Baptist",
+            "South Florida",
+            "Michigan St",
+            "UCF",
+            "UConn"
+          ],
+          "round_32_winners": [
+            "Duke",
+            "Northern Iowa",
+            "Michigan St",
+            "UConn"
+          ],
+          "round_16_winners": [
+            "Duke",
+            "Michigan St"
+          ],
+          "region_champion": "Duke"
+        },
+        "West": {
+          "round_64_winners": [
+            "Arizona",
+            "Utah State",
+            "High Point",
+            "Hawai'i",
+            "Texas",
+            "Gonzaga",
+            "Missouri",
+            "Purdue"
+          ],
+          "round_32_winners": [
+            "Utah State",
+            "High Point",
+            "Texas",
+            "Missouri"
+          ],
+          "round_16_winners": [
+            "Utah State",
+            "Texas"
+          ],
+          "region_champion": "Texas"
+        },
+        "South": {
+          "round_64_winners": [
+            "Florida",
+            "Iowa",
+            "McNeese",
+            "Nebraska",
+            "VCU",
+            "Illinois",
+            "Texas A&M",
+            "Houston"
+          ],
+          "round_32_winners": [
+            "Iowa",
+            "Nebraska",
+            "VCU",
+            "Texas A&M"
+          ],
+          "round_16_winners": [
+            "Nebraska",
+            "VCU"
+          ],
+          "region_champion": "Nebraska"
+        },
+        "Midwest": {
+          "round_64_winners": [
+            "Michigan",
+            "Saint Louis",
+            "Akron",
+            "Hofstra",
+            "Tennessee",
+            "Wright St",
+            "Santa Clara",
+            "Iowa State"
+          ],
+          "round_32_winners": [
+            "Michigan",
+            "Akron",
+            "Tennessee",
+            "Santa Clara"
+          ],
+          "round_16_winners": [
+            "Michigan",
+            "Santa Clara"
+          ],
+          "region_champion": "Michigan"
+        }
+      },
+      "final_four_winners": [
+        "Duke",
+        "Michigan"
+      ]
+    }
+  },
+  {
+    "cutoff_round": 6,
+    "round_name": "Title",
+    "ev": 99.33836417177731,
+    "summary": {
+      "cutoff_round": 6,
+      "regions": {
+        "East": {
+          "round_64_winners": [
+            "Duke",
+            "TCU",
+            "Northern Iowa",
+            "CA Baptist",
+            "South Florida",
+            "Michigan St",
+            "UCF",
+            "UConn"
+          ],
+          "round_32_winners": [
+            "Duke",
+            "Northern Iowa",
+            "Michigan St",
+            "UConn"
+          ],
+          "round_16_winners": [
+            "Duke",
+            "Michigan St"
+          ],
+          "region_champion": "Duke"
+        },
+        "West": {
+          "round_64_winners": [
+            "Arizona",
+            "Utah State",
+            "High Point",
+            "Hawai'i",
+            "Texas",
+            "Gonzaga",
+            "Missouri",
+            "Purdue"
+          ],
+          "round_32_winners": [
+            "Utah State",
+            "High Point",
+            "Texas",
+            "Missouri"
+          ],
+          "round_16_winners": [
+            "Utah State",
+            "Texas"
+          ],
+          "region_champion": "Texas"
+        },
+        "South": {
+          "round_64_winners": [
+            "Florida",
+            "Iowa",
+            "McNeese",
+            "Nebraska",
+            "VCU",
+            "Illinois",
+            "Texas A&M",
+            "Houston"
+          ],
+          "round_32_winners": [
+            "Iowa",
+            "Nebraska",
+            "VCU",
+            "Texas A&M"
+          ],
+          "round_16_winners": [
+            "Nebraska",
+            "VCU"
+          ],
+          "region_champion": "Nebraska"
+        },
+        "Midwest": {
+          "round_64_winners": [
+            "Michigan",
+            "Saint Louis",
+            "Akron",
+            "Hofstra",
+            "Tennessee",
+            "Wright St",
+            "Santa Clara",
+            "Iowa State"
+          ],
+          "round_32_winners": [
+            "Michigan",
+            "Akron",
+            "Tennessee",
+            "Santa Clara"
+          ],
+          "round_16_winners": [
+            "Michigan",
+            "Santa Clara"
+          ],
+          "region_champion": "Michigan"
+        }
+      },
+      "final_four_winners": [
+        "Duke",
+        "Michigan"
+      ],
+      "champion": "Duke"
+    }
+  }
+]

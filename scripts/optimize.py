@@ -20,6 +20,7 @@ import json
 import os
 import random
 from datetime import datetime
+from pathlib import Path
 from typing import Dict, Generator, List, Optional, Tuple
 
 from data import load_bracket_data
@@ -50,8 +51,13 @@ ROUND_NAME = {
     6: "Title",
 }
 
-SAVE_PATH = "best_bracket.json"
-TOP_K_PATH = "top_brackets.json"
+SCRIPT_DIR = Path(__file__).resolve().parent
+PROJECT_ROOT = SCRIPT_DIR.parent
+RESULTS_DIR = PROJECT_ROOT / "results"
+FULL_RESULTS_DIR = RESULTS_DIR / "full"
+
+SAVE_PATH = str(FULL_RESULTS_DIR / "best_bracket.json")
+TOP_K_PATH = str(FULL_RESULTS_DIR / "top_brackets.json")
 
 MAX_HILL_ITERS = 100
 PRINT_EVERY = 25
@@ -678,6 +684,7 @@ def improve_bracket_hill_climb(
 
 def atomic_json_save(payload: dict, path: str) -> None:
     """Safely write JSON to disk by using a temporary file and replace."""
+    os.makedirs(os.path.dirname(path), exist_ok=True)
     tmp = path + ".tmp"
     with open(tmp, "w") as f:
         json.dump(payload, f, indent=2)
