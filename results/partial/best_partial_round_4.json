@@ -1,16 +1,17 @@
 {
-  "timestamp": "2026-03-25T11:23:44.595414",
-  "best_ev": 98.35829213396227,
+  "timestamp": "2026-03-25T12:48:43.473249",
+  "best_ev": 98.55943700047143,
   "extra": {
-    "starts_completed": 735,
+    "starts_completed": 306,
     "start_mode": "elite:random",
-    "start_ev": 90.11470916657495,
+    "start_ev": 89.83544257922433,
     "history": [
-      90.11470916657495,
-      93.58692825299967,
-      96.33684120240704,
-      97.43310225167963,
-      98.35829213396227
+      89.83544257922433,
+      93.30809997935665,
+      95.4664913572316,
+      96.56272691814553,
+      97.63450407404954,
+      98.55943700047143
     ]
   },
   "best_bracket": {
@@ -287,18 +288,18 @@
             "bpi_source": "espn"
           },
           {
-            "id": "2856",
-            "name": "CA Baptist",
-            "seed": 13,
+            "id": "2305",
+            "name": "Kansas",
+            "seed": 4,
             "region": "East",
-            "bpi": 1.6,
-            "prob_r64": null,
-            "prob_r32": null,
-            "prob_r16": null,
-            "prob_r8": null,
-            "prob_r4": null,
-            "prob_final": null,
-            "bpi_source": "manual"
+            "bpi": 16.288,
+            "prob_r64": 100.0,
+            "prob_r32": 0.0,
+            "prob_r16": 0.0,
+            "prob_r8": 0.0,
+            "prob_r4": 0.0,
+            "prob_final": 0.0,
+            "bpi_source": "espn"
           },
           {
             "id": "97",
@@ -315,18 +316,18 @@
             "bpi_source": "espn"
           },
           {
-            "id": "2449",
-            "name": "N Dakota St",
-            "seed": 14,
+            "id": "127",
+            "name": "Michigan St",
+            "seed": 3,
             "region": "East",
-            "bpi": 1.9,
-            "prob_r64": null,
-            "prob_r32": null,
-            "prob_r16": null,
-            "prob_r8": null,
-            "prob_r4": null,
-            "prob_final": null,
-            "bpi_source": "manual"
+            "bpi": 18.663,
+            "prob_r64": 100.0,
+            "prob_r32": 100.0,
+            "prob_r16": 46.63,
+            "prob_r8": 14.57,
+            "prob_r4": 5.8500000000000005,
+            "prob_final": 2.07,
+            "bpi_source": "espn"
           },
           {
             "id": "26",
@@ -1647,18 +1648,18 @@
             "bpi_source": "espn"
           },
           {
-            "id": "258",
-            "name": "Virginia",
-            "seed": 3,
+            "id": "2750",
+            "name": "Wright St",
+            "seed": 14,
             "region": "Midwest",
-            "bpi": 16.3265,
-            "prob_r64": 100.0,
-            "prob_r32": 0.0,
-            "prob_r16": 0.0,
-            "prob_r8": 0.0,
-            "prob_r4": 0.0,
-            "prob_final": 0.0,
-            "bpi_source": "espn"
+            "bpi": 1.5,
+            "prob_r64": null,
+            "prob_r32": null,
+            "prob_r16": null,
+            "prob_r8": null,
+            "prob_r4": null,
+            "prob_final": null,
+            "bpi_source": "manual"
           },
           {
             "id": "96",
