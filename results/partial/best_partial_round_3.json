@@ -1,16 +1,14 @@
 {
-  "timestamp": "2026-03-25T07:38:56.181208",
-  "best_ev": 87.56064475927022,
+  "timestamp": "2026-03-25T11:18:31.940840",
+  "best_ev": 87.58757695672925,
   "extra": {
-    "starts_completed": 400,
+    "starts_completed": 499,
     "start_mode": "elite:random",
-    "start_ev": 83.31611357790155,
+    "start_ev": 85.14430082651666,
     "history": [
-      83.31611357790155,
-      85.28376675389194,
-      86.6158712344288,
-      87.21637380135874,
-      87.56064475927022
+      85.14430082651666,
+      86.68050027021313,
+      87.58757695672925
     ]
   },
   "best_bracket": {
@@ -315,18 +313,18 @@
             "bpi_source": "espn"
           },
           {
-            "id": "2449",
-            "name": "N Dakota St",
-            "seed": 14,
+            "id": "127",
+            "name": "Michigan St",
+            "seed": 3,
             "region": "East",
-            "bpi": 1.9,
-            "prob_r64": null,
-            "prob_r32": null,
-            "prob_r16": null,
-            "prob_r8": null,
-            "prob_r4": null,
-            "prob_final": null,
-            "bpi_source": "manual"
+            "bpi": 18.663,
+            "prob_r64": 100.0,
+            "prob_r32": 100.0,
+            "prob_r16": 46.63,
+            "prob_r8": 14.57,
+            "prob_r4": 5.8500000000000005,
+            "prob_final": 2.07,
+            "bpi_source": "espn"
           },
           {
             "id": "26",

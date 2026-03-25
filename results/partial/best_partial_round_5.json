@@ -1,17 +1,19 @@
 {
-  "timestamp": "2026-03-25T07:31:39.610257",
-  "best_ev": 107.68108499593818,
+  "timestamp": "2026-03-25T11:16:57.275461",
+  "best_ev": 107.76135796043322,
   "extra": {
-    "starts_completed": 6,
+    "starts_completed": 426,
     "start_mode": "elite:greedy_init",
-    "start_ev": 93.73374234633,
+    "start_ev": 95.13169596315547,
     "history": [
-      93.73374234633,
-      99.65794159056523,
-      104.08028888714954,
-      104.41357083376813,
-      104.4678569119641,
-      107.68108499593818
+      95.13169596315547,
+      99.55404325973977,
+      101.09024270343625,
+      102.97177575604604,
+      104.16056185164457,
+      104.49384379826317,
+      104.54812987645914,
+      107.76135796043322
     ]
   },
   "best_bracket": {
@@ -1162,12 +1164,12 @@
             "bpi_source": "espn"
           },
           {
-            "id": "2377",
-            "name": "McNeese",
-            "seed": 12,
+            "id": "238",
+            "name": "Vanderbilt",
+            "seed": 5,
             "region": "South",
-            "bpi": 9.4511,
-            "prob_r64": 0.0,
+            "bpi": 18.1674,
+            "prob_r64": 100.0,
             "prob_r32": 0.0,
             "prob_r16": 0.0,
             "prob_r8": 0.0,
@@ -1262,17 +1264,17 @@
             "bpi_source": "espn"
           },
           {
-            "id": "158",
-            "name": "Nebraska",
-            "seed": 4,
+            "id": "238",
+            "name": "Vanderbilt",
+            "seed": 5,
             "region": "South",
-            "bpi": 17.3776,
+            "bpi": 18.1674,
             "prob_r64": 100.0,
-            "prob_r32": 100.0,
-            "prob_r16": 59.57,
-            "prob_r8": 17.37,
-            "prob_r4": 5.37,
-            "prob_final": 1.6500000000000001,
+            "prob_r32": 0.0,
+            "prob_r16": 0.0,
+            "prob_r8": 0.0,
+            "prob_r4": 0.0,
+            "prob_final": 0.0,
             "bpi_source": "espn"
           },
           {
@@ -1306,17 +1308,17 @@
         ],
         "round_16_winners": [
           {
-            "id": "158",
-            "name": "Nebraska",
-            "seed": 4,
+            "id": "238",
+            "name": "Vanderbilt",
+            "seed": 5,
             "region": "South",
-            "bpi": 17.3776,
+            "bpi": 18.1674,
             "prob_r64": 100.0,
-            "prob_r32": 100.0,
-            "prob_r16": 59.57,
-            "prob_r8": 17.37,
-            "prob_r4": 5.37,
-            "prob_final": 1.6500000000000001,
+            "prob_r32": 0.0,
+            "prob_r16": 0.0,
+            "prob_r8": 0.0,
+            "prob_r4": 0.0,
+            "prob_final": 0.0,
             "bpi_source": "espn"
           },
           {
