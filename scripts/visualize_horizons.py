@@ -21,6 +21,7 @@ PROJECT_ROOT = SCRIPT_DIR.parent
 PARTIAL_RESULTS_DIR = PROJECT_ROOT / "results" / "partial"
 FULL_RESULTS_DIR = PROJECT_ROOT / "results" / "full"
 OUTPUT_PATH = PARTIAL_RESULTS_DIR / "horizon_dashboard.html"
+DOCS_OUTPUT_PATH = PROJECT_ROOT / "docs" / "index.html"
 
 ROUND_LABELS = {
     1: "R64",
@@ -1223,8 +1224,11 @@ def render_dashboard(payloads: List[dict]) -> str:
 def main() -> None:
     payloads = load_horizon_payloads()
     html = render_dashboard(payloads)
+    DOCS_OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT_PATH.write_text(html)
+    DOCS_OUTPUT_PATH.write_text(html)
     print(f"Wrote dashboard to {OUTPUT_PATH}")
+    print(f"Wrote publishable site to {DOCS_OUTPUT_PATH}")
 
 
 if __name__ == "__main__":

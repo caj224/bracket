@@ -1,17 +1,16 @@
 {
-  "timestamp": "2026-03-25T11:18:18.120149",
-  "best_ev": 98.35421126131133,
+  "timestamp": "2026-03-25T11:23:44.595414",
+  "best_ev": 98.35829213396227,
   "extra": {
-    "starts_completed": 488,
+    "starts_completed": 735,
     "start_mode": "elite:random",
-    "start_ev": 87.32260450726504,
+    "start_ev": 90.11470916657495,
     "history": [
-      87.32260450726504,
-      90.03478667545296,
-      92.17380932885393,
-      95.59515715319688,
-      96.19565972012683,
-      98.35421126131133
+      90.11470916657495,
+      93.58692825299967,
+      96.33684120240704,
+      97.43310225167963,
+      98.35829213396227
     ]
   },
   "best_bracket": {
@@ -288,18 +287,18 @@
             "bpi_source": "espn"
           },
           {
-            "id": "2305",
-            "name": "Kansas",
-            "seed": 4,
+            "id": "2856",
+            "name": "CA Baptist",
+            "seed": 13,
             "region": "East",
-            "bpi": 16.288,
-            "prob_r64": 100.0,
-            "prob_r32": 0.0,
-            "prob_r16": 0.0,
-            "prob_r8": 0.0,
-            "prob_r4": 0.0,
-            "prob_final": 0.0,
-            "bpi_source": "espn"
+            "bpi": 1.6,
+            "prob_r64": null,
+            "prob_r32": null,
+            "prob_r16": null,
+            "prob_r8": null,
+            "prob_r4": null,
+            "prob_final": null,
+            "bpi_source": "manual"
           },
           {
             "id": "97",
@@ -316,18 +315,18 @@
             "bpi_source": "espn"
           },
           {
-            "id": "127",
-            "name": "Michigan St",
-            "seed": 3,
+            "id": "2449",
+            "name": "N Dakota St",
+            "seed": 14,
             "region": "East",
-            "bpi": 18.663,
-            "prob_r64": 100.0,
-            "prob_r32": 100.0,
-            "prob_r16": 46.63,
-            "prob_r8": 14.57,
-            "prob_r4": 5.8500000000000005,
-            "prob_final": 2.07,
-            "bpi_source": "espn"
+            "bpi": 1.9,
+            "prob_r64": null,
+            "prob_r32": null,
+            "prob_r16": null,
+            "prob_r8": null,
+            "prob_r4": null,
+            "prob_final": null,
+            "bpi_source": "manual"
           },
           {
             "id": "26",
@@ -818,17 +817,17 @@
             "bpi_source": "espn"
           },
           {
-            "id": "2272",
-            "name": "High Point",
-            "seed": 12,
+            "id": "8",
+            "name": "Arkansas",
+            "seed": 4,
             "region": "West",
-            "bpi": 9.301,
+            "bpi": 16.8373,
             "prob_r64": 100.0,
-            "prob_r32": 0.0,
-            "prob_r16": 0.0,
-            "prob_r8": 0.0,
-            "prob_r4": 0.0,
-            "prob_final": 0.0,
+            "prob_r32": 100.0,
+            "prob_r16": 23.380000000000003,
+            "prob_r8": 9.32,
+            "prob_r4": 2.73,
+            "prob_final": 0.77,
             "bpi_source": "espn"
           },
           {

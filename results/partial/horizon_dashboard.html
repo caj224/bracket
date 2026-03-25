@@ -33,36 +33,6 @@
       margin: 0 auto;
       padding: 40px 20px 72px;
     }
-    .tabs {
-      display: flex;
-      gap: 12px;
-      margin-bottom: 24px;
-      flex-wrap: wrap;
-    }
-    .tab-button {
-      appearance: none;
-      border: 1px solid rgba(148, 163, 184, 0.14);
-      border-radius: 999px;
-      padding: 12px 18px;
-      font: inherit;
-      font-weight: 700;
-      color: #c9d8ed;
-      background: rgba(15, 23, 42, 0.68);
-      cursor: pointer;
-      transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
-    }
-    .tab-button:hover {
-      transform: translateY(-1px);
-      border-color: rgba(56, 189, 248, 0.34);
-    }
-    .tab-button.active {
-      color: #f8fbff;
-      background: linear-gradient(135deg, rgba(56, 189, 248, 0.24), rgba(249, 115, 22, 0.2));
-      border-color: rgba(56, 189, 248, 0.42);
-    }
-    .tab-panel[hidden] {
-      display: none;
-    }
     .hero {
       display: grid;
       grid-template-columns: 1.5fr 0.9fr;
@@ -352,177 +322,6 @@
       color: var(--accent);
       font-weight: 600;
     }
-    .calculator-shell {
-      display: grid;
-      gap: 20px;
-    }
-    .calculator-card {
-      padding: 24px;
-    }
-    .calculator-actions {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-top: 18px;
-    }
-    .action-button {
-      appearance: none;
-      border: 1px solid rgba(148, 163, 184, 0.16);
-      border-radius: 14px;
-      padding: 11px 14px;
-      font: inherit;
-      font-weight: 700;
-      color: #e7f1fd;
-      background: rgba(15, 23, 42, 0.7);
-      cursor: pointer;
-    }
-    .action-button.primary {
-      background: rgba(56, 189, 248, 0.18);
-      border-color: rgba(56, 189, 248, 0.28);
-      color: #d7f2ff;
-    }
-    .calculator-summary {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 12px;
-      margin-top: 22px;
-    }
-    .summary-stat {
-      padding: 14px 16px;
-      border-radius: 18px;
-      background: rgba(15, 23, 42, 0.58);
-      border: 1px solid rgba(148, 163, 184, 0.1);
-    }
-    .summary-stat .label {
-      color: var(--muted);
-      font-size: 0.78rem;
-      margin-bottom: 8px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-    .summary-stat .value {
-      font-size: 1.35rem;
-      font-weight: 700;
-    }
-    .calculator-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 18px;
-    }
-    .region-card {
-      padding: 20px;
-    }
-    .bracket-region {
-      overflow: hidden;
-    }
-    .region-header {
-      display: flex;
-      justify-content: space-between;
-      gap: 16px;
-      align-items: center;
-      margin-bottom: 16px;
-    }
-    .bracket-board {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(180px, 1fr));
-      gap: 14px;
-      align-items: start;
-      overflow-x: auto;
-      padding-bottom: 6px;
-    }
-    .bracket-column {
-      min-width: 180px;
-    }
-    .bracket-column.round-64 .matchup-stack {
-      padding-top: 0;
-    }
-    .bracket-column.round-32 .matchup-stack {
-      padding-top: 28px;
-    }
-    .bracket-column.round-16 .matchup-stack {
-      padding-top: 82px;
-    }
-    .bracket-column.round-elite-8 .matchup-stack {
-      padding-top: 192px;
-    }
-    .matchup-stack {
-      display: grid;
-      gap: 12px;
-    }
-    .bracket-column.round-32 .matchup-stack,
-    .bracket-column.round-16 .matchup-stack,
-    .bracket-column.round-elite-8 .matchup-stack {
-      gap: 30px;
-    }
-    .bracket-column.round-16 .matchup-stack {
-      gap: 84px;
-    }
-    .bracket-column.round-elite-8 .matchup-stack {
-      gap: 196px;
-    }
-    .matchup-row {
-      padding: 12px;
-      border-radius: 16px;
-      background: rgba(15, 23, 42, 0.52);
-      border: 1px solid rgba(148, 163, 184, 0.1);
-      position: relative;
-    }
-    .matchup-row label {
-      display: block;
-      font-size: 0.86rem;
-      color: #c8d8eb;
-      margin-bottom: 8px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-    .matchup-row select {
-      width: 100%;
-      padding: 10px 12px;
-      border-radius: 12px;
-      border: 1px solid rgba(148, 163, 184, 0.16);
-      background: rgba(8, 17, 31, 0.9);
-      color: #e5eefc;
-      font: inherit;
-    }
-    .matchup-row.connector:after {
-      content: "";
-      position: absolute;
-      top: 50%;
-      right: -14px;
-      width: 14px;
-      height: 1px;
-      background: rgba(148, 163, 184, 0.22);
-    }
-    .finals-grid {
-      display: grid;
-      grid-template-columns: 1fr minmax(220px, 280px) 1fr;
-      gap: 18px;
-      align-items: center;
-    }
-    .finals-column {
-      display: grid;
-      gap: 18px;
-    }
-    .final-card {
-      padding: 20px;
-    }
-    .title-card {
-      padding: 24px;
-      text-align: center;
-      background:
-        radial-gradient(circle at top, rgba(56, 189, 248, 0.12), transparent 58%),
-        rgba(12, 23, 42, 0.84);
-    }
-    .helper-text {
-      color: var(--muted);
-      margin-top: 10px;
-    }
-    .status-ok {
-      color: #bbf7d0;
-    }
-    .status-warn {
-      color: #fde68a;
-    }
     ul {
       margin: 0;
       padding-left: 18px;
@@ -546,69 +345,46 @@
       .stats {
         grid-template-columns: 1fr;
       }
-      .calculator-summary,
-      .calculator-grid,
-      .finals-grid {
-        grid-template-columns: 1fr;
-      }
-      .bracket-board {
-        grid-template-columns: repeat(4, minmax(160px, 1fr));
-      }
-      .bracket-column.round-32 .matchup-stack,
-      .bracket-column.round-16 .matchup-stack,
-      .bracket-column.round-elite-8 .matchup-stack {
-        padding-top: 0;
-        gap: 12px;
-      }
-      .matchup-row.connector:after {
-        display: none;
-      }
     }
   </style>
 </head>
 <body>
   <main class="shell">
-    <div class="tabs" role="tablist" aria-label="Dashboard tabs">
-      <button class="tab-button active" type="button" data-tab-target="dashboard-tab" aria-selected="true">Dashboard</button>
-      <button class="tab-button" type="button" data-tab-target="calculator-tab" aria-selected="false">Custom EV</button>
-    </div>
-
-    <section id="dashboard-tab" class="tab-panel">
-      <section class="hero">
-        <div class="card hero-copy">
-          <div class="eyebrow">Bracket Horizon Dashboard</div>
-          <h1>How the optimized bracket evolves as the horizon gets deeper.</h1>
-          <p>
-            This report compares the best saved bracket for each cutoff round and highlights
-            how expected value rises, which teams survive deeper into the tree, and where
-            the optimizer changes its mind as it starts caring about later rounds.
-          </p>
-          <div class="stats">
-            <div class="stat">
-              <div class="label">Horizons Loaded</div>
-              <div class="value">6</div>
-            </div>
-            <div class="stat">
-              <div class="label">EV Range</div>
-              <div class="value">74.39</div>
-            </div>
-            <div class="stat">
-              <div class="label">Best Horizon</div>
-              <div class="value">Title</div>
-            </div>
+    <section class="hero">
+      <div class="card hero-copy">
+        <div class="eyebrow">Bracket Horizon Dashboard</div>
+        <h1>How the optimized bracket evolves as the horizon gets deeper.</h1>
+        <p>
+          This report compares the best saved bracket for each cutoff round and highlights
+          how expected value rises, which teams survive deeper into the tree, and where
+          the optimizer changes its mind as it starts caring about later rounds.
+        </p>
+        <div class="stats">
+          <div class="stat">
+            <div class="label">Horizons Loaded</div>
+            <div class="value">6</div>
+          </div>
+          <div class="stat">
+            <div class="label">EV Range</div>
+            <div class="value">74.39</div>
+          </div>
+          <div class="stat">
+            <div class="label">Best Horizon</div>
+            <div class="value">Title</div>
           </div>
         </div>
-        <aside class="card spotlight">
-          <div class="eyebrow">Deepest Horizon Snapshot</div>
-          <h3 class="section-title">Round 6 bracket spine</h3>
-          <div class="spotlight-row"><span>East</span><strong>(1) Duke</strong></div><div class="spotlight-row"><span>West</span><strong>(1) Arizona</strong></div><div class="spotlight-row"><span>South</span><strong>(3) Illinois</strong></div><div class="spotlight-row"><span>Midwest</span><strong>(1) Michigan</strong></div><div class="spotlight-row"><span>Finalists</span><strong>(1) Duke, (1) Michigan</strong></div><div class="spotlight-row"><span>Champion</span><strong>(1) Duke</strong></div>
-        </aside>
-      </section>
+      </div>
+      <aside class="card spotlight">
+        <div class="eyebrow">Deepest Horizon Snapshot</div>
+        <h3 class="section-title">Round 6 bracket spine</h3>
+        <div class="spotlight-row"><span>East</span><strong>(1) Duke</strong></div><div class="spotlight-row"><span>West</span><strong>(1) Arizona</strong></div><div class="spotlight-row"><span>South</span><strong>(3) Illinois</strong></div><div class="spotlight-row"><span>Midwest</span><strong>(1) Michigan</strong></div><div class="spotlight-row"><span>Finalists</span><strong>(1) Duke, (1) Michigan</strong></div><div class="spotlight-row"><span>Champion</span><strong>(1) Duke</strong></div>
+      </aside>
+    </section>
 
-      <section class="card chart-card">
-        <div class="eyebrow">Trend</div>
-        <h3 class="section-title">Expected Value by Horizon</h3>
-        
+    <section class="card chart-card">
+      <div class="eyebrow">Trend</div>
+      <h3 class="section-title">Expected Value by Horizon</h3>
+      
     <svg viewBox="0 0 920 260" role="img" aria-label="Expected value by horizon">
       <defs>
         <linearGradient id="evArea" x1="0" x2="0" y1="0" y2="1">
@@ -617,30 +393,30 @@
         </linearGradient>
       </defs>
       <line x1="56" y1="20.0" x2="896" y2="20.0" stroke="rgba(148,163,184,0.22)" stroke-width="1" /><text x="46" y="24.0" text-anchor="end" fill="#94a3b8" font-size="12">114.7</text><line x1="56" y1="70.0" x2="896" y2="70.0" stroke="rgba(148,163,184,0.22)" stroke-width="1" /><text x="46" y="74.0" text-anchor="end" fill="#94a3b8" font-size="12">96.1</text><line x1="56" y1="120.0" x2="896" y2="120.0" stroke="rgba(148,163,184,0.22)" stroke-width="1" /><text x="46" y="124.0" text-anchor="end" fill="#94a3b8" font-size="12">77.5</text><line x1="56" y1="170.0" x2="896" y2="170.0" stroke="rgba(148,163,184,0.22)" stroke-width="1" /><text x="46" y="174.0" text-anchor="end" fill="#94a3b8" font-size="12">58.9</text><line x1="56" y1="220.0" x2="896" y2="220.0" stroke="rgba(148,163,184,0.22)" stroke-width="1" /><text x="46" y="224.0" text-anchor="end" fill="#94a3b8" font-size="12">40.3</text>
-      <polygon points="56,220 56.0,220.0 224.0,141.3 392.0,92.9 560.0,64.1 728.0,38.8 896.0,20.0 896,220" fill="url(#evArea)"></polygon>
-      <polyline points="56.0,220.0 224.0,141.3 392.0,92.9 560.0,64.1 728.0,38.8 896.0,20.0" fill="none" stroke="#38bdf8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></polyline>
-      <circle cx="56.0" cy="220.0" r="5.5" fill="#f97316" /><circle cx="56.0" cy="220.0" r="11" fill="rgba(249,115,22,0.18)" /><text x="56.0" y="206.0" text-anchor="middle" fill="#e2e8f0" font-size="12">40.30</text><circle cx="224.0" cy="141.3" r="5.5" fill="#f97316" /><circle cx="224.0" cy="141.3" r="11" fill="rgba(249,115,22,0.18)" /><text x="224.0" y="127.3" text-anchor="middle" fill="#e2e8f0" font-size="12">69.57</text><circle cx="392.0" cy="92.9" r="5.5" fill="#f97316" /><circle cx="392.0" cy="92.9" r="11" fill="rgba(249,115,22,0.18)" /><text x="392.0" y="78.9" text-anchor="middle" fill="#e2e8f0" font-size="12">87.56</text><circle cx="560.0" cy="64.1" r="5.5" fill="#f97316" /><circle cx="560.0" cy="64.1" r="11" fill="rgba(249,115,22,0.18)" /><text x="560.0" y="50.1" text-anchor="middle" fill="#e2e8f0" font-size="12">98.29</text><circle cx="728.0" cy="38.8" r="5.5" fill="#f97316" /><circle cx="728.0" cy="38.8" r="11" fill="rgba(249,115,22,0.18)" /><text x="728.0" y="24.8" text-anchor="middle" fill="#e2e8f0" font-size="12">107.68</text><circle cx="896.0" cy="20.0" r="5.5" fill="#f97316" /><circle cx="896.0" cy="20.0" r="11" fill="rgba(249,115,22,0.18)" /><text x="896.0" y="6.0" text-anchor="middle" fill="#e2e8f0" font-size="12">114.69</text>
+      <polygon points="56,220 56.0,220.0 224.0,141.3 392.0,92.9 560.0,63.9 728.0,38.6 896.0,20.0 896,220" fill="url(#evArea)"></polygon>
+      <polyline points="56.0,220.0 224.0,141.3 392.0,92.9 560.0,63.9 728.0,38.6 896.0,20.0" fill="none" stroke="#38bdf8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></polyline>
+      <circle cx="56.0" cy="220.0" r="5.5" fill="#f97316" /><circle cx="56.0" cy="220.0" r="11" fill="rgba(249,115,22,0.18)" /><text x="56.0" y="206.0" text-anchor="middle" fill="#e2e8f0" font-size="12">40.30</text><circle cx="224.0" cy="141.3" r="5.5" fill="#f97316" /><circle cx="224.0" cy="141.3" r="11" fill="rgba(249,115,22,0.18)" /><text x="224.0" y="127.3" text-anchor="middle" fill="#e2e8f0" font-size="12">69.57</text><circle cx="392.0" cy="92.9" r="5.5" fill="#f97316" /><circle cx="392.0" cy="92.9" r="11" fill="rgba(249,115,22,0.18)" /><text x="392.0" y="78.9" text-anchor="middle" fill="#e2e8f0" font-size="12">87.59</text><circle cx="560.0" cy="63.9" r="5.5" fill="#f97316" /><circle cx="560.0" cy="63.9" r="11" fill="rgba(249,115,22,0.18)" /><text x="560.0" y="49.9" text-anchor="middle" fill="#e2e8f0" font-size="12">98.36</text><circle cx="728.0" cy="38.6" r="5.5" fill="#f97316" /><circle cx="728.0" cy="38.6" r="11" fill="rgba(249,115,22,0.18)" /><text x="728.0" y="24.6" text-anchor="middle" fill="#e2e8f0" font-size="12">107.76</text><circle cx="896.0" cy="20.0" r="5.5" fill="#f97316" /><circle cx="896.0" cy="20.0" r="11" fill="rgba(249,115,22,0.18)" /><text x="896.0" y="6.0" text-anchor="middle" fill="#e2e8f0" font-size="12">114.69</text>
       <text x="56.0" y="248" text-anchor="middle" fill="#94a3b8" font-size="12">R64</text><text x="224.0" y="248" text-anchor="middle" fill="#94a3b8" font-size="12">R32</text><text x="392.0" y="248" text-anchor="middle" fill="#94a3b8" font-size="12">Sweet 16</text><text x="560.0" y="248" text-anchor="middle" fill="#94a3b8" font-size="12">Elite 8</text><text x="728.0" y="248" text-anchor="middle" fill="#94a3b8" font-size="12">Final Four</text><text x="896.0" y="248" text-anchor="middle" fill="#94a3b8" font-size="12">Title</text>
     </svg>
     
-      </section>
+    </section>
 
-      <section class="card chart-card">
-        <div class="eyebrow">Comparison</div>
-        <h3 class="section-title">Each Optimized Bracket Against the Others</h3>
-        <p class="chart-note">
-          Each line shows the cumulative expected value of one horizon-optimized bracket.
-          Lines stop at their own cutoff, so the R64 bracket ends after Round 1, the R32 bracket ends after Round 2, and so on.
-        </p>
-        
+    <section class="card chart-card">
+      <div class="eyebrow">Comparison</div>
+      <h3 class="section-title">Each Optimized Bracket Against the Others</h3>
+      <p class="chart-note">
+        Each line shows the cumulative expected value of one horizon-optimized bracket.
+        Lines stop at their own cutoff, so the R64 bracket ends after Round 1, the R32 bracket ends after Round 2, and so on.
+      </p>
+      
     <div class="legend-row"><div class="legend-item"><span class="legend-swatch" style="background:#38bdf8"></span>R64 bracket</div><div class="legend-item"><span class="legend-swatch" style="background:#f97316"></span>R32 bracket</div><div class="legend-item"><span class="legend-swatch" style="background:#22c55e"></span>Sweet 16 bracket</div><div class="legend-item"><span class="legend-swatch" style="background:#facc15"></span>Elite 8 bracket</div><div class="legend-item"><span class="legend-swatch" style="background:#fb7185"></span>Final Four bracket</div><div class="legend-item"><span class="legend-swatch" style="background:#a78bfa"></span>Title bracket</div></div>
     <svg viewBox="0 0 920 320" role="img" aria-label="Cumulative expected value by round for each optimized bracket">
-      <line x1="64" y1="28.0" x2="888" y2="28.0" stroke="rgba(148,163,184,0.22)" stroke-width="1" /><text x="54" y="32.0" text-anchor="end" fill="#94a3b8" font-size="12">114.7</text><line x1="64" y1="89.0" x2="888" y2="89.0" stroke="rgba(148,163,184,0.22)" stroke-width="1" /><text x="54" y="93.0" text-anchor="end" fill="#94a3b8" font-size="12">95.0</text><line x1="64" y1="150.0" x2="888" y2="150.0" stroke="rgba(148,163,184,0.22)" stroke-width="1" /><text x="54" y="154.0" text-anchor="end" fill="#94a3b8" font-size="12">75.2</text><line x1="64" y1="211.0" x2="888" y2="211.0" stroke="rgba(148,163,184,0.22)" stroke-width="1" /><text x="54" y="215.0" text-anchor="end" fill="#94a3b8" font-size="12">55.5</text><line x1="64" y1="272.0" x2="888" y2="272.0" stroke="rgba(148,163,184,0.22)" stroke-width="1" /><text x="54" y="276.0" text-anchor="end" fill="#94a3b8" font-size="12">35.7</text>
+      <line x1="64" y1="28.0" x2="888" y2="28.0" stroke="rgba(148,163,184,0.22)" stroke-width="1" /><text x="54" y="32.0" text-anchor="end" fill="#94a3b8" font-size="12">114.7</text><line x1="64" y1="89.0" x2="888" y2="89.0" stroke="rgba(148,163,184,0.22)" stroke-width="1" /><text x="54" y="93.0" text-anchor="end" fill="#94a3b8" font-size="12">95.0</text><line x1="64" y1="150.0" x2="888" y2="150.0" stroke="rgba(148,163,184,0.22)" stroke-width="1" /><text x="54" y="154.0" text-anchor="end" fill="#94a3b8" font-size="12">75.2</text><line x1="64" y1="211.0" x2="888" y2="211.0" stroke="rgba(148,163,184,0.22)" stroke-width="1" /><text x="54" y="215.0" text-anchor="end" fill="#94a3b8" font-size="12">55.5</text><line x1="64" y1="272.0" x2="888" y2="272.0" stroke="rgba(148,163,184,0.22)" stroke-width="1" /><text x="54" y="276.0" text-anchor="end" fill="#94a3b8" font-size="12">35.8</text>
       <line x1="64.0" y1="272" x2="64.0" y2="278" stroke="rgba(148,163,184,0.34)" stroke-width="1" /><text x="64.0" y="306" text-anchor="middle" fill="#94a3b8" font-size="12">R64</text><line x1="228.8" y1="272" x2="228.8" y2="278" stroke="rgba(148,163,184,0.34)" stroke-width="1" /><text x="228.8" y="306" text-anchor="middle" fill="#94a3b8" font-size="12">R32</text><line x1="393.6" y1="272" x2="393.6" y2="278" stroke="rgba(148,163,184,0.34)" stroke-width="1" /><text x="393.6" y="306" text-anchor="middle" fill="#94a3b8" font-size="12">Sweet 16</text><line x1="558.4" y1="272" x2="558.4" y2="278" stroke="rgba(148,163,184,0.34)" stroke-width="1" /><text x="558.4" y="306" text-anchor="middle" fill="#94a3b8" font-size="12">Elite 8</text><line x1="723.2" y1="272" x2="723.2" y2="278" stroke="rgba(148,163,184,0.34)" stroke-width="1" /><text x="723.2" y="306" text-anchor="middle" fill="#94a3b8" font-size="12">Final Four</text><line x1="888.0" y1="272" x2="888.0" y2="278" stroke="rgba(148,163,184,0.34)" stroke-width="1" /><text x="888.0" y="306" text-anchor="middle" fill="#94a3b8" font-size="12">Title</text>
-      <polyline points="64.0,257.9" fill="none" stroke="#38bdf8" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" /><circle cx="64.0" cy="257.9" r="4.5" fill="#38bdf8" /><polyline points="64.0,265.5 228.8,167.4" fill="none" stroke="#f97316" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" /><circle cx="64.0" cy="265.5" r="4.5" fill="#f97316" /><circle cx="228.8" cy="167.4" r="4.5" fill="#f97316" /><polyline points="64.0,266.0 228.8,169.5 393.6,111.8" fill="none" stroke="#22c55e" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" /><circle cx="64.0" cy="266.0" r="4.5" fill="#22c55e" /><circle cx="228.8" cy="169.5" r="4.5" fill="#22c55e" /><circle cx="393.6" cy="111.8" r="4.5" fill="#22c55e" /><polyline points="64.0,272.0 228.8,175.1 393.6,117.4 558.4,78.7" fill="none" stroke="#facc15" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" /><circle cx="64.0" cy="272.0" r="4.5" fill="#facc15" /><circle cx="228.8" cy="175.1" r="4.5" fill="#facc15" /><circle cx="393.6" cy="117.4" r="4.5" fill="#facc15" /><circle cx="558.4" cy="78.7" r="4.5" fill="#facc15" /><polyline points="64.0,263.1 228.8,173.7 393.6,115.4 558.4,76.6 723.2,49.7" fill="none" stroke="#fb7185" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" /><circle cx="64.0" cy="263.1" r="4.5" fill="#fb7185" /><circle cx="228.8" cy="173.7" r="4.5" fill="#fb7185" /><circle cx="393.6" cy="115.4" r="4.5" fill="#fb7185" /><circle cx="558.4" cy="76.6" r="4.5" fill="#fb7185" /><circle cx="723.2" cy="49.7" r="4.5" fill="#fb7185" /><polyline points="64.0,271.8 228.8,176.6 393.6,116.3 558.4,77.2 723.2,48.8 888.0,28.0" fill="none" stroke="#a78bfa" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" /><circle cx="64.0" cy="271.8" r="4.5" fill="#a78bfa" /><circle cx="228.8" cy="176.6" r="4.5" fill="#a78bfa" /><circle cx="393.6" cy="116.3" r="4.5" fill="#a78bfa" /><circle cx="558.4" cy="77.2" r="4.5" fill="#a78bfa" /><circle cx="723.2" cy="48.8" r="4.5" fill="#a78bfa" /><circle cx="888.0" cy="28.0" r="4.5" fill="#a78bfa" />
+      <polyline points="64.0,258.1" fill="none" stroke="#38bdf8" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" /><circle cx="64.0" cy="258.1" r="4.5" fill="#38bdf8" /><polyline points="64.0,265.7 228.8,167.5" fill="none" stroke="#f97316" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" /><circle cx="64.0" cy="265.7" r="4.5" fill="#f97316" /><circle cx="228.8" cy="167.5" r="4.5" fill="#f97316" /><polyline points="64.0,266.1 228.8,169.6 393.6,111.8" fill="none" stroke="#22c55e" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" /><circle cx="64.0" cy="266.1" r="4.5" fill="#22c55e" /><circle cx="228.8" cy="169.6" r="4.5" fill="#22c55e" /><circle cx="393.6" cy="111.8" r="4.5" fill="#22c55e" /><polyline points="64.0,272.0 228.8,175.0 393.6,117.3 558.4,78.5" fill="none" stroke="#facc15" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" /><circle cx="64.0" cy="272.0" r="4.5" fill="#facc15" /><circle cx="228.8" cy="175.0" r="4.5" fill="#facc15" /><circle cx="393.6" cy="117.3" r="4.5" fill="#facc15" /><circle cx="558.4" cy="78.5" r="4.5" fill="#facc15" /><polyline points="64.0,266.1 228.8,174.6 393.6,115.2 558.4,76.4 723.2,49.4" fill="none" stroke="#fb7185" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" /><circle cx="64.0" cy="266.1" r="4.5" fill="#fb7185" /><circle cx="228.8" cy="174.6" r="4.5" fill="#fb7185" /><circle cx="393.6" cy="115.2" r="4.5" fill="#fb7185" /><circle cx="558.4" cy="76.4" r="4.5" fill="#fb7185" /><circle cx="723.2" cy="49.4" r="4.5" fill="#fb7185" /><polyline points="64.0,272.0 228.8,176.7 393.6,116.4 558.4,77.3 723.2,48.8 888.0,28.0" fill="none" stroke="#a78bfa" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" /><circle cx="64.0" cy="272.0" r="4.5" fill="#a78bfa" /><circle cx="228.8" cy="176.7" r="4.5" fill="#a78bfa" /><circle cx="393.6" cy="116.4" r="4.5" fill="#a78bfa" /><circle cx="558.4" cy="77.3" r="4.5" fill="#a78bfa" /><circle cx="723.2" cy="48.8" r="4.5" fill="#a78bfa" /><circle cx="888.0" cy="28.0" r="4.5" fill="#a78bfa" />
     </svg>
     
-        
+      
     <div class="table-wrap">
       <table class="curve-table">
         <thead>
@@ -678,7 +454,7 @@
                   Sweet 16 bracket
                 </span>
               </th>
-              <td>37.67</td><td>68.89</td><td>87.56</td><td class="empty">-</td><td class="empty">-</td><td class="empty">-</td>
+              <td>37.69</td><td>68.91</td><td>87.59</td><td class="empty">-</td><td class="empty">-</td><td class="empty">-</td>
             </tr>
             
             <tr>
@@ -688,7 +464,7 @@
                   Elite 8 bracket
                 </span>
               </th>
-              <td>35.72</td><td>67.08</td><td>85.75</td><td>98.29</td><td class="empty">-</td><td class="empty">-</td>
+              <td>35.79</td><td>67.15</td><td>85.82</td><td>98.36</td><td class="empty">-</td><td class="empty">-</td>
             </tr>
             
             <tr>
@@ -698,7 +474,7 @@
                   Final Four bracket
                 </span>
               </th>
-              <td>38.60</td><td>67.52</td><td>86.42</td><td>98.96</td><td>107.68</td><td class="empty">-</td>
+              <td>37.69</td><td>67.28</td><td>86.50</td><td>99.04</td><td>107.76</td><td class="empty">-</td>
             </tr>
             
             <tr>
@@ -715,13 +491,13 @@
       </table>
     </div>
     
-      </section>
+    </section>
 
-      <section>
-        <div class="eyebrow">Profiles</div>
-        <h3 class="section-title">Best Bracket at Each Cutoff</h3>
-        <div class="grid">
-          
+    <section>
+      <div class="eyebrow">Profiles</div>
+      <h3 class="section-title">Best Bracket at Each Cutoff</h3>
+      <div class="grid">
+        
             <section class="card horizon-card">
               <div class="card-top">
                 <div>
@@ -770,7 +546,7 @@
                   <div class="eyebrow">Cutoff Round 3</div>
                   <h3>Sweet 16</h3>
                 </div>
-                <div class="ev-pill">EV 87.56</div>
+                <div class="ev-pill">EV 87.59</div>
               </div>
               <div class="meta-row">
                 <span>Saved from <code>best_partial_round_3.json</code></span>
@@ -791,7 +567,7 @@
                   <div class="eyebrow">Cutoff Round 4</div>
                   <h3>Elite 8</h3>
                 </div>
-                <div class="ev-pill">EV 98.29</div>
+                <div class="ev-pill">EV 98.36</div>
               </div>
               <div class="meta-row">
                 <span>Saved from <code>best_partial_round_4.json</code></span>
@@ -812,7 +588,7 @@
                   <div class="eyebrow">Cutoff Round 5</div>
                   <h3>Final Four</h3>
                 </div>
-                <div class="ev-pill">EV 107.68</div>
+                <div class="ev-pill">EV 107.76</div>
               </div>
               <div class="meta-row">
                 <span>Saved from <code>best_partial_round_5.json</code></span>
@@ -848,14 +624,14 @@
               </div>
             </section>
             
-        </div>
-      </section>
+      </div>
+    </section>
 
-      <section>
-        <div class="eyebrow">Transitions</div>
-        <h3 class="section-title">What Changed from One Horizon to the Next</h3>
-        <div class="grid">
-          
+    <section>
+      <div class="eyebrow">Transitions</div>
+      <h3 class="section-title">What Changed from One Horizon to the Next</h3>
+      <div class="grid">
+        
             <section class="card change-card">
               <div class="card-top">
                 <h3>R64 -> R32</h3>
@@ -872,12 +648,12 @@
             <section class="card change-card">
               <div class="card-top">
                 <h3>R32 -> Sweet 16</h3>
-                <div class="gain-pill">+17.99 EV</div>
+                <div class="gain-pill">+18.02 EV</div>
               </div>
               
                     <div class="change-group">
-                      <div class="change-title">R64 <span>2 changes</span></div>
-                      <ul><li>Michigan St -&gt; N Dakota St</li><li>Gonzaga -&gt; Kennesaw St</li></ul>
+                      <div class="change-title">R64 <span>1 changes</span></div>
+                      <ul><li>Gonzaga -&gt; Kennesaw St</li></ul>
                     </div>
                     
                     <div class="change-group">
@@ -890,12 +666,12 @@
             <section class="card change-card">
               <div class="card-top">
                 <h3>Sweet 16 -> Elite 8</h3>
-                <div class="gain-pill">+10.73 EV</div>
+                <div class="gain-pill">+10.77 EV</div>
               </div>
               
                     <div class="change-group">
-                      <div class="change-title">R64 <span>7 changes</span></div>
-                      <ul><li>CA Baptist -&gt; Kansas</li><li>N Dakota St -&gt; Michigan St</li><li>Hawai&#x27;i -&gt; Arkansas</li><li>Kennesaw St -&gt; Gonzaga</li><li>Houston -&gt; Idaho</li><li>Akron -&gt; Texas Tech</li></ul>
+                      <div class="change-title">R64 <span>6 changes</span></div>
+                      <ul><li>Michigan St -&gt; N Dakota St</li><li>Hawai&#x27;i -&gt; Arkansas</li><li>Kennesaw St -&gt; Gonzaga</li><li>Houston -&gt; Idaho</li><li>Akron -&gt; Texas Tech</li><li>Wright St -&gt; Virginia</li></ul>
                     </div>
                     
                     <div class="change-group">
@@ -908,22 +684,22 @@
             <section class="card change-card">
               <div class="card-top">
                 <h3>Elite 8 -> Final Four</h3>
-                <div class="gain-pill">+9.39 EV</div>
+                <div class="gain-pill">+9.40 EV</div>
               </div>
               
                     <div class="change-group">
-                      <div class="change-title">R64 <span>7 changes</span></div>
-                      <ul><li>Kansas -&gt; CA Baptist</li><li>Arkansas -&gt; Hawai&#x27;i</li><li>Idaho -&gt; Houston</li><li>Texas Tech -&gt; Akron</li><li>Alabama -&gt; Hofstra</li><li>Virginia -&gt; Wright St</li></ul>
+                      <div class="change-title">R64 <span>8 changes</span></div>
+                      <ul><li>N Dakota St -&gt; Michigan St</li><li>Arkansas -&gt; Hawai&#x27;i</li><li>McNeese -&gt; Vanderbilt</li><li>Idaho -&gt; Houston</li><li>Texas Tech -&gt; Akron</li><li>Alabama -&gt; Hofstra</li></ul>
                     </div>
                     
                     <div class="change-group">
-                      <div class="change-title">R32 <span>5 changes</span></div>
-                      <ul><li>Arkansas -&gt; High Point</li><li>Texas -&gt; Gonzaga</li><li>Purdue -&gt; Missouri</li><li>Texas Tech -&gt; Akron</li><li>Kentucky -&gt; Iowa State</li></ul>
+                      <div class="change-title">R32 <span>6 changes</span></div>
+                      <ul><li>Arkansas -&gt; High Point</li><li>Texas -&gt; Gonzaga</li><li>Purdue -&gt; Missouri</li><li>Nebraska -&gt; Vanderbilt</li><li>Texas Tech -&gt; Akron</li><li>Kentucky -&gt; Iowa State</li></ul>
                     </div>
                     
                     <div class="change-group">
-                      <div class="change-title">Sweet 16 <span>1 changes</span></div>
-                      <ul><li>Purdue -&gt; Gonzaga</li></ul>
+                      <div class="change-title">Sweet 16 <span>2 changes</span></div>
+                      <ul><li>Purdue -&gt; Gonzaga</li><li>Nebraska -&gt; Vanderbilt</li></ul>
                     </div>
                     
             </section>
@@ -931,37 +707,32 @@
             <section class="card change-card">
               <div class="card-top">
                 <h3>Final Four -> Title</h3>
-                <div class="gain-pill">+7.01 EV</div>
+                <div class="gain-pill">+6.93 EV</div>
               </div>
               
                     <div class="change-group">
-                      <div class="change-title">R64 <span>7 changes</span></div>
-                      <ul><li>Michigan St -&gt; N Dakota St</li><li>Hawai&#x27;i -&gt; Arkansas</li><li>McNeese -&gt; Vanderbilt</li><li>Nebraska -&gt; Troy</li><li>Hofstra -&gt; Alabama</li><li>Wright St -&gt; Virginia</li></ul>
+                      <div class="change-title">R64 <span>6 changes</span></div>
+                      <ul><li>Michigan St -&gt; N Dakota St</li><li>Hawai&#x27;i -&gt; Arkansas</li><li>Nebraska -&gt; Troy</li><li>Hofstra -&gt; Alabama</li><li>Wright St -&gt; Virginia</li><li>Santa Clara -&gt; Kentucky</li></ul>
                     </div>
                     
                     <div class="change-group">
-                      <div class="change-title">R32 <span>3 changes</span></div>
-                      <ul><li>High Point -&gt; Arkansas</li><li>Nebraska -&gt; Vanderbilt</li><li>Iowa State -&gt; Kentucky</li></ul>
-                    </div>
-                    
-                    <div class="change-group">
-                      <div class="change-title">Sweet 16 <span>1 changes</span></div>
-                      <ul><li>Nebraska -&gt; Vanderbilt</li></ul>
+                      <div class="change-title">R32 <span>2 changes</span></div>
+                      <ul><li>High Point -&gt; Arkansas</li><li>Iowa State -&gt; Kentucky</li></ul>
                     </div>
                     
             </section>
             
-        </div>
-      </section>
+      </div>
+    </section>
 
-      <section class="card chart-card">
-        <div class="eyebrow">Teams</div>
-        <h3 class="section-title">Team Survival Matrix Across Horizons</h3>
-        <p class="chart-note">
-          Each cell shows the deepest round that team reaches in that horizon's optimized bracket.
-          Teams are sorted by how deep they ever go across the six horizons.
-        </p>
-        
+    <section class="card chart-card">
+      <div class="eyebrow">Teams</div>
+      <h3 class="section-title">Team Survival Matrix Across Horizons</h3>
+      <p class="chart-note">
+        Each cell shows the deepest round that team reaches in that horizon's optimized bracket.
+        Teams are sorted by how deep they ever go across the six horizons.
+      </p>
+      
     <div class="table-wrap">
       <table class="matrix-table">
         <thead>
@@ -1016,16 +787,16 @@
             
             <tr>
               <th scope="row">
-                <span class="team-label">(4) Nebraska</span>
+                <span class="team-label">(2) Purdue</span>
               </th>
-              <td class="depth-1">R64</td><td class="depth-2">R32</td><td class="depth-3">Sweet 16</td><td class="depth-3">Sweet 16</td><td class="depth-3">Sweet 16</td><td class="depth-0">Out</td>
+              <td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-3">Sweet 16</td><td class="depth-3">Sweet 16</td><td class="depth-1">R64</td><td class="depth-1">R64</td>
             </tr>
             
             <tr>
               <th scope="row">
-                <span class="team-label">(2) Purdue</span>
+                <span class="team-label">(4) Nebraska</span>
               </th>
-              <td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-3">Sweet 16</td><td class="depth-3">Sweet 16</td><td class="depth-1">R64</td><td class="depth-1">R64</td>
+              <td class="depth-1">R64</td><td class="depth-2">R32</td><td class="depth-3">Sweet 16</td><td class="depth-3">Sweet 16</td><td class="depth-1">R64</td><td class="depth-0">Out</td>
             </tr>
             
             <tr>
@@ -1039,7 +810,7 @@
               <th scope="row">
                 <span class="team-label">(5) Vanderbilt</span>
               </th>
-              <td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-3">Sweet 16</td>
+              <td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-3">Sweet 16</td><td class="depth-3">Sweet 16</td>
             </tr>
             
             <tr>
@@ -1177,21 +948,14 @@
             
             <tr>
               <th scope="row">
-                <span class="team-label">(2) Houston</span>
-              </th>
-              <td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-0">Out</td><td class="depth-1">R64</td><td class="depth-1">R64</td>
-            </tr>
-            
-            <tr>
-              <th scope="row">
-                <span class="team-label">(12) McNeese</span>
-              </th>
-              <td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-0">Out</td>
-            </tr>
-            
-            <tr>
-              <th scope="row">
                 <span class="team-label">(13) CA Baptist</span>
+              </th>
+              <td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-1">R64</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(2) Houston</span>
               </th>
               <td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-0">Out</td><td class="depth-1">R64</td><td class="depth-1">R64</td>
             </tr>
@@ -1200,7 +964,14 @@
               <th scope="row">
                 <span class="team-label">(3) Michigan St</span>
               </th>
-              <td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-0">Out</td><td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-0">Out</td>
+              <td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-0">Out</td><td class="depth-1">R64</td><td class="depth-0">Out</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(12) McNeese</span>
+              </th>
+              <td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-1">R64</td><td class="depth-0">Out</td><td class="depth-0">Out</td>
             </tr>
             
             <tr>
@@ -1242,14 +1013,7 @@
               <th scope="row">
                 <span class="team-label">(14) N Dakota St</span>
               </th>
-              <td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-1">R64</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-1">R64</td>
-            </tr>
-            
-            <tr>
-              <th scope="row">
-                <span class="team-label">(4) Kansas</span>
-              </th>
-              <td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-1">R64</td><td class="depth-0">Out</td><td class="depth-0">Out</td>
+              <td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-1">R64</td><td class="depth-0">Out</td><td class="depth-1">R64</td>
             </tr>
             
             <tr>
@@ -1292,6 +1056,13 @@
                 <span class="team-label">(15) Idaho</span>
               </th>
               <td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-1">R64</td><td class="depth-0">Out</td><td class="depth-0">Out</td>
+            </tr>
+            
+            <tr>
+              <th scope="row">
+                <span class="team-label">(4) Kansas</span>
+              </th>
+              <td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td><td class="depth-0">Out</td>
             </tr>
             
             <tr>
@@ -1424,16 +1195,16 @@
       </table>
     </div>
     
-      </section>
+    </section>
 
-      <section class="card chart-card">
-        <div class="eyebrow">Similarity</div>
-        <h3 class="section-title">How Similar the Horizon Brackets Are</h3>
-        <p class="chart-note">
-          Each percentage compares two horizons across all rounds they both specify.
-          Darker cells mean the optimizer is making almost the same choices in both views.
-        </p>
-        
+    <section class="card chart-card">
+      <div class="eyebrow">Similarity</div>
+      <h3 class="section-title">How Similar the Horizon Brackets Are</h3>
+      <p class="chart-note">
+        Each percentage compares two horizons across all rounds they both specify.
+        Lighter cells mean the optimizer is making almost the same choices in both views.
+      </p>
+      
     <div class="table-wrap">
       <table class="heatmap-table">
         <thead>
@@ -1443,518 +1214,12 @@
           </tr>
         </thead>
         <tbody>
-          <tr><th>R64</th><td style="background:rgba(56, 189, 248, 0.700)">100%</td><td style="background:rgba(56, 189, 248, 0.613)">84%</td><td style="background:rgba(56, 189, 248, 0.578)">78%</td><td style="background:rgba(56, 189, 248, 0.525)">69%</td><td style="background:rgba(56, 189, 248, 0.648)">91%</td><td style="background:rgba(56, 189, 248, 0.525)">69%</td></tr><tr><th>R32</th><td style="background:rgba(56, 189, 248, 0.613)">84%</td><td style="background:rgba(56, 189, 248, 0.700)">100%</td><td style="background:rgba(56, 189, 248, 0.642)">90%</td><td style="background:rgba(56, 189, 248, 0.583)">79%</td><td style="background:rgba(56, 189, 248, 0.618)">85%</td><td style="background:rgba(56, 189, 248, 0.572)">77%</td></tr><tr><th>Sweet 16</th><td style="background:rgba(56, 189, 248, 0.578)">78%</td><td style="background:rgba(56, 189, 248, 0.642)">90%</td><td style="background:rgba(56, 189, 248, 0.700)">100%</td><td style="background:rgba(56, 189, 248, 0.610)">84%</td><td style="background:rgba(56, 189, 248, 0.610)">84%</td><td style="background:rgba(56, 189, 248, 0.580)">79%</td></tr><tr><th>Elite 8</th><td style="background:rgba(56, 189, 248, 0.525)">69%</td><td style="background:rgba(56, 189, 248, 0.583)">79%</td><td style="background:rgba(56, 189, 248, 0.610)">84%</td><td style="background:rgba(56, 189, 248, 0.700)">100%</td><td style="background:rgba(56, 189, 248, 0.579)">78%</td><td style="background:rgba(56, 189, 248, 0.588)">80%</td></tr><tr><th>Final Four</th><td style="background:rgba(56, 189, 248, 0.648)">91%</td><td style="background:rgba(56, 189, 248, 0.618)">85%</td><td style="background:rgba(56, 189, 248, 0.610)">84%</td><td style="background:rgba(56, 189, 248, 0.579)">78%</td><td style="background:rgba(56, 189, 248, 0.700)">100%</td><td style="background:rgba(56, 189, 248, 0.601)">82%</td></tr><tr><th>Title</th><td style="background:rgba(56, 189, 248, 0.525)">69%</td><td style="background:rgba(56, 189, 248, 0.572)">77%</td><td style="background:rgba(56, 189, 248, 0.580)">79%</td><td style="background:rgba(56, 189, 248, 0.588)">80%</td><td style="background:rgba(56, 189, 248, 0.601)">82%</td><td style="background:rgba(56, 189, 248, 0.700)">100%</td></tr>
+          <tr><th>R64</th><td style="background:rgba(56, 189, 248, 0.700)">100%</td><td style="background:rgba(56, 189, 248, 0.613)">84%</td><td style="background:rgba(56, 189, 248, 0.595)">81%</td><td style="background:rgba(56, 189, 248, 0.525)">69%</td><td style="background:rgba(56, 189, 248, 0.630)">88%</td><td style="background:rgba(56, 189, 248, 0.525)">69%</td></tr><tr><th>R32</th><td style="background:rgba(56, 189, 248, 0.613)">84%</td><td style="background:rgba(56, 189, 248, 0.700)">100%</td><td style="background:rgba(56, 189, 248, 0.653)">92%</td><td style="background:rgba(56, 189, 248, 0.583)">79%</td><td style="background:rgba(56, 189, 248, 0.595)">81%</td><td style="background:rgba(56, 189, 248, 0.572)">77%</td></tr><tr><th>Sweet 16</th><td style="background:rgba(56, 189, 248, 0.595)">81%</td><td style="background:rgba(56, 189, 248, 0.653)">92%</td><td style="background:rgba(56, 189, 248, 0.700)">100%</td><td style="background:rgba(56, 189, 248, 0.620)">86%</td><td style="background:rgba(56, 189, 248, 0.590)">80%</td><td style="background:rgba(56, 189, 248, 0.570)">77%</td></tr><tr><th>Elite 8</th><td style="background:rgba(56, 189, 248, 0.525)">69%</td><td style="background:rgba(56, 189, 248, 0.583)">79%</td><td style="background:rgba(56, 189, 248, 0.620)">86%</td><td style="background:rgba(56, 189, 248, 0.700)">100%</td><td style="background:rgba(56, 189, 248, 0.551)">73%</td><td style="background:rgba(56, 189, 248, 0.607)">83%</td></tr><tr><th>Final Four</th><td style="background:rgba(56, 189, 248, 0.630)">88%</td><td style="background:rgba(56, 189, 248, 0.595)">81%</td><td style="background:rgba(56, 189, 248, 0.590)">80%</td><td style="background:rgba(56, 189, 248, 0.551)">73%</td><td style="background:rgba(56, 189, 248, 0.700)">100%</td><td style="background:rgba(56, 189, 248, 0.628)">87%</td></tr><tr><th>Title</th><td style="background:rgba(56, 189, 248, 0.525)">69%</td><td style="background:rgba(56, 189, 248, 0.572)">77%</td><td style="background:rgba(56, 189, 248, 0.570)">77%</td><td style="background:rgba(56, 189, 248, 0.607)">83%</td><td style="background:rgba(56, 189, 248, 0.628)">87%</td><td style="background:rgba(56, 189, 248, 0.700)">100%</td></tr>
         </tbody>
       </table>
     </div>
     
-      </section>
-    </section>
-
-    <section id="calculator-tab" class="tab-panel" hidden>
-      <div class="calculator-shell">
-        <section class="card calculator-card">
-          <div class="eyebrow">Interactive</div>
-          <h2 class="section-title">Build Your Own Bracket and Score Its EV</h2>
-          <p>
-            Enter winners round by round. The calculator uses the same BPI-derived matchup model
-            as the dashboard and computes the full expected value for your custom bracket.
-          </p>
-          <div class="calculator-actions">
-            <button id="load-optimized" class="action-button primary" type="button">Load best Title bracket</button>
-            <button id="reset-calculator" class="action-button" type="button">Clear picks</button>
-          </div>
-          <div class="calculator-summary">
-            <div class="summary-stat">
-              <div class="label">Custom EV</div>
-              <div class="value" id="custom-ev">-</div>
-            </div>
-            <div class="summary-stat">
-              <div class="label">Completed Picks</div>
-              <div class="value" id="custom-complete">0 / 63</div>
-            </div>
-            <div class="summary-stat">
-              <div class="label">Champion</div>
-              <div class="value" id="custom-champion">-</div>
-            </div>
-            <div class="summary-stat">
-              <div class="label">Status</div>
-              <div class="value status-warn" id="custom-status">Waiting for picks</div>
-            </div>
-          </div>
-          <p class="helper-text">Round choices unlock as upstream winners are selected. EV updates automatically once the bracket is complete.</p>
-        </section>
-
-        <div id="calculator-root"></div>
-      </div>
     </section>
   </main>
-  <script id="calculator-data" type="application/json">{"regions": ["East", "West", "South", "Midwest"], "roundLabels": {"1": "R64", "2": "R32", "3": "Sweet 16", "4": "Elite 8", "5": "Final Four", "6": "Title"}, "teamsByRegion": {"East": [{"name": "Duke", "seed": 1, "bpi": 25.6386}, {"name": "Siena", "seed": 16, "bpi": -1.8}, {"name": "Ohio State", "seed": 8, "bpi": 14.8911}, {"name": "TCU", "seed": 9, "bpi": 11.1891}, {"name": "St John's", "seed": 5, "bpi": 17.8005}, {"name": "Northern Iowa", "seed": 12, "bpi": 7.4}, {"name": "Kansas", "seed": 4, "bpi": 16.5791}, {"name": "CA Baptist", "seed": 13, "bpi": 1.6}, {"name": "Louisville", "seed": 6, "bpi": 19.065}, {"name": "South Florida", "seed": 11, "bpi": 10.5329}, {"name": "Michigan St", "seed": 3, "bpi": 18.4218}, {"name": "N Dakota St", "seed": 14, "bpi": 1.9}, {"name": "UCLA", "seed": 7, "bpi": 15.1653}, {"name": "UCF", "seed": 10, "bpi": 9.6203}, {"name": "UConn", "seed": 2, "bpi": 19.3987}, {"name": "Furman", "seed": 15, "bpi": -0.1}], "West": [{"name": "Arizona", "seed": 1, "bpi": 23.7315}, {"name": "Long Island", "seed": 16, "bpi": -3.3}, {"name": "Villanova", "seed": 8, "bpi": 13.6188}, {"name": "Utah State", "seed": 9, "bpi": 14.0605}, {"name": "Wisconsin", "seed": 5, "bpi": 15.7663}, {"name": "High Point", "seed": 12, "bpi": 8.9168}, {"name": "Arkansas", "seed": 4, "bpi": 16.946}, {"name": "Hawai'i", "seed": 13, "bpi": 2.8}, {"name": "BYU", "seed": 6, "bpi": 16.7646}, {"name": "Texas", "seed": 11, "bpi": 13.5752}, {"name": "Gonzaga", "seed": 3, "bpi": 20.6631}, {"name": "Kennesaw St", "seed": 14, "bpi": 2.5}, {"name": "Miami", "seed": 7, "bpi": 13.2624}, {"name": "Missouri", "seed": 10, "bpi": 12.0371}, {"name": "Purdue", "seed": 2, "bpi": 20.6224}, {"name": "Queens", "seed": 15, "bpi": -1.8}], "South": [{"name": "Florida", "seed": 1, "bpi": 22.3203}, {"name": "Prairie View", "seed": 16, "bpi": -7.8}, {"name": "Clemson", "seed": 8, "bpi": 14.6037}, {"name": "Iowa", "seed": 9, "bpi": 14.4233}, {"name": "Vanderbilt", "seed": 5, "bpi": 18.1679}, {"name": "McNeese", "seed": 12, "bpi": 9.4308}, {"name": "Nebraska", "seed": 4, "bpi": 16.9448}, {"name": "Troy", "seed": 13, "bpi": 1.9}, {"name": "North Carolina", "seed": 6, "bpi": 14.4579}, {"name": "VCU", "seed": 11, "bpi": 11.6811}, {"name": "Illinois", "seed": 3, "bpi": 21.0155}, {"name": "Penn", "seed": 14, "bpi": -0.1}, {"name": "Saint Mary's", "seed": 7, "bpi": 14.805}, {"name": "Texas A&M", "seed": 10, "bpi": 14.1893}, {"name": "Houston", "seed": 2, "bpi": 23.0221}, {"name": "Idaho", "seed": 15, "bpi": -0.6}], "Midwest": [{"name": "Michigan", "seed": 1, "bpi": 24.0992}, {"name": "Howard", "seed": 16, "bpi": -2.5}, {"name": "Georgia", "seed": 8, "bpi": 14.0655}, {"name": "Saint Louis", "seed": 9, "bpi": 13.82}, {"name": "Texas Tech", "seed": 5, "bpi": 16.5924}, {"name": "Akron", "seed": 12, "bpi": 7.7}, {"name": "Alabama", "seed": 4, "bpi": 17.8618}, {"name": "Hofstra", "seed": 13, "bpi": 4.6}, {"name": "Tennessee", "seed": 6, "bpi": 18.8721}, {"name": "Miami OH", "seed": 11, "bpi": 6.2}, {"name": "Virginia", "seed": 3, "bpi": 16.7229}, {"name": "Wright St", "seed": 14, "bpi": 1.5}, {"name": "Kentucky", "seed": 7, "bpi": 16.5198}, {"name": "Santa Clara", "seed": 10, "bpi": 10.8683}, {"name": "Iowa State", "seed": 2, "bpi": 21.5046}, {"name": "Tennessee St", "seed": 15, "bpi": -2.6}]}, "optimized": {"regions": {"East": {"round_64_winners": ["Duke", "TCU", "St John's", "CA Baptist", "Louisville", "N Dakota St", "UCLA", "UConn"], "round_32_winners": ["Duke", "St John's", "Louisville", "UCLA"], "round_16_winners": ["Duke", "Louisville"], "region_champion": ["Duke"]}, "West": {"round_64_winners": ["Arizona", "Utah State", "High Point", "Arkansas", "Texas", "Gonzaga", "Missouri", "Purdue"], "round_32_winners": ["Arizona", "Arkansas", "Gonzaga", "Missouri"], "round_16_winners": ["Arizona", "Gonzaga"], "region_champion": ["Arizona"]}, "South": {"round_64_winners": ["Florida", "Iowa", "Vanderbilt", "Troy", "VCU", "Illinois", "Texas A&M", "Houston"], "round_32_winners": ["Iowa", "Vanderbilt", "Illinois", "Texas A&M"], "round_16_winners": ["Vanderbilt", "Illinois"], "region_champion": ["Illinois"]}, "Midwest": {"round_64_winners": ["Michigan", "Saint Louis", "Akron", "Alabama", "Tennessee", "Virginia", "Kentucky", "Iowa State"], "round_32_winners": ["Michigan", "Akron", "Tennessee", "Kentucky"], "round_16_winners": ["Michigan", "Tennessee"], "region_champion": ["Michigan"]}}, "final_four_winners": ["Duke", "Michigan"], "champion": ["Duke"]}, "scalingFactor": 0.15, "roundParams": {"1": [1, 1], "2": [2, 2], "3": [4, 3], "4": [8, 4], "5": [16, 5], "6": [32, 6]}}</script>
-  <script>
-    const tabButtons = document.querySelectorAll(".tab-button");
-    const tabPanels = document.querySelectorAll(".tab-panel");
-    tabButtons.forEach((button) => {
-      button.addEventListener("click", () => {
-        const target = button.dataset.tabTarget;
-        tabButtons.forEach((candidate) => {
-          const active = candidate === button;
-          candidate.classList.toggle("active", active);
-          candidate.setAttribute("aria-selected", active ? "true" : "false");
-        });
-        tabPanels.forEach((panel) => {
-          panel.hidden = panel.id !== target;
-        });
-      });
-    });
-
-    const calculatorData = JSON.parse(document.getElementById("calculator-data").textContent);
-    const regionOrder = calculatorData.regions;
-    const teamsByRegion = calculatorData.teamsByRegion;
-    const optimized = calculatorData.optimized;
-    const scalingFactor = calculatorData.scalingFactor;
-    const roundParams = calculatorData.roundParams;
-    const roundKeyOrder = ["round_64_winners", "round_32_winners", "round_16_winners", "region_champion"];
-    const roundTitleMap = {
-      round_64_winners: "R64",
-      round_32_winners: "R32",
-      round_16_winners: "Sweet 16",
-      region_champion: "Elite 8",
-    };
-    const matchupsPerRound = {
-      round_64_winners: 8,
-      round_32_winners: 4,
-      round_16_winners: 2,
-      region_champion: 1,
-    };
-    const state = {
-      regions: {},
-      final_four_winners: ["", ""],
-      champion: "",
-    };
-    const teamLookup = {};
-
-    regionOrder.forEach((region) => {
-      state.regions[region] = {
-        round_64_winners: Array(8).fill(""),
-        round_32_winners: Array(4).fill(""),
-        round_16_winners: Array(2).fill(""),
-        region_champion: [""],
-      };
-      teamsByRegion[region].forEach((team) => {
-        teamLookup[team.name] = team;
-      });
-    });
-
-    const root = document.getElementById("calculator-root");
-    const customEv = document.getElementById("custom-ev");
-    const customComplete = document.getElementById("custom-complete");
-    const customChampion = document.getElementById("custom-champion");
-    const customStatus = document.getElementById("custom-status");
-
-    function prob(teamAName, teamBName) {
-      if (teamAName === teamBName) {
-        return 0.5;
-      }
-      const teamA = teamLookup[teamAName];
-      const teamB = teamLookup[teamBName];
-      return 1 / (1 + Math.exp(-(teamA.bpi - teamB.bpi) * scalingFactor));
-    }
-
-    function createOptionMarkup(options, selectedValue) {
-      const placeholder = '<option value="">Choose winner</option>';
-      const choices = options.map((name) => {
-        const selected = name === selectedValue ? " selected" : "";
-        const team = teamLookup[name];
-        return `<option value="${name}"${selected}>(${team.seed}) ${name}</option>`;
-      });
-      return placeholder + choices.join("");
-    }
-
-    function getRegionRoundSources(region, roundKey) {
-      if (roundKey === "round_64_winners") {
-        const teams = teamsByRegion[region].map((team) => team.name);
-        const pairs = [];
-        for (let i = 0; i < teams.length; i += 2) {
-          pairs.push([teams[i], teams[i + 1]]);
-        }
-        return pairs;
-      }
-
-      if (roundKey === "round_32_winners") {
-        const picks = state.regions[region].round_64_winners;
-        return [
-          [picks[0], picks[1]],
-          [picks[2], picks[3]],
-          [picks[4], picks[5]],
-          [picks[6], picks[7]],
-        ];
-      }
-
-      if (roundKey === "round_16_winners") {
-        const picks = state.regions[region].round_32_winners;
-        return [
-          [picks[0], picks[1]],
-          [picks[2], picks[3]],
-        ];
-      }
-
-      const picks = state.regions[region].round_16_winners;
-      return [[picks[0], picks[1]]];
-    }
-
-    function syncInvalidPick(region, roundKey, slot, validOptions) {
-      if (!validOptions.includes(state.regions[region][roundKey][slot])) {
-        state.regions[region][roundKey][slot] = "";
-      }
-    }
-
-    function syncRegionDependencies(region) {
-      roundKeyOrder.forEach((roundKey) => {
-        const sources = getRegionRoundSources(region, roundKey);
-        sources.forEach((options, slot) => {
-          const validOptions = options.filter(Boolean);
-          syncInvalidPick(region, roundKey, slot, validOptions);
-        });
-      });
-    }
-
-    function syncFinalDependencies() {
-      const eastSouth = [state.regions.East.region_champion[0], state.regions.South.region_champion[0]].filter(Boolean);
-      const westMidwest = [state.regions.West.region_champion[0], state.regions.Midwest.region_champion[0]].filter(Boolean);
-
-      if (!eastSouth.includes(state.final_four_winners[0])) {
-        state.final_four_winners[0] = "";
-      }
-      if (!westMidwest.includes(state.final_four_winners[1])) {
-        state.final_four_winners[1] = "";
-      }
-
-      const finalOptions = state.final_four_winners.filter(Boolean);
-      if (!finalOptions.includes(state.champion)) {
-        state.champion = "";
-      }
-    }
-
-    function regionCardMarkup(region) {
-      const roundClasses = {
-        round_64_winners: "round-64",
-        round_32_winners: "round-32",
-        round_16_winners: "round-16",
-        region_champion: "round-elite-8",
-      };
-
-      const columns = roundKeyOrder.map((roundKey, roundIndex) => {
-        const sources = getRegionRoundSources(region, roundKey);
-        const rows = sources.map((options, slot) => {
-          const validOptions = options.filter(Boolean);
-          const selectedValue = state.regions[region][roundKey][slot];
-          const disabled = validOptions.length < 2 ? " disabled" : "";
-          const subtitle = validOptions.length
-            ? validOptions.map((name) => `(${teamLookup[name].seed}) ${name}`).join(" vs ")
-            : "Waiting for prior round";
-          const connectorClass = roundIndex < roundKeyOrder.length - 1 ? " connector" : "";
-          return `
-            <div class="matchup-row${connectorClass}">
-              <label>${roundTitleMap[roundKey]} matchup ${slot + 1}</label>
-              <div class="helper-text">${subtitle}</div>
-              <select data-region="${region}" data-round-key="${roundKey}" data-slot="${slot}"${disabled}>
-                ${createOptionMarkup(validOptions, selectedValue)}
-              </select>
-            </div>
-          `;
-        }).join("");
-
-        return `
-          <div class="bracket-column ${roundClasses[roundKey]}">
-            <div class="pick-label">${roundTitleMap[roundKey]}</div>
-            <div class="matchup-stack">${rows}</div>
-          </div>
-        `;
-      }).join("");
-
-      return `
-        <section class="card region-card bracket-region">
-          <div class="region-header">
-            <h3>${region}</h3>
-            <div class="ev-pill">${teamsByRegion[region].length} teams</div>
-          </div>
-          <div class="bracket-board">${columns}</div>
-        </section>
-      `;
-    }
-
-    function finalsMarkup() {
-      const semi1Options = [state.regions.East.region_champion[0], state.regions.South.region_champion[0]].filter(Boolean);
-      const semi2Options = [state.regions.West.region_champion[0], state.regions.Midwest.region_champion[0]].filter(Boolean);
-      const finalOptions = state.final_four_winners.filter(Boolean);
-      const semis = [
-        {
-          label: "East vs South",
-          options: semi1Options,
-          slot: 0,
-        },
-        {
-          label: "West vs Midwest",
-          options: semi2Options,
-          slot: 1,
-        },
-      ].map((item) => {
-        const disabled = item.options.length < 2 ? " disabled" : "";
-        return `
-          <section class="card final-card">
-            <div class="pick-label">${item.label}</div>
-            <div class="matchup-row">
-              <div class="helper-text">${item.options.length ? item.options.map((name) => `(${teamLookup[name].seed}) ${name}`).join(" vs ") : "Waiting for region champions"}</div>
-              <select data-final-slot="${item.slot}"${disabled}>
-                ${createOptionMarkup(item.options, state.final_four_winners[item.slot])}
-              </select>
-            </div>
-          </section>
-        `;
-      }).join("");
-
-      const titleDisabled = finalOptions.length < 2 ? " disabled" : "";
-      const titleSubtitle = finalOptions.length
-        ? finalOptions.map((name) => `(${teamLookup[name].seed}) ${name}`).join(" vs ")
-        : "Waiting for finalists";
-
-      return `
-        <section class="finals-grid">
-          <div class="finals-column">
-            ${semis[0]}
-          </div>
-          <section class="card title-card">
-            <div class="pick-label">National Champion</div>
-            <div class="matchup-row">
-              <div class="helper-text">${titleSubtitle}</div>
-              <select id="champion-select"${titleDisabled}>
-                ${createOptionMarkup(finalOptions, state.champion)}
-              </select>
-            </div>
-            <div class="helper-text">Final Four winners feed the title game automatically.</div>
-          </section>
-          <div class="finals-column">
-            ${semis[1]}
-          </div>
-        </section>
-      `;
-    }
-
-    function renderCalculator() {
-      regionOrder.forEach((region) => syncRegionDependencies(region));
-      syncFinalDependencies();
-      root.innerHTML = `
-        <div class="calculator-grid">
-          ${regionOrder.map((region) => regionCardMarkup(region)).join("")}
-        </div>
-        ${finalsMarkup()}
-      `;
-
-      root.querySelectorAll("select[data-region]").forEach((select) => {
-        select.addEventListener("change", (event) => {
-          const el = event.currentTarget;
-          const region = el.dataset.region;
-          const roundKey = el.dataset.roundKey;
-          const slot = Number(el.dataset.slot);
-          state.regions[region][roundKey][slot] = el.value;
-          renderCalculator();
-          updateSummary();
-        });
-      });
-
-      root.querySelectorAll("select[data-final-slot]").forEach((select) => {
-        select.addEventListener("change", (event) => {
-          const slot = Number(event.currentTarget.dataset.finalSlot);
-          state.final_four_winners[slot] = event.currentTarget.value;
-          renderCalculator();
-          updateSummary();
-        });
-      });
-
-      const championSelect = document.getElementById("champion-select");
-      if (championSelect) {
-        championSelect.addEventListener("change", (event) => {
-          state.champion = event.currentTarget.value;
-          updateSummary();
-        });
-      }
-    }
-
-    function buildCustomBracket() {
-      const bracket = {
-        cutoff_round: 6,
-        regions: {},
-        final_four_winners: [],
-      };
-
-      for (const region of regionOrder) {
-        const picks = state.regions[region];
-        if (picks.round_64_winners.some((value) => !value) ||
-            picks.round_32_winners.some((value) => !value) ||
-            picks.round_16_winners.some((value) => !value) ||
-            !picks.region_champion[0]) {
-          return null;
-        }
-        bracket.regions[region] = {
-          teams: teamsByRegion[region],
-          round_64_winners: picks.round_64_winners.map((name) => teamLookup[name]),
-          round_32_winners: picks.round_32_winners.map((name) => teamLookup[name]),
-          round_16_winners: picks.round_16_winners.map((name) => teamLookup[name]),
-          region_champion: teamLookup[picks.region_champion[0]],
-        };
-      }
-
-      if (state.final_four_winners.some((value) => !value) || !state.champion) {
-        return null;
-      }
-
-      bracket.final_four_winners = state.final_four_winners.map((name) => teamLookup[name]);
-      bracket.champion = teamLookup[state.champion];
-      return bracket;
-    }
-
-    function matchupEv(leftDist, rightDist, pickedName, roundNum) {
-      const [base, bonus] = roundParams[String(roundNum)];
-      let ev = 0;
-      for (const [leftName, leftProb] of Object.entries(leftDist)) {
-        const leftTeam = teamLookup[leftName];
-        for (const [rightName, rightProb] of Object.entries(rightDist)) {
-          const rightTeam = teamLookup[rightName];
-          const pMatch = leftProb * rightProb;
-          if (pickedName === leftName) {
-            ev += pMatch * prob(leftName, rightName) * (base + bonus * Math.max(0, leftTeam.seed - rightTeam.seed));
-          } else if (pickedName === rightName) {
-            ev += pMatch * prob(rightName, leftName) * (base + bonus * Math.max(0, rightTeam.seed - leftTeam.seed));
-          }
-        }
-      }
-      return ev;
-    }
-
-    function advanceDistribution(leftDist, rightDist) {
-      const out = {};
-      for (const [leftName, leftProb] of Object.entries(leftDist)) {
-        for (const [rightName, rightProb] of Object.entries(rightDist)) {
-          const pMatch = leftProb * rightProb;
-          out[leftName] = (out[leftName] || 0) + pMatch * prob(leftName, rightName);
-          out[rightName] = (out[rightName] || 0) + pMatch * prob(rightName, leftName);
-        }
-      }
-      return out;
-    }
-
-    function scoreBracketEv(bracket) {
-      let totalEv = 0;
-      const regionChampDists = {};
-
-      for (const region of regionOrder) {
-        const regionData = bracket.regions[region];
-        const regionTeams = regionData.teams;
-        const r64Inputs = [];
-        for (let i = 0; i < regionTeams.length; i += 2) {
-          r64Inputs.push([regionTeams[i], regionTeams[i + 1]]);
-        }
-
-        const r64WinnerDists = [];
-        regionData.round_64_winners.forEach((picked, slot) => {
-          const [teamA, teamB] = r64Inputs[slot];
-          totalEv += matchupEv({ [teamA.name]: 1 }, { [teamB.name]: 1 }, picked.name, 1);
-          r64WinnerDists.push({
-            [teamA.name]: prob(teamA.name, teamB.name),
-            [teamB.name]: prob(teamB.name, teamA.name),
-          });
-        });
-
-        const r32WinnerDists = [];
-        regionData.round_32_winners.forEach((picked, slot) => {
-          const leftDist = r64WinnerDists[2 * slot];
-          const rightDist = r64WinnerDists[2 * slot + 1];
-          totalEv += matchupEv(leftDist, rightDist, picked.name, 2);
-          r32WinnerDists.push(advanceDistribution(leftDist, rightDist));
-        });
-
-        const r16WinnerDists = [];
-        regionData.round_16_winners.forEach((picked, slot) => {
-          const leftDist = r32WinnerDists[2 * slot];
-          const rightDist = r32WinnerDists[2 * slot + 1];
-          totalEv += matchupEv(leftDist, rightDist, picked.name, 3);
-          r16WinnerDists.push(advanceDistribution(leftDist, rightDist));
-        });
-
-        totalEv += matchupEv(r16WinnerDists[0], r16WinnerDists[1], regionData.region_champion.name, 4);
-        regionChampDists[region] = advanceDistribution(r16WinnerDists[0], r16WinnerDists[1]);
-      }
-
-      totalEv += matchupEv(regionChampDists.East, regionChampDists.South, bracket.final_four_winners[0].name, 5);
-      const semi1 = advanceDistribution(regionChampDists.East, regionChampDists.South);
-      totalEv += matchupEv(regionChampDists.West, regionChampDists.Midwest, bracket.final_four_winners[1].name, 5);
-      const semi2 = advanceDistribution(regionChampDists.West, regionChampDists.Midwest);
-      totalEv += matchupEv(semi1, semi2, bracket.champion.name, 6);
-      return totalEv;
-    }
-
-    function countCompletedPicks() {
-      let complete = 0;
-      for (const region of regionOrder) {
-        for (const roundKey of roundKeyOrder) {
-          complete += state.regions[region][roundKey].filter(Boolean).length;
-        }
-      }
-      complete += state.final_four_winners.filter(Boolean).length;
-      if (state.champion) {
-        complete += 1;
-      }
-      return complete;
-    }
-
-    function updateSummary() {
-      const completed = countCompletedPicks();
-      customComplete.textContent = `${completed} / 63`;
-      customChampion.textContent = state.champion ? `(${teamLookup[state.champion].seed}) ${state.champion}` : "-";
-
-      const bracket = buildCustomBracket();
-      if (!bracket) {
-        customEv.textContent = "-";
-        customStatus.textContent = completed === 0 ? "Waiting for picks" : "Incomplete bracket";
-        customStatus.className = "value status-warn";
-        return;
-      }
-
-      const ev = scoreBracketEv(bracket);
-      customEv.textContent = ev.toFixed(2);
-      customStatus.textContent = "Full bracket scored";
-      customStatus.className = "value status-ok";
-    }
-
-    function loadOptimizedBracket() {
-      regionOrder.forEach((region) => {
-        const saved = optimized.regions[region];
-        roundKeyOrder.forEach((roundKey) => {
-          state.regions[region][roundKey] = [...saved[roundKey]];
-        });
-      });
-      state.final_four_winners = [...optimized.final_four_winners];
-      state.champion = optimized.champion[0] || "";
-      renderCalculator();
-      updateSummary();
-    }
-
-    function resetCalculator() {
-      regionOrder.forEach((region) => {
-        roundKeyOrder.forEach((roundKey) => {
-          state.regions[region][roundKey] = state.regions[region][roundKey].map(() => "");
-        });
-      });
-      state.final_four_winners = ["", ""];
-      state.champion = "";
-      renderCalculator();
-      updateSummary();
-    }
-
-    document.getElementById("load-optimized").addEventListener("click", loadOptimizedBracket);
-    document.getElementById("reset-calculator").addEventListener("click", resetCalculator);
-    renderCalculator();
-    updateSummary();
-  </script>
 </body>
 </html>
