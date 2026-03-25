@@ -53,6 +53,31 @@ PARTIAL_RESULTS_DIR = RESULTS_DIR / "partial"
 PARTIAL_SAVE_PATH_TEMPLATE = str(PARTIAL_RESULTS_DIR / "best_partial_round_{cutoff}.json")
 PARTIAL_TOP_K_PATH_TEMPLATE = str(PARTIAL_RESULTS_DIR / "top_partial_round_{cutoff}.json")
 
+# Bias deeper horizons harder because the early-round searches are cheaper and
+# tend to stabilize sooner.
+PARTIAL_SEARCH_RUN_WEIGHTS = {
+    1: 1,
+    2: 1,
+    3: 2,
+    4: 4,
+    5: 4,
+}
+
+# For Elite 8 / Final Four, some "random" restarts begin near the saved
+# full-title bracket and then get lightly perturbed before hill climbing.
+TITLE_GUIDED_RANDOM_RESTART_PROB = {
+    4: 0.35,
+    5: 0.45,
+}
+TITLE_GUIDED_MIN_FLIPS = {
+    4: 1,
+    5: 1,
+}
+TITLE_GUIDED_MAX_FLIPS = {
+    4: 2,
+    5: 3,
+}
+
 
 # ============================================================
 # PARTIAL BRACKET BUILDERS
@@ -571,6 +596,36 @@ def load_title_round_from_full_results() -> dict:
     }
 
 
+def project_title_bracket_to_cutoff(cutoff_round: int) -> Optional[dict]:
+    if cutoff_round < 4 or cutoff_round > 5:
+        return None
+
+    try:
+        title_bracket = load_title_round_from_full_results()["best_bracket"]
+    except FileNotFoundError:
+        return None
+
+    out = {"cutoff_round": cutoff_round, "regions": {}}
+
+    for region in REGION_ORDER:
+        src = title_bracket["regions"][region]
+        region_out = {"teams": copy.deepcopy(src["teams"])}
+        if cutoff_round >= 1:
+            region_out["round_64_winners"] = copy.deepcopy(src["round_64_winners"])
+        if cutoff_round >= 2:
+            region_out["round_32_winners"] = copy.deepcopy(src["round_32_winners"])
+        if cutoff_round >= 3:
+            region_out["round_16_winners"] = copy.deepcopy(src["round_16_winners"])
+        if cutoff_round >= 4:
+            region_out["region_champion"] = copy.deepcopy(src["region_champion"])
+        out["regions"][region] = region_out
+
+    if cutoff_round >= 5:
+        out["final_four_winners"] = copy.deepcopy(title_bracket["final_four_winners"])
+
+    return out
+
+
 def save_best_partial_result(
     best_bracket: dict,
     best_ev: float,
@@ -631,6 +686,24 @@ def choose_partial_elite_restart(cutoff_round: int, elite_pool_size: int = 5):
         source_mode = source_mode[len("elite:"):]
 
     return source_mode, copy.deepcopy(picked["bracket"])
+
+
+def choose_title_guided_partial_restart(
+    cutoff_round: int,
+    prob_grid,
+    name_to_idx: Dict[str, int],
+):
+    base = project_title_bracket_to_cutoff(cutoff_round)
+    if base is None:
+        return None
+
+    return perturb_partial_bracket(
+        base,
+        prob_grid,
+        name_to_idx,
+        min_flips=TITLE_GUIDED_MIN_FLIPS[cutoff_round],
+        max_flips=TITLE_GUIDED_MAX_FLIPS[cutoff_round],
+    )
 
 
 def mutate_one_random_flip_partial(partial_bracket: dict, prob_grid, name_to_idx: Dict[str, int]) -> dict:
@@ -726,6 +799,11 @@ def build_partial_restart_bracket(
     u = random.random()
 
     if u < P_RANDOM_RESTART:
+        guided_prob = TITLE_GUIDED_RANDOM_RESTART_PROB.get(cutoff_round, 0.0)
+        if guided_prob > 0 and random.random() < guided_prob:
+            guided = choose_title_guided_partial_restart(cutoff_round, prob_grid, name_to_idx)
+            if guided is not None:
+                return "title_guided_random", guided
         bracket = build_partial_bracket(all_region_teams, cutoff_round, prob_grid, name_to_idx, picker="random")
         return "random", bracket
 
@@ -885,8 +963,20 @@ def main():
                 )
             )
 
+        weighted_states = []
+        for state in states:
+            cutoff_round = state["cutoff_round"]
+            run_weight = PARTIAL_SEARCH_RUN_WEIGHTS.get(cutoff_round, 0)
+            for _ in range(run_weight):
+                weighted_states.append(state)
+
+        print("Per-cycle search weights:")
+        for cutoff_round in range(1, 6):
+            print(f"  {ROUND_NAME[cutoff_round]:<10} x{PARTIAL_SEARCH_RUN_WEIGHTS[cutoff_round]}")
+        print(f"  {ROUND_NAME[6]:<10} external only\n")
+
         while True:
-            for state in states:
+            for state in weighted_states:
                 run_partial_search_step(
                     state=state,
                     all_region_teams=all_region_teams,

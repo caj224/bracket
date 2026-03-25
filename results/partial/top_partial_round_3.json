@@ -15627,13 +15627,13 @@
     }
   },
   {
-    "timestamp": "2026-03-25T11:22:23.823061",
-    "ev": 87.34258640297871,
+    "timestamp": "2026-03-25T13:15:21.672321",
+    "ev": 87.34799543910489,
     "source_mode": "elite:random",
     "history": [
-      84.08200194996984,
-      86.74208383604876,
-      87.34258640297871
+      84.03556717738758,
+      86.74758234571792,
+      87.34799543910489
     ],
     "bracket": {
       "cutoff_round": 3,
@@ -15881,12 +15881,12 @@
               "bpi_source": "espn"
             },
             {
-              "id": "194",
-              "name": "Ohio State",
-              "seed": 8,
+              "id": "2628",
+              "name": "TCU",
+              "seed": 9,
               "region": "East",
-              "bpi": 14.7216,
-              "prob_r64": 0.0,
+              "bpi": 11.2093,
+              "prob_r64": 100.0,
               "prob_r32": 0.0,
               "prob_r16": 0.0,
               "prob_r8": 0.0,
@@ -15965,18 +15965,18 @@
               "bpi_source": "espn"
             },
             {
-              "id": "41",
-              "name": "UConn",
-              "seed": 2,
+              "id": "231",
+              "name": "Furman",
+              "seed": 15,
               "region": "East",
-              "bpi": 19.4389,
-              "prob_r64": 100.0,
-              "prob_r32": 100.0,
-              "prob_r16": 53.37,
-              "prob_r8": 18.16,
-              "prob_r4": 7.85,
-              "prob_final": 3.01,
-              "bpi_source": "espn"
+              "bpi": -0.1,
+              "prob_r64": null,
+              "prob_r32": null,
+              "prob_r16": null,
+              "prob_r8": null,
+              "prob_r4": null,
+              "prob_final": null,
+              "bpi_source": "manual"
             }
           ],
           "round_32_winners": [
@@ -16883,17 +16883,17 @@
               "bpi_source": "espn"
             },
             {
-              "id": "248",
-              "name": "Houston",
-              "seed": 2,
+              "id": "245",
+              "name": "Texas A&M",
+              "seed": 10,
               "region": "South",
-              "bpi": 23.5351,
+              "bpi": 14.0666,
               "prob_r64": 100.0,
-              "prob_r32": 100.0,
-              "prob_r16": 59.28,
-              "prob_r8": 45.5,
-              "prob_r4": 24.73,
-              "prob_final": 13.61,
+              "prob_r32": 0.0,
+              "prob_r16": 0.0,
+              "prob_r8": 0.0,
+              "prob_r4": 0.0,
+              "prob_final": 0.0,
               "bpi_source": "espn"
             }
           ],
