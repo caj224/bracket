@@ -1,16 +1,16 @@
 {
-  "timestamp": "2026-03-24T22:52:40.711868",
-  "best_ev": 107.44293334078732,
+  "timestamp": "2026-03-24T23:24:50.453982",
+  "best_ev": 107.66865445109022,
   "extra": {
-    "starts_completed": 150,
+    "starts_completed": 6,
     "start_mode": "elite:greedy_init",
-    "start_ev": 92.9717621674757,
+    "start_ev": 99.64551104571727,
     "history": [
-      92.9717621674757,
-      98.89596141171093,
-      104.17541917861728,
-      104.22970525681325,
-      107.44293334078732
+      99.64551104571727,
+      104.06785834230158,
+      104.40114028892017,
+      104.45542636711615,
+      107.66865445109022
     ]
   },
   "best_bracket": {
@@ -1619,18 +1619,18 @@
             "bpi_source": "manual"
           },
           {
-            "id": "333",
-            "name": "Alabama",
-            "seed": 4,
+            "id": "2275",
+            "name": "Hofstra",
+            "seed": 13,
             "region": "Midwest",
-            "bpi": 18.4415,
-            "prob_r64": 100.0,
-            "prob_r32": 100.0,
-            "prob_r16": 27.38,
-            "prob_r8": 10.879999999999999,
-            "prob_r4": 4.0,
-            "prob_final": 1.34,
-            "bpi_source": "espn"
+            "bpi": 4.6,
+            "prob_r64": null,
+            "prob_r32": null,
+            "prob_r16": null,
+            "prob_r8": null,
+            "prob_r4": null,
+            "prob_final": null,
+            "bpi_source": "manual"
           },
           {
             "id": "2633",
