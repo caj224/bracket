@@ -1,0 +1,5 @@
+/*
+  Cache-Control: no-cache, no-store, must-revalidate
+  CDN-Cache-Control: no-cache
+  Cloudflare-CDN-Cache-Control: no-cache
+  Netlify-CDN-Cache-Control: no-cache
