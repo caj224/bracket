@@ -720,10 +720,12 @@ def render_dashboard(payloads: List[dict]) -> str:
         ev = float(payload["best_ev"])
         ev_values.append(ev)
         ev_labels.append(ROUND_LABELS[cutoff_round])
+        curve = cumulative_ev_by_round(bracket)
+        curve[cutoff_round - 1] = ev
         curve_rows.append(
             {
                 "label": f"{ROUND_LABELS[cutoff_round]} bracket",
-                "curve": cumulative_ev_by_round(bracket),
+                "curve": curve,
             }
         )
 
@@ -1485,14 +1487,6 @@ def render_dashboard(payloads: List[dict]) -> str:
       </section>
 
       <section>
-        <div class="eyebrow">Profiles</div>
-        <h3 class="section-title">Best Bracket at Each Cutoff</h3>
-        <div class="grid">
-          {''.join(horizon_rows)}
-        </div>
-      </section>
-
-      <section>
         <div class="eyebrow">Transitions</div>
         <h3 class="section-title">What Changed from One Horizon to the Next</h3>
         <div class="grid">
@@ -1518,6 +1512,14 @@ def render_dashboard(payloads: List[dict]) -> str:
           Lighter cells mean the optimizer is making almost the same choices in both views.
         </p>
         {build_similarity_heatmap(payloads)}
+      </section>
+
+      <section>
+        <div class="eyebrow">Profiles</div>
+        <h3 class="section-title">Best Bracket at Each Cutoff</h3>
+        <div class="grid">
+          {''.join(horizon_rows)}
+        </div>
       </section>
     </section>
 
