@@ -1,15 +1,15 @@
 {
-  "timestamp": "2026-03-25T13:29:59.897017",
-  "best_ev": 99.84960371480544,
+  "timestamp": "2026-03-26T11:27:35.158901",
+  "best_ev": 99.86286768103224,
   "extra": {
-    "starts_completed": 1379,
+    "starts_completed": 2462,
     "start_mode": "elite:title_guided_random",
-    "start_ev": 96.14542962921459,
+    "start_ev": 94.39306639484099,
     "history": [
-      96.14542962921459,
-      97.09079924354349,
-      97.69121233693048,
-      99.84960371480544
+      94.39306639484099,
+      97.1037319368285,
+      97.70513009084476,
+      99.86286768103224
     ]
   },
   "best_bracket": {
@@ -1174,18 +1174,18 @@
             "bpi_source": "espn"
           },
           {
-            "id": "2653",
-            "name": "Troy",
-            "seed": 13,
+            "id": "158",
+            "name": "Nebraska",
+            "seed": 4,
             "region": "South",
-            "bpi": 1.9,
-            "prob_r64": null,
-            "prob_r32": null,
-            "prob_r16": null,
-            "prob_r8": null,
-            "prob_r4": null,
-            "prob_final": null,
-            "bpi_source": "manual"
+            "bpi": 16.9448,
+            "prob_r64": 92.69,
+            "prob_r32": 58.93000000000001,
+            "prob_r16": 19.759999999999998,
+            "prob_r8": 6.239999999999999,
+            "prob_r4": 1.8499999999999999,
+            "prob_final": 0.5599999999999999,
+            "bpi_source": "espn"
           },
           {
             "id": "2670",

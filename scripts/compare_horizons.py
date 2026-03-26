@@ -59,8 +59,8 @@ PARTIAL_SEARCH_RUN_WEIGHTS = {
     1: 1,
     2: 1,
     3: 1,
-    4: 30,
-    5: 5,
+    4: 80,
+    5: 10,
     6: 0,
 }
 
@@ -75,8 +75,8 @@ TITLE_GUIDED_MIN_FLIPS = {
     5: 1,
 }
 TITLE_GUIDED_MAX_FLIPS = {
-    4: 2,
-    5: 2,
+    4: 3,
+    5: 4,
 }
 
 
