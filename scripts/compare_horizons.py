@@ -59,7 +59,7 @@ PARTIAL_SEARCH_RUN_WEIGHTS = {
     1: 1,
     2: 1,
     3: 1,
-    4: 80,
+    4: 1,
     5: 10,
     6: 0,
 }
@@ -77,6 +77,24 @@ TITLE_GUIDED_MIN_FLIPS = {
 TITLE_GUIDED_MAX_FLIPS = {
     4: 3,
     5: 4,
+}
+
+# For deeper horizons, spend some restarts refining the current incumbent best
+# instead of always starting from scratch.
+INCUMBENT_GUIDED_RESTART_PROB = {
+    4: 0.35,
+    5: 0.55,
+    6: 0.25,
+}
+INCUMBENT_GUIDED_MIN_FLIPS = {
+    4: 1,
+    5: 1,
+    6: 1,
+}
+INCUMBENT_GUIDED_MAX_FLIPS = {
+    4: 2,
+    5: 2,
+    6: 2,
 }
 
 
@@ -722,6 +740,28 @@ def choose_title_guided_partial_restart(
     )
 
 
+def choose_incumbent_guided_partial_restart(
+    incumbent_bracket: Optional[dict],
+    prob_grid,
+    name_to_idx: Dict[str, int],
+):
+    if incumbent_bracket is None:
+        return None
+
+    cutoff_round = incumbent_bracket["cutoff_round"]
+    guided_prob = INCUMBENT_GUIDED_RESTART_PROB.get(cutoff_round, 0.0)
+    if guided_prob <= 0 or random.random() >= guided_prob:
+        return None
+
+    return perturb_partial_bracket(
+        incumbent_bracket,
+        prob_grid,
+        name_to_idx,
+        min_flips=INCUMBENT_GUIDED_MIN_FLIPS[cutoff_round],
+        max_flips=INCUMBENT_GUIDED_MAX_FLIPS[cutoff_round],
+    )
+
+
 def mutate_one_random_flip_partial(partial_bracket: dict, prob_grid, name_to_idx: Dict[str, int]) -> dict:
     candidate = copy.deepcopy(partial_bracket)
     cutoff_round = candidate["cutoff_round"]
@@ -811,7 +851,16 @@ def build_partial_restart_bracket(
     cutoff_round: int,
     prob_grid,
     name_to_idx,
+    incumbent_bracket: Optional[dict] = None,
 ):
+    incumbent_guided = choose_incumbent_guided_partial_restart(
+        incumbent_bracket,
+        prob_grid,
+        name_to_idx,
+    )
+    if incumbent_guided is not None:
+        return "incumbent_guided", incumbent_guided
+
     u = random.random()
 
     if u < P_RANDOM_RESTART:
@@ -919,6 +968,7 @@ def run_partial_search_step(
         cutoff_round,
         prob_grid,
         name_to_idx,
+        incumbent_bracket=state["best_bracket"],
     )
 
     if start_mode.startswith("elite:"):
