@@ -11,6 +11,7 @@ It then writes a single visual report to:
 
 import json
 import math
+from datetime import datetime
 from html import escape
 from pathlib import Path
 from typing import Dict, List, Tuple
@@ -826,12 +827,16 @@ def render_dashboard(payloads: List[dict]) -> str:
 
     best_gain = max(ev_values) - min(ev_values)
     calculator_bootstrap = build_calculator_bootstrap(final_bracket)
+    generated_label = datetime.now().astimezone().strftime("%Y-%m-%d %I:%M:%S %p %Z")
 
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <title>Horizon Bracket Dashboard</title>
   <style>
     :root {{
@@ -1431,11 +1436,13 @@ def render_dashboard(payloads: List[dict]) -> str:
       <section class="hero">
         <div class="card hero-copy">
           <div class="eyebrow">Bracket Horizon Dashboard</div>
-          <h1>How the optimized bracket evolves as the horizon gets deeper.</h1>
+          <h1>March Madness Bracket Optimizer</h1>
           <p>
             This report compares the best saved bracket for each cutoff round and highlights
             how expected value rises, which teams survive deeper into the tree, and where
-            the optimizer changes its mind as it starts caring about later rounds.
+            the optimizer changes its mind as it starts caring about later rounds. 
+            Built for an upset based scoring system, the optimizer's choices can shift 
+            dramatically as the horizon expands and it starts prioritizing different teams and matchups.
           </p>
           <div class="stats">
             <div class="stat">
@@ -1451,6 +1458,7 @@ def render_dashboard(payloads: List[dict]) -> str:
               <div class="value">{escape(ROUND_LABELS[payloads[-1]["best_bracket"]["cutoff_round"]])}</div>
             </div>
           </div>
+          <p class="helper-text">Last updated: <strong>{escape(generated_label)}</strong></p>
         </div>
         <aside class="card spotlight">
           <div class="eyebrow">Deepest Horizon Snapshot</div>
@@ -1474,6 +1482,14 @@ def render_dashboard(payloads: List[dict]) -> str:
         </p>
         {build_bracket_curve_svg(curve_rows)}
         {build_curve_table(curve_rows)}
+      </section>
+
+      <section>
+        <div class="eyebrow">Profiles</div>
+        <h3 class="section-title">Best Bracket at Each Cutoff</h3>
+        <div class="grid">
+          {''.join(horizon_rows)}
+        </div>
       </section>
 
       <section>
@@ -1502,14 +1518,6 @@ def render_dashboard(payloads: List[dict]) -> str:
           Lighter cells mean the optimizer is making almost the same choices in both views.
         </p>
         {build_similarity_heatmap(payloads)}
-      </section>
-
-      <section>
-        <div class="eyebrow">Profiles</div>
-        <h3 class="section-title">Best Bracket at Each Cutoff</h3>
-        <div class="grid">
-          {''.join(horizon_rows)}
-        </div>
       </section>
     </section>
 
