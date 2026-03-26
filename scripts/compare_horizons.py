@@ -59,15 +59,16 @@ PARTIAL_SEARCH_RUN_WEIGHTS = {
     1: 1,
     2: 1,
     3: 1,
-    4: 20,
-    5: 1,
+    4: 30,
+    5: 5,
+    6: 0,
 }
 
 # For Elite 8 / Final Four, some "random" restarts begin near the saved
 # full-title bracket and then get lightly perturbed before hill climbing.
 TITLE_GUIDED_RANDOM_RESTART_PROB = {
-    4: 0.35,
-    5: 0.45,
+    4: 0.45,
+    5: 0.70,
 }
 TITLE_GUIDED_MIN_FLIPS = {
     4: 1,
@@ -75,7 +76,7 @@ TITLE_GUIDED_MIN_FLIPS = {
 }
 TITLE_GUIDED_MAX_FLIPS = {
     4: 2,
-    5: 3,
+    5: 2,
 }
 
 
@@ -641,6 +642,21 @@ def save_best_partial_result(
     atomic_json_save(payload, partial_save_path(cutoff_round))
 
 
+def save_best_title_result(
+    best_bracket: dict,
+    best_ev: float,
+    extra: Optional[dict] = None,
+) -> None:
+    payload = {
+        "timestamp": datetime.now().isoformat(),
+        "best_ev": float(best_ev),
+        "extra": extra or {},
+        "best_bracket": copy.deepcopy(best_bracket),
+    }
+    payload["best_bracket"].pop("cutoff_round", None)
+    atomic_json_save(payload, FULL_BRACKET_SAVE_PATH)
+
+
 def maybe_update_partial_top_k(
     bracket: dict,
     ev: float,
@@ -829,13 +845,29 @@ def initialize_partial_search_for_round(
     if cutoff_round == 6:
         title_payload = load_title_round_from_full_results()
         best_ev = float(title_payload["best_ev"])
-        print(f"{ROUND_NAME[cutoff_round]:<10} using optimize.py result: {best_ev:.4f}")
+        if PARTIAL_SEARCH_RUN_WEIGHTS.get(6, 0) <= 0:
+            print(f"{ROUND_NAME[cutoff_round]:<10} using optimize.py result: {best_ev:.4f}")
+            return {
+                "cutoff_round": cutoff_round,
+                "best_bracket": title_payload["best_bracket"],
+                "best_ev": best_ev,
+                "starts_completed": 0,
+                "external_source": True,
+            }
+
+        print(f"{ROUND_NAME[cutoff_round]:<10} initialized from optimize.py result: {best_ev:.4f}")
+        maybe_update_partial_top_k(
+            title_payload["best_bracket"],
+            best_ev,
+            "full_init",
+            [float(best_ev)],
+            cutoff_round,
+        )
         return {
             "cutoff_round": cutoff_round,
             "best_bracket": title_payload["best_bracket"],
             "best_ev": best_ev,
             "starts_completed": 0,
-            "external_source": True,
         }
 
     save_path = partial_save_path(cutoff_round)
@@ -912,17 +944,16 @@ def run_partial_search_step(
     if final_ev > state["best_ev"]:
         state["best_ev"] = final_ev
         state["best_bracket"] = final_bracket
-        save_best_partial_result(
-            final_bracket,
-            final_ev,
-            cutoff_round,
-            extra={
-                "starts_completed": starts_completed,
-                "start_mode": start_mode,
-                "start_ev": float(start_ev),
-                "history": history,
-            },
-        )
+        save_extra = {
+            "starts_completed": starts_completed,
+            "start_mode": start_mode,
+            "start_ev": float(start_ev),
+            "history": history,
+        }
+        if cutoff_round == 6:
+            save_best_title_result(final_bracket, final_ev, extra=save_extra)
+        else:
+            save_best_partial_result(final_bracket, final_ev, cutoff_round, extra=save_extra)
         print(
             f"{ROUND_NAME[cutoff_round]:<10} [{starts_completed}] NEW BEST | "
             f"mode={start_mode:<14} | start_ev={start_ev:.4f} | best_ev={final_ev:.4f}"
@@ -940,7 +971,7 @@ def main():
     all_region_teams = build_region_teams(teams_64)
     name_to_idx = {team["name"]: i for i, team in enumerate(teams_64)}
     print("Starting ongoing partial-round searches...")
-    print("Rounds 1-5 keep their own partial results; Title uses the saved full bracket from optimize.py.")
+    print("Rounds 1-5 keep their own partial results; Title uses the saved full bracket unless weight 6 is set above 0.")
     print("Press Ctrl+C to stop.\n")
 
     try:
@@ -971,9 +1002,9 @@ def main():
                 weighted_states.append(state)
 
         print("Per-cycle search weights:")
-        for cutoff_round in range(1, 6):
+        for cutoff_round in range(1, 7):
             print(f"  {ROUND_NAME[cutoff_round]:<10} x{PARTIAL_SEARCH_RUN_WEIGHTS[cutoff_round]}")
-        print(f"  {ROUND_NAME[6]:<10} external only\n")
+        print("")
 
         while True:
             for state in weighted_states:
